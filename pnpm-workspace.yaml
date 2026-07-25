@@ -24,4 +24,4 @@ allowBuilds:
 
 catalogs:
   development:
-    astro: 5.13.4
+    astro: 7.1.3
