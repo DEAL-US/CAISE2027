@@ -13,7 +13,7 @@
     "./node/*": "./src/node/*.ts"
   },
   "scripts": {
-    "check": "pnpm check:types",
+    "check": "corepack pnpm check:types",
     "check:types": "tsc",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

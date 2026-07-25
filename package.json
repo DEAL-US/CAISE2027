@@ -11,9 +11,9 @@
     "yarn": "yarn is not supported. Please use pnpm"
   },
   "scripts": {
-    "lint": "pnpm -r --if-present --no-bail lint",
-    "lint:fix": "pnpm -r --if-present --no-bail lint:fix",
-    "check": "pnpm -r --if-present --no-bail check"
+    "lint": "corepack pnpm -r --if-present --no-bail lint",
+    "lint:fix": "corepack pnpm -r --if-present --no-bail lint:fix",
+    "check": "corepack pnpm -r --if-present --no-bail check"
   },
   "devDependencies": {
     "@eslint/config-inspector": "1.2.0",

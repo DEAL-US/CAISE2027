@@ -5,18 +5,18 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "prisma": "pnpm prisma:generate && pnpm prisma:migrate",
+    "prisma": "corepack pnpm prisma:generate && corepack pnpm prisma:migrate",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
     "prisma:create-migration": "prisma migrate dev",
-    "start": "pnpm prisma && pnpm listhen:dev",
-    "prod": "pnpm prisma && pnpm listhen:prod",
+    "start": "corepack pnpm prisma && corepack pnpm listhen:dev",
+    "prod": "corepack pnpm prisma && corepack pnpm listhen:prod",
     "listhen:dev": "DEV=1 listhen -w ./src/app.ts",
     "listhen:prod": "listhen --public --qr false ./src/app.ts",
-    "check": "pnpm check:types",
-    "check:types": "pnpm prisma:generate && tsc",
-    "lint": "pnpm prisma:generate && eslint .",
-    "lint:fix": "pnpm prisma:generate && eslint . --fix",
+    "check": "corepack pnpm check:types",
+    "check:types": "corepack pnpm prisma:generate && tsc",
+    "lint": "corepack pnpm prisma:generate && eslint .",
+    "lint:fix": "corepack pnpm prisma:generate && eslint . --fix",
     "lint:inspect": "eslint-config-inspector"
   },
   "devDependencies": {

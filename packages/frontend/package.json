@@ -11,10 +11,10 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview --host",
-    "prod": "pnpm build && pnpm preview",
+    "prod": "corepack pnpm build && corepack pnpm preview",
     "astro": "astro",
     "check": "astro check",
-    "check:types": "pnpm check",
+    "check:types": "corepack pnpm check",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:inspect": "eslint-config-inspector"

@@ -14,7 +14,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:inspect": "eslint-config-inspector",
-    "check": "pnpm check:types",
+    "check": "corepack pnpm check:types",
     "check:types": "tsc"
   },
   "devDependencies": {
