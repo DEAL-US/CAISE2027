@@ -26,14 +26,14 @@
   },
   "dependencies": {
     "@caise2027-website/shared": "workspace:*",
-    "@prisma/client": "6.15.0",
+    "@prisma/client": "7.9.0",
     "consola": "3.4.2",
     "destr": "2.0.5",
     "h3": "1.15.11",
     "image-size": "2.0.2",
     "listhen": "1.9.0",
-    "microinvoice": "1.0.6",
+    "microinvoice": "2.0.2",
     "nodemailer": "9.0.3",
-    "prisma": "6.15.0"
+    "prisma": "7.9.0"
   }
 }
