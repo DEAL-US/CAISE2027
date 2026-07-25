@@ -103,7 +103,8 @@
   },
   "extends": [
     "mergeConfidence:age-confidence-badges",
-    ":semanticCommits"
+    ":semanticCommits",
+    "helpers:pinGitHubActionDigests"
   ],
   "forkProcessing": "enabled"
 }

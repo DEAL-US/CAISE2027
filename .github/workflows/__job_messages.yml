@@ -31,6 +31,8 @@ jobs:
   cf_pages_msg:
     name: Cloudflare Pages deployment 📃🚀
     runs-on: ubuntu-latest
+    permissions: 
+      pull-requests: write 
 
     steps:
       - name: Compose message 📃

@@ -14,6 +14,8 @@ jobs:
     if: ${{ always() && !cancelled() }}
     uses: ./.github/workflows/__job_messages.yml
     secrets: inherit
+    permissions: 
+      pull-requests: write 
     with:
       commit: ${{ github.event.pull_request.head.sha }}
       in_progress: true
