@@ -16,12 +16,12 @@
     "check": "corepack pnpm -r --if-present --no-bail check"
   },
   "devDependencies": {
-    "@eslint/config-inspector": "1.2.0",
+    "@eslint/config-inspector": "3.1.0",
     "@iconify/json": "2.2.379",
-    "@types/node": "24.3.0",
-    "eslint": "9.34.0",
+    "@types/node": "26.1.1",
+    "eslint": "10.8.0",
     "jiti": "2.5.1",
-    "type-fest": "4.41.0",
-    "typescript": "5.9.2"
+    "type-fest": "5.8.0",
+    "typescript": "7.0.2"
   }
 }
