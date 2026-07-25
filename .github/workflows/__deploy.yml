@@ -1,0 +1,103 @@
+name: Deploy 🏗️
+
+on:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+      commit:
+        required: false
+        type: string
+      comment:
+        required: false
+        type: boolean
+      artifact_name:
+        required: false
+        type: string
+        default: page
+      is_prerelease:
+        required: true
+        type: boolean
+
+# Allow this job to clone the repo and create a page deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+env:
+  CF_PROJECT_NAME: caise27
+
+jobs:
+  cf-pages:
+    name: Cloudflare Pages 📃
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ inputs.branch == 'main' && 'Production (Cloudflare Pages)' || 'Preview (Cloudflare Pages)' }}
+      url: ${{ steps.cf.outputs.deployment-url }}
+    outputs:
+      url: ${{ steps.cf.outputs.deployment-url }}
+
+    steps:
+      - name: Download workflow artifact ⬇️
+        uses: actions/download-artifact@v5.0.0
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: dist
+
+      - name: Publish to Cloudflare Pages 📃
+        uses: cloudflare/wrangler-action@v3.14.1
+        id: cf
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ env.CF_PROJECT_NAME }} --branch=${{ inputs.branch }}
+
+  github-pages:
+    name: GitHub Pages 📃
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.is_prerelease }}
+    environment: 
+      name: ${{ inputs.branch == 'main' && 'Production (GitHub Pages)' || 'Preview (GitHub Pages)' }}
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - name: Download workflow artifact ⬇️
+        uses: actions/download-artifact@v5.0.0
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: dist
+
+      - name: Upload GitHub Pages artifact ⬆️
+        uses: actions/upload-pages-artifact@v4.0.0
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages 🚀
+        id: deploy
+        uses: actions/deploy-pages@v4.0.5
+
+      - name: Remove unnecessary artifacts 🗑️
+        if: ${{ always() }}
+        uses: geekyeggo/delete-artifact@v5.1.0
+        with:
+          name: github-pages
+
+  compose-comment:
+    name: Compose and push comment 📝
+    # Always run so the comment is composed for the workflow summary
+    if: ${{ always() }}
+    uses: ./.github/workflows/__job_messages.yml
+    secrets: inherit
+    permissions: 
+      pull-requests: write
+    needs:
+      - cf-pages
+
+    with:
+      branch: ${{ inputs.branch }}
+      commit: ${{ inputs.commit }}
+      preview_url: ${{ needs.cf-pages.outputs.url }}
+      in_progress: false
+      comment: ${{ inputs.comment }}

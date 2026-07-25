@@ -1,0 +1,353 @@
+---
+import Contact from '#/components/widgets/Contact.astro';
+import PageLayout from '#/layouts/PageLayout.astro';
+import { getPermalink } from '#/utils/permalinks';
+
+import countries from 'world-countries';
+// import tickets from '#/data/tickets';
+
+/**
+ * Dynamic route generator
+ */
+export function getStaticPaths() {
+  // return tickets.map((_t, index) => ({ params: { product: index + 1 } }));
+  return [];
+}
+
+export const sitemap = false;
+
+const { product } = Astro.params;
+const formSubtitle = `
+  <b>Accepted payment methods:</b> Visa, Mastercard, JCB, UnionPay and Discover
+`;
+const formDescription = `
+  After a successful payment, you will receive an email with a receipt.
+  If you don't receive it, check your spam folder or contact us at info@bpm2025seville.org.
+`;
+---
+
+<PageLayout
+  metadata={{
+    title: `Register for ${tickets[product - 1]?.title}`,
+    description: `Register for ${tickets[product - 1]?.title} package of the conference!`
+  }}>
+  <Contact
+    subtitle={formSubtitle}
+    formProps={{
+      action: import.meta.env.DEV ? 'https://sis-t.redsys.es:25443/sis/realizarPago' : 'https://sis.redsys.es/sis/realizarPago',
+      id: 'payment-form',
+      method: 'POST'
+    }}
+    inputs={[
+      {
+        type: 'text',
+        name: 'name',
+        required: true,
+        label: 'Full Name'
+      },
+      {
+        type: 'email',
+        name: 'email',
+        required: true,
+        label: 'Email',
+        description: `
+          Every person attending (even if doing so as a company) <b>must</b> use a <b>unique email address</b> for registering.
+          <br />
+          If one email address gets registered to one conference package, it won't be able to register again to the same package`
+      },
+      {
+        type: 'text',
+        name: 'billing_address',
+        required: true,
+        label: 'Address (for generating the receipt)'
+      },
+      {
+        type: 'text',
+        name: 'institution',
+        label: 'Institution'
+      },
+      {
+        name: 'country',
+        label: 'Country of work',
+        options: countries.map(c => ({ value: c.name.common, label: c.name.common })),
+        description: `
+          Depending on the country of your institution, you might be applicable for further discounts. Those
+          discounts will automatically be applied after clicking "Validate".
+          <br /><br />
+          These discounts are ONLY for members of public academic institutions. If this is not your case,
+          it's better to leave this field empty so the discount is not applied
+          incorrectly to you. The registration with this discount will go through a manual validation process
+          and might be rejected if the institution is not public or academic.
+          <br /><br />
+          <a href="https://www.acm.org/publications/policies/full-waiver-countries" class="underline">List of countries with 45% OFF</a>
+          <br />
+          <a href="https://www.acm.org/publications/policies/lower-middle-income-countries" class="underline">List of countries with 20% OFF</a>
+        `
+      },
+      {
+        type: 'text',
+        name: 'discount_code',
+        label: 'Discount code (if you have one)'
+      },
+      // Product id marker for the backend
+      {
+        type: 'hidden',
+        name: 'product_id',
+        value: product
+      },
+      // Santander TPV Params
+      {
+        'type': 'hidden',
+        'name': 'Ds_SignatureVersion',
+        'value': 'HMAC_SHA256_V1',
+        'data-tpv': ''
+      },
+      {
+        'type': 'hidden',
+        'name': 'Ds_MerchantParameters',
+        'data-tpv': ''
+      },
+      {
+        'type': 'hidden',
+        'name': 'Ds_Signature',
+        'data-tpv': ''
+      }
+    ]}
+    textarea={{
+      name: 'notes',
+      label: 'Additional comments',
+      placeholder: `
+        Provide all the information needed for an invitation letter
+        (if you need one), tell us if you have any dietary restrictions,
+        or any other comments...
+      `
+    }}
+    disclaimers={[
+      {
+        required: true,
+        label: `I agree to the
+          <a class="underline" href="${getPermalink('/terms/registration')}">
+            registration terms and conditions
+          </a> and the
+          <a class="underline" href="${getPermalink('/terms/privacy')}">
+            privacy policy
+          </a>.
+        `
+      },
+      {
+        name: 'is_student',
+        label: `
+          <b>I am a student and I will provide proof of my student status (100 € discount)</b>.
+          I understand that my registration will be pending until the proof is validated
+          and will be revoked if incorrect or not provided.
+          `
+      }
+    ]}
+    button={{
+      text: 'Validate',
+      variant: 'secondary',
+      id: 'submit-button',
+      icon: 'i-tabler:chevron-right'
+    }}
+    description={formDescription}
+  />
+</PageLayout>
+
+<script>
+  import type { OrderPayload, SignupPayload, TPVOperation } from '@caise2027-website/shared';
+  import { isStr } from '@caise2027-website/shared/validation';
+  import { isNumber } from '@caise2027-website/shared/validation';
+  import { validateOrderBody } from '@caise2027-website/shared/validation/data';
+
+  const registrationPageRegex = /\/registration\/\d+\/?$/;
+  const baseUrl = import.meta.env.DEV ? 'http://127.0.0.1:3000' : 'https://registration.bpm2025seville.org';
+  const userPostUrl = `${baseUrl}/user`;
+  const orderPostUrl = `${baseUrl}/order`;
+
+  document.addEventListener('astro:page-load', () => {
+    /**
+     * Only run this script on the registration pages
+     */
+    if (!registrationPageRegex.test(window.location.pathname)) {
+      return;
+    }
+
+    let order_response: TPVOperation;
+    const i_chevron = 'i-tabler:chevron-right';
+    const i_spinner = 'i-svg-spinners:ring-resize';
+    const formRef = document.getElementById('payment-form') as HTMLFormElement;
+    const button = formRef.querySelector('#submit-button') as HTMLButtonElement;
+    const buttonIcon = button.querySelector('[data-icon]') as HTMLDivElement;
+
+    function onFail({ e = new Error('There was an error in the backend'), showDefault = true } = {}): never {
+      const message = showDefault
+        ? `${e.message}.\n\nPlease try again later and contact us at info@bpm2025seville.org if it keeps happening`
+        : e.message;
+
+      window.requestAnimationFrame(() => {
+        showSpinner(false);
+      });
+      alert(message);
+
+      throw e;
+    }
+
+    async function request(url: string, payload: unknown) {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.status === 409) {
+        onFail({
+          e: new Error('You are already registered and paid for this event, so you are probably paying twice by mistake'),
+          showDefault: false
+        });
+      } else if (response.status >= 400) {
+        onFail();
+      }
+
+      return response;
+    }
+
+    function showSpinner(show = true) {
+      if (show) {
+        for (const el of formRef.querySelectorAll('input:not([data-tpv]), textarea')) {
+          // @ts-expect-error - TypeScript can't properly infer types from multiple elements
+          el.readOnly = true;
+          // @ts-expect-error - TypeScript can't properly infer types from multiple elements
+          el.disabled = true;
+        }
+
+        /**
+         * font-size: 0 hides the text inside the button
+         */
+        button.classList.add('font-size-0');
+        buttonIcon.classList.remove(i_chevron);
+        buttonIcon.classList.add(i_spinner);
+        button.setAttribute('disabled', '');
+      } else {
+        buttonIcon.classList.remove(i_spinner);
+        buttonIcon.classList.add(i_chevron);
+        button.classList.remove('font-size-0');
+        button.removeAttribute('disabled');
+      }
+    }
+
+    function setPayButton(amount: number) {
+      showSpinner(false);
+
+      if (button?.firstChild) {
+        button.classList.add('btn-primary');
+        button.classList.remove('btn-secondary');
+        button.firstChild.textContent = `Pay ${amount} €`;
+      }
+    }
+
+    function setFreeButton() {
+      showSpinner(false);
+
+      if (button?.firstChild) {
+        button.setAttribute('disabled', '');
+        button.classList.add('text-white', 'bg-green-600', 'dark:bg-green-700');
+        buttonIcon.classList.remove(i_chevron);
+        buttonIcon.classList.add('i-tabler:check');
+        button.firstChild.textContent = 'Your registration was free and confirmed!';
+      }
+    }
+
+    /**
+     * Serializes the form inputs
+     */
+    function getFormData() {
+      const obj = Object.fromEntries(new FormData(formRef));
+
+      delete obj['Ds_SignatureVersion'];
+      delete obj['Ds_Signature'];
+      delete obj['Ds_MerchantParameters'];
+
+      if (obj['is_student'] === 'on') {
+        // @ts-expect-error - We're serializing this for backend
+        obj['is_student'] = true;
+      }
+
+      for (const key of ['notes', 'institution']) {
+        if (obj[key] === '') {
+          delete obj[key];
+        }
+      }
+
+      // @ts-expect-error - We're serializing this for backend
+      obj['product_id'] = Number(obj['product_id']);
+
+      if (!validateOrderBody(obj)) {
+        onFail({ e: new Error('Data validation failed') });
+      } else {
+        return obj as SignupPayload & OrderPayload;
+      }
+    }
+
+    async function createUser(inputs: SignupPayload) {
+      await request(userPostUrl, inputs);
+    }
+
+    async function createOrder(inputs: OrderPayload): Promise<TPVOperation> {
+      const response = await request(orderPostUrl, inputs);
+      const json = await response.json();
+
+      if (
+        (!('price' in json) || !isNumber(json.price))
+        || (!('signature' in json) || !isStr(json.signature))
+        || (!('parameters' in json) || !isStr(json.parameters))
+      ) {
+        onFail({ e: new Error('Data validation failed') });
+      }
+
+      return json;
+    }
+
+    function updateInputsOnPay(response: TPVOperation) {
+      for (const input of formRef.querySelectorAll('input[data-tpv]')) {
+        switch (input.getAttribute('name')) {
+          case 'Ds_MerchantParameters':
+            input.setAttribute('value', response.parameters);
+            break;
+          case 'Ds_Signature':
+            input.setAttribute('value', response.signature);
+            break;
+        }
+      }
+    }
+
+    formRef.addEventListener('submit', async (event) => {
+      if (!order_response) {
+        event.preventDefault();
+
+        try {
+          const inputs = getFormData();
+          showSpinner();
+
+          await createUser(inputs);
+          order_response = await createOrder(inputs);
+
+          updateInputsOnPay(order_response);
+        } catch {} finally {
+          window.requestAnimationFrame(() => {
+            showSpinner(false);
+
+            if (order_response) {
+              if (order_response.price === 0) {
+                setFreeButton();
+              } else {
+                setPayButton(order_response.price);
+              }
+            }
+          });
+        }
+      }
+    });
+  });
+</script>

@@ -1,0 +1,25 @@
+{
+  "name": "@caise2027-website/shared",
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.d.ts"
+    },
+    "./validation": "./src/universal/validation/index.ts",
+    "./validation/data": "./src/universal/validation/data.ts",
+    "./node/*": "./src/node/*.ts"
+  },
+  "scripts": {
+    "check": "pnpm check:types",
+    "check:types": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:inspect": "eslint-config-inspector"
+  },
+  "devDependencies": {
+    "@caise2027-website/configs": "workspace:*"
+  }
+}

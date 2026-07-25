@@ -1,0 +1,104 @@
+{
+  "timezone": "Europe/Madrid",
+  "npm": {
+    "minimumReleaseAge": "1 day"
+  },
+  "packageRules": [
+    {
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "dependencies",
+        "pnpm.catalog.runtime"
+      ],
+      "groupName": "npm (runtime)"
+    },
+    {
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "devDependencies",
+        "pnpm.catalog.development",
+        "engines",
+        "packageManager"
+      ],
+      "groupName": "npm (development)"
+    },
+    {
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "peerDependencies"
+      ],
+      "matchUpdateTypes": [
+        "pin"
+      ],
+      "enabled": false
+    },
+    {
+      "matchDepNames": [
+        "pnpm"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "pnpm"
+    },
+    {
+      "matchManagers": [
+        "github-actions",
+        "devcontainer"
+      ],
+      "separateMajorMinor": false,
+      "groupName": "ci"
+    },
+    {
+      "matchUpdateTypes": [
+        "lockFileMaintenance"
+      ],
+      "groupName": "lockfiles",
+      "dependencyDashboardApproval": true
+    }
+  ],
+  "dependencyDashboard": true,
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0,
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "groupName": "vulnerable",
+    "labels": [
+      "security",
+      "dependencies"
+    ]
+  },
+  "ignoreDeps": [
+    "node"
+  ],
+  "enabledManagers": [
+    "npm",
+    "maven",
+    "maven-wrapper",
+    "github-actions",
+    "devcontainer"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "rebaseWhen": "behind-base-branch",
+  "rangeStrategy": "pin",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "groupName": "lockfiles",
+    "schedule": [
+      "every month"
+    ]
+  },
+  "extends": [
+    "mergeConfidence:age-confidence-badges"
+  ],
+  "forkProcessing": "enabled"
+}

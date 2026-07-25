@@ -1,0 +1,286 @@
+---
+import PageLayout from '#/layouts/PageLayout.astro';
+import Content from '#/components/widgets/Content.astro';
+import CallToAction from '#/components/widgets/CallToAction.astro';
+import Steps from '#/components/widgets/Steps.astro';
+import Headline from '#/components/ui/Headline.astro';
+import { getPermalink } from '#/utils/permalinks';
+import WidgetWrapper from '#/components/ui/WidgetWrapper.astro';
+import Sponsors from '#/components/ui/Sponsors.astro';
+import { Image } from 'astro:assets';
+import Avatar from '#/components/ui/Avatar.astro';
+import Booklet from '#/components/widgets/Booklet.astro';
+
+// import SevilleCathedral from '#/assets/images/hero/cathedral.jpg';
+import BPMLogo from '@caise2027-website/assets/icon';
+// import ManuelResinas_img from '#/assets/images/people/resinas.jpg';
+// import Adela_img from '#/assets/images/people/ortega.jpg';
+import Blockquote from '#/components/widgets/Blockquote.astro';
+
+const pdfBooklet = '/program/Program_booklet.pdf';
+const cathedralText = 'Cathedral of Seville';
+---
+
+<PageLayout
+  heroProps={{
+    title: '23<sup>rd</sup> International Conference on Business Process Management <br /> (BPM 2025)',
+    tagline: '31st Aug - 5th Sep 2025 | Seville, Spain',
+    actions: [
+      { variant: 'primary', text: 'App', href: getPermalink('/app-instructions/'), icon: 'i-tabler:apps' },
+      { variant: 'primary', text: 'Booklet', href: pdfBooklet, icon: 'i-tabler:download', target: '_blank' },
+      { variant: 'primary', text: 'Proceedings', href: getPermalink('/proceedings/'), icon: 'i-tabler:book' }
+    ]
+  }}>
+  <Fragment slot="hero-subtitle">
+    BPM 2025 is the 23<sup>rd</sup> conference in a series that provides the most prestigious forum
+    for researchers and practitioners in the field of Business Process Management.
+  </Fragment>
+
+  <div class="flex w-full justify-center print:hidden lg:-mb-12" slot="hero-content">
+    <div class="hero-picture-container mx-12 lg:-mb-60">
+      <figure class="hero-picture border-4 border-white bg-white lg:border-8">
+        <picture>
+          <Image class="bg-black" src={BPMLogo} alt="Logo BPM 2025" width={300} height={300} loading="eager" />
+        </picture>
+        <figcaption class="font-bold pt-3 text-center dark:text-black">
+          BPM 2025
+        </figcaption>
+      </figure>
+      <figure class="hero-picture hero-picture--odd border-4 border-white bg-white lg:border-8">
+        <picture>
+          <!-- <Image class="bg-black" src={SevilleCathedral} width={352} height={312} alt={cathedralText} loading="eager" /> -->
+        </picture>
+        <figcaption class="font-bold pt-3 text-center dark:text-black">
+          <a href="https://www.catedraldesevilla.es/" target="_blank">{cathedralText}</a>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  {/* Calendar */}
+
+  <Content
+    title="Calendar"
+    images={[
+      // {
+      //   src: SevilleCathedral,
+      //   alt: cathedralText,
+      //   description: true
+      // }
+    ]}
+    classes={{ container: '!pb-0' }}>
+    <Fragment slot="content">
+      <p>
+        BPM 2025 will be held in <b>Seville, Spain</b>, from August, 31 to September, 5
+        and will host hundreds of attendees from all over the world
+      </p>
+      <Steps
+        classes={{ container: '!pt-2 !pb-0' }}
+        items={[
+          {
+            title:
+          `<a href="${getPermalink('/program/doctoral-consortium/')}">Doctoral Consortium</a> <br class="hidden" /> <span class="font-normal hidden"></span> <br /> <span class="text-sm font-normal">31st of August</span>`,
+            // description: '[TO BE REDACTED]',
+            icon: 'i-hugeicons:mentor'
+          },
+          {
+            title:
+          `<a href="${getPermalink('/program/workshops/')}">Workshops</a> <br class="hidden" /> <span class="font-normal hidden"></span> <br /> <span class="text-sm font-normal">1st of September</span>`,
+            // description: '[TO BE REDACTED]',
+            icon: 'i-material-symbols:forum'
+          },
+          {
+            title:
+          'Main conference <br class="hidden" /> <span class="font-normal hidden"></span> <br /> <span class="text-sm font-normal">2nd - 4th of September</span>',
+            description: `
+<ul>
+<li><a href="${getPermalink('/program/keynotes/')}" class="underline">Keynotes</a></a></li>
+<li><a href="${getPermalink('/program/main-track/')}" class="underline">Main track</a></li>
+<li><a href="${getPermalink('/program/bpm-forum/')}" class="underline">BPM Forum</a></li>
+<li><a href="${getPermalink('/program/process-technology-forum/')}" class="underline">Process Technology Forum</a></li>
+<li><a href="${getPermalink('/program/responsible-bpm-forum/')}" class="underline">Responsible BPM Forum</a></li>
+<li><a href="${getPermalink('/program/industry-forum/')}" class="underline">Industry Forum</a></li>
+<li><a href="${getPermalink('/program/educators-forum/')}" class="underline">Educators Forum</a></li>
+<li><a href="${getPermalink('/program/tutorials/')}" class="underline">Tutorials</a></li>
+<li><a href="${getPermalink('/program/demos-&-resources/')}" class="underline">Demos & Resources</a></li>
+<li><a href="${getPermalink('/program/journal-first-track/')}" class="underline">Journal First</a></li>
+</ul> `.trim(),
+            // icon: 'i-material-symbols-light:lab-research'
+            icon: 'i-hugeicons:teacher'
+          },
+          // {
+          //   title:
+          // ' <br class="hidden" /> <span class="font-normal hidden"></span> <br /> <span class="text-sm font-normal">2nd - 4th of September</span>',
+          //   // description: '[TO BE REDACTED]',
+          //   icon: 'i-material-symbols:forum'
+          // },
+          {
+            title:
+          `<a href="${getPermalink('/program/bpm-admin/')}">Jornadas Gestión y Automatización de Procesos en la Era de la Inteligencia Artificial</a> <br class="hidden" /> <span class="font-normal hidden"></span> <br /> <span class="text-sm font-normal">5th of September</span>`,
+            // description: 'Impulsando la innovación en el sector público',
+            icon: 'i-hugeicons:bank'
+          }
+        ]}
+      />
+    </Fragment>
+  </Content>
+
+  {/* Program booklet */}
+  <Content
+    title="Program booklet"
+    classes={{ container: '!pt-6', content: 'justify-center' }}
+    bg
+  >
+    <Fragment slot="content">
+      <Booklet />
+    </Fragment>
+  </Content>
+
+  { /* Cite */ }
+
+  <Content>
+    <Fragment slot="content">
+      <div class="flex gap-2 justify-center">
+        <!-- <Avatar
+          xl
+          image={{
+            src: Adela_img,
+            alt: 'Adela del Río Ortega'
+          }} /> -->
+        <!-- <Avatar
+          xl
+          image={{
+            src: ManuelResinas_img,
+            alt: 'Manuel Resinas'
+          }} /> -->
+      </div>
+      <Blockquote quotes>
+        <div>
+          <p>
+            We are delighted to invite you to the 23<sup>rd</sup> edition of the International Conference on Business Process Management (BPM 2025),
+            taking place in the beautiful and historic city of Seville from August 31 to September 5, 2025.
+          </p>
+          <br />
+          <p>
+            Five years ago, we had the pleasure of hosting a previous edition of this conference,
+            although the event was moved online due to the global pandemic. Now, we are thrilled to
+            welcome you back in person to Seville, a city renowned for its rich cultural heritage, vibrant atmosphere, and stunning architecture.
+            From the iconic Plaza de España to the charming streets of the old town, Seville offers a perfect backdrop for what promises to be
+            an inspiring and enriching event.
+          </p>
+          <br />
+          <p>
+            BPM 2025 continues the tradition of providing the the premier forum for researchers and practitioners in Business Process Management.
+            For over two decades, the BPM conference series has been a driving force in advancing cutting-edge research and practical insights. This prestigious forum brings together leading thinkers, pioneering researchers, and industry leaders for a week of insightful talks, hands-on tutorials, and forward-thinking discussions. The BPM conference series celebrates the diversity and depth of the BPM field, acting as a hub for experts from various disciplines, including Computer Science, Information Systems Engineering, and Management.
+          </p>
+          <br />
+          <p>
+            We look forward to welcoming you to Seville for an unforgettable experience of knowledge exchange, networking, and cultural exploration.
+          </p>
+        </div>
+      </Blockquote>
+      <cite class="flex flex-row-reverse">
+        Adela del Río Ortega, Manuel Resinas
+        (BPM 2025 General Chairs)
+      </cite>
+    </Fragment>
+  </Content>
+
+  {/* Sponsors */}
+
+  <WidgetWrapper bg>
+    <Headline
+      classes={{ container: 'pt-6 !mb-0' }}
+      title="Organization & Sponsors"
+      subtitle="These organizations make the BPM conference possible" />
+    <!-- <Sponsors /> -->
+    <CallToAction
+      title="You?"
+      actions={[
+        {
+          variant: 'primary',
+          text: 'Become a sponsor!',
+          href: getPermalink('/sponsors/become-a-sponsor')
+        }
+      ]}
+    />
+  </WidgetWrapper>
+
+  <CallToAction
+    title="Let's get together!"
+    subtitle="Join us in Seville for BPM 2025 and transform the way you think about <br /> Business Process Management"
+    boxed={false}
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Registration info',
+        href: getPermalink('/registration')
+      }
+    ]}
+  >
+  </CallToAction>
+</PageLayout>
+
+<style>
+/**
+ * Polaroid-style pictures, animated on page load to slide down from the top of the page.
+ */
+.hero-picture {
+  --rest-angle: -9deg;
+  --slide-start-x: 0%;
+  --slide-start-y: 0%;
+  --slide-end-x: 0%;
+  --slide-end-y: -10%;
+  display: inline-block;
+  max-width: 30vw;
+  position: relative;
+  /* @ unocss-ignore */
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  /* @ unocss-ignore */
+  transform: translate(var(--slide-end-x), var(--slide-end-y)) rotate(var(--rest-angle));
+  animation: 0.5s slideDown ease-out;
+  transition-property: transform, filter;
+  transition-duration: 0.3s;
+  z-index: 11;
+}
+
+.hero-picture--odd {
+  --slide-end-x: -50%;
+  --rest-angle: 6deg;
+  animation-duration: 0.9s;
+  z-index: 0;
+}
+
+.hero-picture:hover, .hero-picture:focus-within {
+  /* @ unocss-ignore */
+  transform: translate(var(--slide-end-x), var(--slide-end-y)) rotate(0) scale(1.25);
+  /* @ unocss-ignore */
+  filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.5));
+  z-index: 12;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-picture {
+    animation-iteration-count: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-picture--odd {
+    --slide-end-x: 20%;
+    --slide-end-y: -80%;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translate(var(--slide-start-x), var(--slide-start-y)) rotate(0);
+  }
+  50% {
+    transform: translate(calc(var(--slide-start-x) + var(--slide-end-x) / 2), calc(var(--slide-start-y) + var(--slide-end-y) / 2)) rotate(calc(-1 * var(--rest-angle) / 4));
+  }
+  100% {
+    transform: translate(var(--slide-end-x), var(--slide-end-y)) rotate(var(--rest-angle));
+  }
+}
+</style>

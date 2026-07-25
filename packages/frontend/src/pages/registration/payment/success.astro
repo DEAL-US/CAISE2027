@@ -1,0 +1,42 @@
+---
+import Button from '#/components/ui/Button/Button.astro';
+import CallToAction from '#/components/widgets/CallToAction.astro';
+import Layout from '#/layouts/Layout.astro';
+import { getHomePermalink } from '#/utils/permalinks';
+---
+
+<Layout metadata={{
+  title: '✔️ Payment confirmed',
+  description: 'The payment for the BPM 2025 conference was confirmed and completed successfully!'
+}}>
+  <section class="p-16 flex h-full items-center">
+    <div class="mx-auto my-8 px-5 container flex flex-col items-center justify-center">
+      <div class="text-center max-w-md">
+        <h2 class="text-9xl font-bold mb-8">
+          <span>🎉</span>
+        </h2>
+        <p class="text-3xl">Your payment has been confirmed</p>
+        <br />
+        <br />
+        <br />
+        <p class="text-xl font-semibold">We look forward to seeing you in Seville!</p>
+      </div>
+      <Button
+        class="ml-4 mt-4"
+        variant="primary"
+        href={getHomePermalink()}
+        icon="i-mdi:home"
+        text="Go to homepage" />
+    </div>
+  </section>
+  <CallToAction
+    title="Don't have a place to stay yet?"
+    subtitle="Book in the same place where the conference takes place!"
+    actions={[
+      {
+        href: 'https://www.melia.com/es/hoteles/espana/sevilla/melia-sevilla',
+        icon: 'i-mdi:chevron-right',
+        text: 'Book room in Meliá Sevilla'
+      }
+    ]} />
+</Layout>

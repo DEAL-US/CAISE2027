@@ -1,0 +1,125 @@
+<script>
+  import { ui } from '#/config.json';
+  import { isStr, isArray } from '@caise2027-website/shared/validation';
+
+  const header_sticky_attribute = 'data-aw-sticky-header';
+  const dark_class = 'dark';
+  const light_class = 'light';
+
+  function applyTheme(theme: string) {
+    if (theme === dark_class) {
+      document.documentElement.classList.add(dark_class);
+    } else {
+      document.documentElement.classList.remove(dark_class);
+    }
+  }
+
+  function initTheme() {
+    if ((ui.theme && ui.theme.endsWith(':only')) || (!localStorage.theme && ui.theme !== 'system')) {
+      applyTheme(ui.theme.replace(':only', ''));
+    } else if (
+      localStorage.theme === dark_class
+      || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      applyTheme(dark_class);
+    } else {
+      applyTheme(light_class);
+    }
+  };
+
+  function attachEvent<K extends keyof HTMLElementEventMap>(
+    selector: string | NodeListOf<Element> | Element[] | string[] | Document | Element,
+    event: K,
+    fn: (e: HTMLElementEventMap[K] | Event, elem: Element) => void
+  ): void {
+    const matches: Element[] = [];
+
+    if (isStr(selector)) {
+      matches.push(...[...document.querySelectorAll(selector)]);
+    } else if (isArray(selector)) {
+      matches.push(...selector
+        .flatMap(
+          sel => isStr(sel) ? [...document.querySelectorAll(sel)] : sel)
+        .filter(Boolean)
+      );
+    } else {
+      matches.push(selector as Element);
+    }
+
+    if (matches && matches.length) {
+      matches.forEach((elem) => {
+        elem.addEventListener(event, e => fn(e, elem), { passive: true });
+      });
+    }
+  }
+
+  function onLoad() {
+    const toggle = document.querySelector('[data-aw-toggle-menu]');
+    const header = document.querySelector('header');
+    const headerWithNav = document.querySelector('header nav');
+    const headerLastChild = document.querySelector('header > div > div:last-child');
+    const screenSize = window.matchMedia('(max-width: 1023px)');
+
+    function toggleMobileMenu() {
+      window.requestAnimationFrame(() => {
+        toggle?.classList.toggle('expanded');
+        header?.classList.toggle('expanded');
+        document.body.classList.toggle('!overflow-hidden');
+        header?.classList.toggle('h-screen');
+        header?.classList.toggle('bg-page');
+        headerWithNav?.classList.toggle('hidden');
+        headerLastChild?.classList.toggle('hidden');
+      });
+    };
+
+    function applyHeaderStylesOnScroll(scrollPos: number = window.scrollY) {
+      window.requestAnimationFrame(() => {
+        if (!header?.hasAttribute(header_sticky_attribute)) {
+          return;
+        }
+
+        const isScrolled = scrollPos > (header.offsetHeight / 2);
+
+        header.classList.toggle('scroll', isScrolled);
+        header.classList.toggle(dark_class, !isScrolled
+          && !screenSize.matches
+          && !header.hasAttribute('data-aw-forced-mobile-header')
+        );
+      });
+    }
+
+    if (headerWithNav && toggle) {
+      attachEvent(toggle, 'click', toggleMobileMenu);
+    }
+
+    attachEvent('[data-aw-toggle-color-scheme]', 'click', () => {
+      if (ui.theme.endsWith(':only')) {
+        return;
+      }
+
+      const isApplied = document.documentElement.classList.toggle(dark_class);
+      localStorage.theme = isApplied ? dark_class : light_class;
+    });
+
+    screenSize.addEventListener('change', () => {
+      if (!screenSize.matches) {
+        if (header?.classList.contains('expanded')) {
+          toggleMobileMenu();
+        }
+      }
+
+      applyHeaderStylesOnScroll();
+    });
+
+    attachEvent(document, 'scroll', () => applyHeaderStylesOnScroll());
+
+    initTheme();
+    applyHeaderStylesOnScroll();
+  };
+
+  window.addEventListener('load', onLoad, { once: true });
+  document.addEventListener('astro:after-swap', () => {
+    initTheme();
+    onLoad();
+  });
+</script>

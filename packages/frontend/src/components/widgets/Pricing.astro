@@ -1,0 +1,113 @@
+---
+import Button from '#/components/ui/Button/Button.astro';
+import Headline from '#/components/ui/Headline.astro';
+import WidgetWrapper from '#/components/ui/WidgetWrapper.astro';
+import type { Pricing as Props } from '#/types';
+import { twMerge } from 'tailwind-merge';
+import { parse } from 'marked';
+
+const {
+  title = '',
+  subtitle = '',
+  tagline = '',
+  prices = [],
+  isDark = false,
+  id = '',
+  classes = {},
+  bg
+} = Astro.props;
+
+const {
+  container: containerClass = ''
+} = classes;
+
+const iconClasses = 'w-5 h-5 font-bold p-1 text-white';
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${containerClass ?? ''}`} bg={bg}>
+  <Headline title={title} subtitle={subtitle} tagline={tagline} />
+  <div class="flex flex-wrap gap-4 justify-center">
+    {
+      prices
+      && prices.map(({ title, subtitle, pricing, items, callToAction, ribbonTitle }) => (
+        <div class="flex flex-1 min-w-40 justify-center">
+          <div class="px-6 py-8 text-center border border-gray-200 rounded-lg bg-white flex flex-col max-w-sm w-full shadow-xs justify-between backdrop-blur-xs dark:border-gray-700 dark:bg-slate-900">
+            {ribbonTitle && (
+              <div class="text-right h-[100px] w-[100px] right-[-5px] top-[-5px] absolute z-[1] overflow-hidden 2xl:right-[-8px] 2xl:top-[-10px] rtl:left-[-8px] rtl:right-auto rtl:2xl:left-[-10px]">
+                <span class="text-[10px] text-white leading-5 font-bold text-center bg-green-700 w-full block uppercase shadow-[0_3px_10px_-5px_rgba(0,0,0,0.3)] rotate-45 right-[-21px] top-[19px] absolute after:border-[3px] before:border-[3px] after:border-b-transparent after:border-l-transparent after:border-r-green-800 after:border-t-green-800 before:border-b-transparent before:border-l-green-800 before:border-r-transparent before:border-t-green-800 after:content-[''] before:content-[''] after:right-0 after:top-full before:left-0 before:top-full rtl:left-[-21px] rtl:right-auto after:absolute before:absolute after:z-[-1] before:z-[-1] rtl:-rotate-45">
+                  <Fragment set:html={parse(ribbonTitle, { async: false })} />
+                </span>
+              </div>
+            )}
+            <div class="px-2 py-0">
+              {title && (
+                <h3 class="text-xl leading-6 tracking-wider font-semibold mb-2 text-center uppercase">
+                  <Fragment set:html={parse(title, { async: false })} />
+                </h3>
+              )}
+              {subtitle && (
+                <p class="text-gray-600 font-light sm:text-lg dark:text-slate-400">
+                  <Fragment set:html={parse(subtitle, { async: false })} />
+                </p>
+              )}
+              <div class="my-8">
+                {(pricing ?? []).map(p => (
+                      <div class="mb-1 text-center flex items-center justify-center">
+                        <span class={p.variant === 'secondary' ? 'text-muted text-xl' : 'text-4xl font-extrabold'}>
+                          <Fragment set:html={parse(String(p.price), { async: false })} />
+                        </span>
+                        <span class={p.variant === 'secondary' ? 'text-lg text-muted' : 'text-3xl'}>
+                          <Fragment set:html={parse(p.currency ?? '', { async: false })} />
+                        </span>
+                      </div>
+                    <p class={`text-base text-gray-600 lowercase dark:text-slate-400 ${
+                      p.variant === 'secondary' ? 'text-xs' : 'leading-6 '}`}>
+                      <Fragment set:html={parse(p.period ?? '', { async: false })} />
+                    </p>
+                ))}
+              </div>
+              <hr class="my-4 border-slate-200 dark:border-slate-600" />
+              {items && (
+                <ul class="my-8 text-left space-y-2 md:my-10">
+                  {items.map(
+                    ({ title, description, icon: CustomIcon, classes }) => (
+                      <li class="leading-7 mb-1.5 flex items-start space-x-3">
+                        <div class={twMerge('rounded-full bg-primary mt-1', classes?.icon)}>
+                          <div class:list={[iconClasses, CustomIcon ?? 'i-tabler:check']} />
+                        </div>
+                        <span>
+                          {title && (
+                            <p class="text-lg font-semibold">
+                              <Fragment set:html={title} />
+                            </p>
+                          )}
+                          {description && (
+                            <p class="text-xs text-gray-600 dark:text-slate-400">
+                              <Fragment set:html={description} />
+                            </p>
+                          )}
+                        </span>
+                      </li>
+                    )
+                  )}
+                </ul>
+              )}
+            </div>
+            {callToAction && (
+              <div class="flex justify-center">
+                {typeof callToAction === 'string'
+                  ? (
+                      <Fragment set:html={callToAction} />
+                    )
+                  : (
+                      callToAction
+                      && callToAction.href && <Button {...(ribbonTitle ? { variant: 'primary' } : {})} {...callToAction} />
+                    )}
+              </div>
+            )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</WidgetWrapper>

@@ -1,0 +1,47 @@
+---
+import Button from '#/components/ui/Button/Button.astro';
+import Layout from '#/layouts/Layout.astro';
+import { getPermalink } from '#/utils/permalinks';
+---
+
+<Layout metadata={{
+  title: '❌ Payment error',
+  description: 'There was an error when processing the payment'
+}}>
+  <section class="p-16 flex h-full items-center">
+    <div class="mx-auto my-8 px-5 container flex flex-col items-center justify-center">
+      <div class="text-center max-w-md">
+        <h2 class="text-9xl font-bold mb-8">
+          <span>❌</span>
+        </h2>
+        <p class="text-3xl">There was an error while processing your payment</p>
+        <br />
+        <br />
+        <br />
+        <p class="text-xl font-semibold">
+          The full information of the error was shown by our payment processor before you were redirected to this page.
+          Go back to check the error details if you have not already and retry registering again.
+        </p>
+      </div>
+      <div class="flex">
+        <Button
+          class="ml-4 mt-4"
+          id="back"
+          icon="i-mdi:chevron-left"
+          text="Back to payment's processor page" />
+        <Button
+          class="ml-4 mt-4"
+          variant="primary"
+          href={getPermalink('/registration')}
+          icon="i-mdi:chevron-right"
+          text="Go to registration page" />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.getElementById('back')?.addEventListener('click', () => {
+    window.history.back();
+  });
+</script>

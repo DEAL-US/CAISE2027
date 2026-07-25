@@ -1,0 +1,204 @@
+---
+import type { EventItem as Props, ScheduleEvent } from '#/types';
+import { isObj } from '@caise2027-website/shared/validation';
+
+const {
+  event,
+  locale = 'en-EN',
+  columns = 1,
+  cellEvents = []
+} = Astro.props;
+
+const categoryColors = {
+  conference_1: '#3498db',
+  conference_2: '#1982c4',
+  demos: '#3f7cab',
+  default: '#757bc8',
+  forum_1: '#8ac926',
+  forum_2: '#ff595e',
+  forum_3: '#6a4c93',
+  keynote: '#9b59b6',
+  lunch: '#f39c12',
+  social: '#2ecc71',
+  workshop: '#e67e22',
+  consortium: '#457b9d',
+  ai4bpm: '#1abc9c',
+  objects: '#c0392b',
+  automate: '#8e44ad',
+  fmbpm: '#2980b9',
+  vipra: '#c06c84',
+  nlp4bpm: '#34495e',
+  bpmeetiot: '#6c5b7b',
+  innov8bpm: '#2980b9',
+  prody: '#16a085',
+  dlt4bpm: '#795548',
+  plc: '#9b59b6',
+  bpm_forum: '#a1887f',
+  journal_first: '#6c5ce7'
+};
+
+function formatTime(time: Date): string {
+  return time.toLocaleTimeString(locale, {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
+}
+
+/**
+ * Check if two events have temporal overlap
+ */
+function hasTemporalOverlap(event1: ScheduleEvent, event2: ScheduleEvent): boolean {
+  const end1 = event1.end ?? new Date(event1.start.getTime() + 60 * 60 * 1000);
+  const end2 = event2.end ?? new Date(event2.start.getTime() + 60 * 60 * 1000);
+
+  // Events overlap if one starts before the other ends
+  return event1.start < end2 && event2.start < end1;
+}
+
+/**
+ * Detect if this event has temporal overlaps with other events in the same cell
+ */
+function hasOverlaps(): boolean {
+  return cellEvents.some((otherEvent: ScheduleEvent) =>
+    otherEvent !== event && hasTemporalOverlap(event, otherEvent)
+  );
+}
+
+/**
+ * Calculate the column index for overlapping events
+ */
+function getColumnIndex(): number {
+  const overlappingEvents = cellEvents.filter(otherEvent =>
+    hasTemporalOverlap(event, otherEvent)
+  );
+
+  if (overlappingEvents.length <= 1) {
+    return 0;
+  }
+
+  return overlappingEvents
+    // Sort overlapping events by start time
+    .sort((a, b) => a.start.getTime() - b.start.getTime())
+    .findIndex(e => e === event);
+}
+
+/**
+ * Get the total number of overlapping events (including this one)
+ */
+function getOverlapCount(): number {
+  const overlappingEvents = cellEvents.filter(otherEvent =>
+    hasTemporalOverlap(event, otherEvent)
+  );
+
+  return Math.max(1, overlappingEvents.length);
+}
+
+const endTime = event.end ?? new Date(event.start.getTime() + 60 * 60 * 1000);
+const bgColor = categoryColors[event.category] || categoryColors.default;
+
+/**
+ * Duration in decimal format where 60 minutes = 100 units
+ */
+const durationInMinutes = (endTime.getTime() - event.start.getTime()) / (60 * 1000);
+const duration = (durationInMinutes / 60) * 100;
+
+/**
+ * Start minutes offset in decimal format where 60 minutes = 100 units
+ */
+const startMinuteRaw = event.start.getMinutes();
+const startMinute = startMinuteRaw > 0 ? (startMinuteRaw / 60) * 100 : 0;
+
+const hasRealOverlaps = hasOverlaps();
+const columnIndex = getColumnIndex();
+const overlapCount = getOverlapCount();
+const columnWidth = overlapCount > 1 ? `${100 / overlapCount}%` : '100%';
+const columnOffset = overlapCount > 1 ? `${(columnIndex * 100) / overlapCount}%` : '0%';
+---
+
+{(() => {
+  const location = isObj(event.location)
+    ? event.location.name
+    : event.location;
+
+  const body = (
+    <div
+      class:list={[
+        'group/event-item',
+        { 'event-item': !event.href },
+        { 'overlapped left-[var(--left-offset)] w-[var(--width-offset)]': hasRealOverlaps },
+        { 'hover:left-0 hover:w-full': hasRealOverlaps },
+        { 'w-full': !hasRealOverlaps },
+        'absolute z-2 h[var(--duration)] overflow-hidden break-words rounded-md bg-white px-3 py-2 hyphens-auto',
+        'transition-all duration-200',
+        'hover:absolute hover:z-3 hover:h-auto hover:min-h-[var(--duration)] hover:transform hover:shadow-lg hover:-translate-y-0.5',
+        { 'hover:transform-scale-115': columns === 1 },
+        { 'hover:transform-scale-105 hover:-translate-x-6': columns > 1 },
+        'hover:cursor-zoom-in parent-hover/event-link:cursor-pointer select-none',
+        'md:px-1.5 md:py-1',
+        /* Creates the background using the pseudoelement */
+        "before:absolute before:inset-0 before:bg-[var(--bg-color)] before:content-['']"
+      ]}
+      style={{
+        'top': `${startMinute}%`,
+        'borderLeft': `4px solid ${bgColor}`,
+        '--duration': `${duration}%`,
+        '--bg-color': `${bgColor}15`,
+        /* Apply horizontal positioning for overlapping events */
+        ...(hasRealOverlaps
+          ? {
+              '--left-offset': columnOffset,
+              '--width-offset': columnWidth
+            }
+          : {})
+      }}>
+      <div class="min-h-full min-w-full inset-0 bottom-auto absolute group-hover/event-item:relative">
+        <div class="p-1">
+          <div class:list={[
+            'text-gray-700 font-semibold mb-1 opacity-80 hyphens-auto transition-[font-size]',
+            durationInMinutes <= 30
+              ? [
+                  'text-[0.6rem] lg:text-[0.5rem] md:text-[0.45rem]',
+                  'group-hover/event-item:text-[0.7rem] group-hover/event-item:lg:text-[0.6rem] group-hover/event-item:md:text-[0.6rem]'
+                ]
+              : 'text-[0.7rem] lg:text-[0.6rem] md:text-[0.6rem]']}>
+            {formatTime(event.start)} - {formatTime(endTime)}
+          </div>
+          <div class:list={[
+            'text-gray-800 leading-tight font-semibold mb-1 hyphens-auto transition-[font-size]',
+            durationInMinutes <= 30
+              ? [
+                  'text-[0.7rem] lg:text-[0.6rem] md:text-[0.55rem]',
+                  'group-hover/event-item:text-[0.8rem] group-hover/event-item:lg:text-xs group-hover/event-item:md:text-[0.7rem]'
+                ]
+              : 'text-[0.8rem] lg:text-xs md:text-[0.7rem]']}>
+            {event.title}
+          </div>
+          {location
+            && <div class="text-[0.7rem] text-gray-600 mb-1 flex gap-0.5 items-center hyphens-auto lg:text-[0.6rem] md:text-[0.7rem]" set:html={`📍 ${location}`} />}
+          {event.description
+            && <div class="text-[0.7rem] text-gray-600 leading-tight hyphens-auto lg:text-[0.6rem] md:text-[0.7rem]" set:html={event.description} />}
+        </div>
+      </div>
+    </div>
+  );
+
+  return event.href
+    ? (
+        <a href={event.href} class="event-item parent/event-link contents">
+          {body}
+        </a>
+      )
+    : body;
+})()}
+
+<style>
+:global(:has(> .event-item.overlapped:hover)) > .event-item.overlapped:not(:hover) {
+  display: none;
+}
+
+:global(div[role="gridcell"]:last-child) a.event-item:hover > div,
+:global(div[role="gridcell"]:last-child) div.event-item:hover {
+  --un-translate-x: clamp(-2rem, -4cqh, -8cqw) !important;
+}
+</style>

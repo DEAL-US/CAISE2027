@@ -1,0 +1,19 @@
+---
+import { getPermalink } from '#/utils/permalinks';
+---
+
+<div
+  class="text-sm text-slate-400 px-3 py-2 border-b border-slate-800 bg-black gap-1 sticky overflow-hidden md:flex"
+>
+  <span
+    class="text-xs text-slate-300 font-semibold mr-0.5 px-1 py-0.5 bg-slate-700 inline-block rtl:ml-0.5 rtl:mr-0"
+  >NEW
+  </span
+  >
+  <a
+    href={getPermalink('/registration')}
+    class="text-slate-400 font-medium hover:underline"
+  >
+    Registrations are open! 🚀
+  </a>
+</div>

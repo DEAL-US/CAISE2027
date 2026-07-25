@@ -1,0 +1,41 @@
+---
+interface Props {
+  class?: string;
+  quotes?: boolean;
+}
+
+const {
+  class: classes = '',
+  quotes = false
+} = Astro.props;
+---
+<blockquote
+  class="text-muted font-serif px-10"
+  class:list={[classes, { quotes: quotes }]}>
+  <slot />
+</blockquote>
+
+<style>
+blockquote::before,
+blockquote::after {
+  --size: 4rem;
+  display: block;
+  font-size: calc(var(--size) * 2);
+  max-width: var(--size);
+  max-height: var(--size);
+  line-height: normal;
+  position: relative;
+}
+
+blockquote.quotes::before {
+  right: var(--size);
+  top: calc(var(--size) / 2);
+  content: '“';
+}
+
+blockquote.quotes::after {
+  left: 100%;
+  bottom: calc(var(--size) / 1.5);
+  content: '”';
+}
+</style>

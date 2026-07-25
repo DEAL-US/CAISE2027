@@ -1,0 +1,17 @@
+{
+  "name": "@caise2027-website/assets",
+  "type": "module",
+  "exports": {
+    "./icon": {
+      "types": "./favicon/icons.d.ts",
+      "default": "./favicon/favicon.svg"
+    },
+    "./hero": {
+      "types": "./hero/hero.d.ts",
+      "default": "./hero/hero.jpg"
+    }
+  },
+  "devDependencies": {
+    "astro": "catalog:development"
+  }
+}

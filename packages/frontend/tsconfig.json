@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "astro/tsconfigs/strictest",
+    "@caise2027-website/configs/typescript"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": [
+      "src/env.d.ts",
+      "unplugin-icons/types/astro",
+    ],
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.astro",
+    "*.config.*"
+  ]
+}

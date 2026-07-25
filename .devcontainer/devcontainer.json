@@ -1,0 +1,19 @@
+{
+  "name": "CAISE'27 webpage Codespace",
+  "build": { 
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "installDockerComposeSwitch": false
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": {
+    "npm": "corepack pnpm ci",
+    "unshallow": "git fetch --unshallow || true"
+  },
+  "postAttachCommand": {
+    "install-extensions": "cat .vscode/extensions.json | jq -r .recommendations[] | xargs -n 1 code --install-extension"
+  }
+}

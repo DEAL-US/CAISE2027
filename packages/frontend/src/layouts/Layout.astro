@@ -1,0 +1,35 @@
+---
+import '#/assets/styles/index.css';
+
+import { i18n } from '#/config.json';
+
+import CommonMeta from '#/components/utils/CommonMeta.astro';
+import Favicons from '#/components/utils/Favicons.astro';
+import Metadata from '#/components/utils/Metadata.astro';
+import BasicScripts from '#/components/utils/BasicScripts.astro';
+import { ClientRouter } from 'astro:transitions';
+
+import type { MetaData as MetaDataType } from '#/types';
+
+export interface Props {
+  metadata?: MetaDataType;
+}
+
+const { metadata = {} } = Astro.props;
+const { language, textDirection } = i18n;
+---
+
+<!doctype html>
+<html lang={language} dir={textDirection} class="2xl:text-[20px] motion-safe:scroll-smooth">
+  <head>
+    <CommonMeta />
+    <Favicons />
+    <Metadata {...metadata} />
+    <BasicScripts />
+    <ClientRouter fallback="animate" />
+  </head>
+
+  <body class="text-default tracking-tight overscroll-none bg-page antialiased overflow-x-hidden">
+    <slot />
+  </body>
+</html>

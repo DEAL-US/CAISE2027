@@ -1,0 +1,53 @@
+---
+import { twMerge } from 'tailwind-merge';
+import type { Timeline as Props } from '#/types';
+import BSlot from '#/components/utils/BSlot.astro';
+
+const { items = [], classes = {} } = Astro.props;
+
+const {
+  container: containerClass = '',
+  panel: panelClass = '',
+  title: titleClass = '',
+  description: descriptionClass = '',
+  icon: defaultIconClass = 'text-primary dark:text-slate-200 border-primary dark:border-blue-700'
+} = classes;
+
+const mergedIconClasses = twMerge('w-10 h-10 p-2 rounded-full border-2', defaultIconClass);
+---
+
+{
+  items && items.length && (
+    <div class={containerClass}>
+      {items.map(({ title, description, icon: iconClass, classes: itemClasses = {} }, index = 0) => (
+        <div class={twMerge('flex', panelClass, itemClasses?.panel)}>
+          <div class="mr-4 flex flex-col items-center rtl:ml-4 rtl:mr-0">
+            <div>
+              <div class="flex items-center justify-center">
+                <BSlot class={twMerge(mergedIconClasses, itemClasses?.icon)}>
+                  {iconClass
+                    ? (
+                        <div>
+                          <div class={iconClass} />
+                        </div>
+                      )
+                    : <slot name="default-icon" />}
+                </BSlot>
+              </div>
+            </div>
+            {index !== items.length - 1 && <div class="bg-black/10 h-full w-px dark:bg-slate-400/50" />}
+          </div>
+          <div class={`pt-1 ${index !== items.length - 1 ? 'pb-8' : ''}`}>
+            {title && <p class={twMerge('text-xl font-bold', titleClass, itemClasses?.title)} set:html={title} />}
+            {description && (
+              <p
+                class={twMerge('text-muted mt-2', descriptionClass, itemClasses?.description)}
+                set:html={description}
+              />
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}

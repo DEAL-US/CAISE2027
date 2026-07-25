@@ -1,0 +1,85 @@
+---
+import type { ItemGrid as Props } from '#/types';
+import { Image } from 'astro:assets';
+import { twMerge } from 'tailwind-merge';
+import Button from '#/components/ui/Button/Button.astro';
+import BSlot from '#/components/utils/BSlot.astro';
+
+const { items = [], columns, classes = {} } = Astro.props;
+
+const {
+  container: containerClass = '',
+  panel: panelClass = '',
+  title: titleClass = '',
+  description: descriptionClass = '',
+  icon: defaultIconClass = 'text-primary',
+  action: actionClass = ''
+} = classes;
+
+const mergedIconClasses = twMerge('w-7 h-7 mr-2 rtl:mr-0 rtl:ml-2', defaultIconClass);
+---
+
+{
+  items && (
+    <div
+      class={twMerge(
+        `grid mx-auto gap-8 md:gap-y-12 ${
+          columns === 4
+            ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2'
+            : columns === 3
+              ? 'lg:grid-cols-3 sm:grid-cols-2'
+              : columns === 2
+                ? 'sm:grid-cols-2 '
+                : ''
+        }`,
+        containerClass
+      )}
+    >
+      {items.map(({ title, description, icon: iconClass, callsToAction, classes: itemClasses = {}, image, extraHtml }) => (
+        <div class="flex justify-between">
+          {image
+            && (
+              <div class="w-1/2">
+                {/* @ts-expect-error - Track https://github.com/withastro/astro/issues/10780 */}
+                <Image inferSize class="object-contain" {...image} />
+              </div>
+            )}
+          <div class="flex w-full">
+            <div class={twMerge('max-w-md', panelClass, itemClasses?.panel)}>
+              <BSlot class={twMerge(mergedIconClasses, itemClasses?.icon)}>
+                {iconClass
+                  ? (
+                      <div>
+                        <div class={iconClass} />
+                      </div>
+                    )
+                  : <slot name="default-icon" />}
+              </BSlot>
+            </div>
+            <div class="mt-0.5">
+              {title && <h3 class={twMerge('text-xl font-bold', titleClass, itemClasses?.title)}>{title}</h3>}
+              {description && (
+                <p
+                  class={twMerge(`${title ? 'mt-3' : ''} text-muted`, descriptionClass, itemClasses?.description)}
+                  set:html={description}
+                />
+              )}
+              {extraHtml && (
+                <Fragment set:html={extraHtml} />
+              )}
+              {callsToAction && callsToAction.length && (
+                <div class="flex flex-wrap justify-center">
+                  {callsToAction.map(act => (
+                    <div class={twMerge(`${title || description ? 'mt-3' : ''}`, actionClass, itemClasses?.action)}>
+                      <Button variant="link" {...act} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}

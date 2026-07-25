@@ -1,0 +1,39 @@
+{
+  "name": "@caise2027-website/backend",
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "scripts": {
+    "prisma": "pnpm prisma:generate && pnpm prisma:migrate",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy",
+    "prisma:create-migration": "prisma migrate dev",
+    "start": "pnpm prisma && pnpm listhen:dev",
+    "prod": "pnpm prisma && pnpm listhen:prod",
+    "listhen:dev": "DEV=1 listhen -w ./src/app.ts",
+    "listhen:prod": "listhen --public --qr false ./src/app.ts",
+    "check": "pnpm check:types",
+    "check:types": "pnpm prisma:generate && tsc",
+    "lint": "pnpm prisma:generate && eslint .",
+    "lint:fix": "pnpm prisma:generate && eslint . --fix",
+    "lint:inspect": "eslint-config-inspector"
+  },
+  "devDependencies": {
+    "@caise2027-website/configs": "workspace:*",
+    "@types/nodemailer": "7.0.1",
+    "dotenv": "17.2.1"
+  },
+  "dependencies": {
+    "@caise2027-website/shared": "workspace:*",
+    "@prisma/client": "6.15.0",
+    "consola": "3.4.2",
+    "destr": "2.0.5",
+    "h3": "1.15.4",
+    "image-size": "2.0.2",
+    "listhen": "1.9.0",
+    "microinvoice": "1.0.6",
+    "nodemailer": "7.0.5",
+    "prisma": "6.15.0"
+  }
+}

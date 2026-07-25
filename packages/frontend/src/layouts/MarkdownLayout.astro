@@ -1,0 +1,38 @@
+---
+import BSlot from '#/components/utils/BSlot.astro';
+import PageLayout from '#/layouts/PageLayout.astro';
+import type { MetaData, Hero as HeroProps } from '#/types';
+
+export interface Props {
+  frontmatter: {
+    title?: string;
+    description?: string;
+    heroProps?: HeroProps;
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+const metadata: MetaData = {
+  title: frontmatter?.title,
+  description: frontmatter?.description ?? frontmatter?.heroProps?.subtitle
+};
+---
+
+<PageLayout metadata={metadata} heroProps={frontmatter.heroProps}>
+  <section class="mx-auto px-4 py-16 max-w-4xl lg:px-8 lg:py-20 sm:px-6">
+    <div
+      class:list={[
+        'lg:prose max-w-4xl dark:prose-invert dark:prose-headings:text-slate-300',
+        'prose-headings:font-heading prose-headings:leading-tight prose-headings:tracking-tighter',
+        'prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8'
+      ]}
+      style={{
+        '--un-prose-hr': 'currentColor'
+      }}>
+      <BSlot class="list-disc">
+        <slot />
+      </BSlot>
+    </div>
+  </section>
+</PageLayout>

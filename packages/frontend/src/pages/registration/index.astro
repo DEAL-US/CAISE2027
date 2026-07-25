@@ -1,0 +1,197 @@
+---
+import PageLayout from '#/layouts/PageLayout.astro';
+import Pricing from '#/components/widgets/Pricing.astro';
+import WidgetWrapper from '#/components/ui/WidgetWrapper.astro';
+import ItemList from '#/components/ui/ItemList.astro';
+import Headline from '#/components/ui/Headline.astro';
+import CallToAction from '#/components/widgets/CallToAction.astro';
+import { getPermalink } from '#/utils/permalinks';
+// import tickets from '#/data/tickets';
+---
+
+<PageLayout
+  metadata={{
+    title: 'Registration info',
+    description: 'These are the different registration packages for this edition of the conference'
+  }}>
+  <div class="relative">
+    <!-- <Pricing
+      title="Prices"
+      subtitle="The last day to register will be the 8th of August 2025"
+      prices={tickets.map((t, index) => ({
+        ...t,
+        callToAction: {
+          text: 'Register now',
+          variant: 'primary',
+          href: getPermalink(`/registration/${index + 1}`),
+          icon: 'i-tabler:chevron-right'
+        }
+      }))}
+    /> -->
+    <div class="bg-page/80 flex items-center inset-0 justify-center absolute z-10 backdrop-blur-xs">
+      <CallToAction
+        classes={{ container: 'backdrop-blur-none' }}
+        title="Registrations are now closed"
+        subtitle="Thank you for your interest in BPM 2025" />
+    </div>
+  </div>
+  <WidgetWrapper bg>
+    <Headline title="Additional information" />
+    <ItemList items={[
+      {
+        description: `
+          We offer a 100€ discount for students. If you register as a student, you must provide proof of your student status
+          (e.g. a student card including the academic year). You are eligible for the "Student fee" if you are a student in the academic year 2024-2025.
+          In case you are not able to provide a proof in time, your student registration will be automatically cancelled.
+        `,
+        icon: 'i-tabler:pig-money'
+      },
+      {
+        description: `
+          If you are a MSc/PhD student and the presenting author
+          (i.e., the only one among the authors who is present at the event) of a paper accepted at a workshop/co-located
+          event/main conference, then you need to buy a regular registration, regardless of whether or not you are a student.
+        `,
+        icon: 'i-tabler:pig-off'
+      },
+      {
+        description: `
+          If you are a PhD student and you have been accepted to participate in the Doctoral Consortium,
+          the participation to the Doctoral Consortium is free of charge. If you want to attend the rest of the
+          workshops and/or conference, you can register as a student.
+        `,
+        icon: 'i-tabler:podium'
+      }
+    ]} />
+    <br />
+    <details>
+      <summary>Leer en Español</summary>
+      <ItemList
+        items={[
+          {
+            description: `
+            Ofrecemos un descuento de 100€ para estudiantes. Si te registras como estudiante, debes proporcionar una
+            prueba de tu condición de estudiante (por ejemplo, una matrícula con el año académico). 
+            Eres elegible para la "tarifa de estudiante" si eres estudiante en el año académico 2024-2025.
+            En caso de no poder proporcionar una prueba a tiempo, tu registro de estudiante se cancelará.
+          `,
+            icon: 'i-tabler:pig-money'
+          },
+          {
+            description: `
+            Si eres estudiante de Máster/Doctorado y autor/a presentador/a 
+            (es decir, la única persona entre los autores que asiste al evento) de un artículo aceptado 
+            en un taller/evento co-ubicado/conferencia principal, entonces necesitas adquirir un 
+            registro regular, independientemente de si eres estudiante o no.
+          `,
+            icon: 'i-tabler:pig-off'
+          },
+          {
+            description: `
+            Si eres estudiante de Doctorado y has sido aceptado/a para participar en el Doctoral Consortium, 
+            la participación en el Doctoral Consortium es gratuita. 
+            Si deseas asistir al resto de los talleres y/o a la conferencia, puedes registrarte como estudiante.
+          `,
+            icon: 'i-tabler:podium'
+          }
+        ]}
+      />
+    </details>
+  </WidgetWrapper>
+  <WidgetWrapper>
+    <Headline title="Cancellation policy" />
+    <ItemList items={[
+      {
+        description: 'The registration of participation is binding.',
+        icon: 'i-tabler:file-check'
+      },
+      {
+        description: `
+          If you cancel your registration no later than 30 days before the start of the conference,
+          and you are not a presenting author of an accepted paper, you get 80% back of the registration fee.
+          In all other cases, the financial responsibilities of the participants remain fully effective.
+        `,
+        icon: 'i-tabler:ticket-off'
+      },
+      {
+        description: `
+          The registration fees are owed upon registration and are payable within 7 days
+          following submission of the registration (but not later than 7 days before the starting day of the event).
+        `,
+        icon: 'i-tabler:calendar-month'
+      },
+      {
+        description: `
+          Participation is not guaranteed until full payment of the registration fee is received.
+        `,
+        icon: 'i-tabler:credit-card'
+      },
+      {
+        description: `
+          Payments will be refunded if the conference is canceled by the organizer. In that case,
+          the organizer will have no further liability to the client.
+          In case the conference must be postponed, registrations remain valid.
+        `,
+        icon: 'i-tabler:credit-card-refund'
+      }
+    ]} />
+    <br />
+    <details>
+      <summary>Leer en Español</summary>
+      <ItemList
+        items={[
+          {
+            description: 'La inscripción para participar es obligatoria.',
+            icon: 'i-tabler:file-check'
+          },
+          {
+            description: `
+            Si cancelas tu registro 30 días antes del inicio de la conferencia
+            y no eres autor/a presentador/a de un trabajo aceptado, 
+            recibirás el 80% del reembolso de la cuota de registro. 
+            En todos los demás casos, las responsabilidades financieras de los participantes 
+            permanecen plenamente vigentes.
+          `,
+            icon: 'i-tabler:ticket-off'
+          },
+          {
+            description: `
+            Las tarifas de registro se adeudan en el momento de la inscripción y se deben pagar 
+            dentro de los 7 días posteriores al envío de la inscripción 
+            (pero no más tarde de 7 días antes del día de inicio del evento).
+          `,
+            icon: 'i-tabler:calendar-month'
+          },
+          {
+            description: `
+            La participación no está garantizada hasta que se reciba el pago completo 
+            de la cuota de inscripción.
+          `,
+            icon: 'i-tabler:credit-card'
+          },
+          {
+            description: `
+            Los pagos serán reembolsados si la conferencia es cancelada por el organizador. 
+            En ese caso, el organizador no tendrá ninguna otra responsabilidad con el cliente. 
+            En caso de que la conferencia deba aplazarse, las inscripciones siguen siendo válidas.
+          `,
+            icon: 'i-tabler:credit-card-refund'
+          }
+        ]}
+      />
+    </details>
+  </WidgetWrapper>
+  <CallToAction
+    classes={{ container: '!pt-0' }}
+    title="Terms & Conditions"
+    subtitle="When registering, you agree to our terms and conditions"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Read terms & conditions',
+        href: getPermalink('/terms/registration'),
+        icon: 'i-tabler:chevron-right'
+      }
+    ]}
+  />
+</PageLayout>

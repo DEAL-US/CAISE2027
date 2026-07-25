@@ -1,0 +1,86 @@
+name: Quality checks 👌🧪
+
+on:
+  workflow_call:
+    inputs:
+      commit:
+        required: true
+        type: string
+  workflow_dispatch:
+
+jobs:
+  dependency-review:
+    name: Vulnerable dependencies 🔎
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5.0.0
+        with:
+          show-progress: false
+          ref: ${{ inputs.commit || github.sha }}
+
+      - name: Scan
+        uses: actions/dependency-review-action@v4.7.2
+        with:
+          base-ref: ${{ github.event.pull_request.base.sha || 'main' }}
+          head-ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+  conventional_commits:
+    name: Conventional commits check 💬
+    if: ${{ github.event_name == 'pull_request_target' || github.event_name == 'merge_group' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout ⬇️
+        uses: actions/checkout@v5.0.0
+        with:
+          show-progress: false
+          ref: ${{ inputs.commit || github.sha }}
+
+      - name: Check if all commits comply with the specification
+        uses: webiny/action-conventional-commits@v1.3.0
+
+  no_merge_commits:
+    name: No merge commits check 🚫
+    if: ${{ github.event_name == 'pull_request_target' || github.event_name == 'merge_group' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout ⬇️
+        uses: actions/checkout@v5.0.0
+        with:
+          show-progress: false
+          fetch-depth: 0
+          ref: ${{ inputs.commit || github.sha }}
+
+      - name: Check commits
+        uses: greenled/no-merge-commits-check@v1.0.1
+
+  quality:
+    name: Run ${{ matrix.command }} 🕵️‍♂️
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        command:
+          - lint
+          - check
+
+    steps:
+      - name: Checkout ⬇️
+        uses: actions/checkout@v5.0.0
+        with:
+          show-progress: false
+          ref: ${{ inputs.commit || github.sha }}
+
+      - name: Setup node environment ⚙️
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: lts/*
+          check-latest: true
+
+      - name: Install dependencies 📦
+        run: corepack pnpm ci
+
+      - name: Run ${{ matrix.command }} ⚙️
+        run: corepack pnpm ${{ matrix.command }}

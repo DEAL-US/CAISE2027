@@ -1,0 +1,39 @@
+---
+import Headline from '#/components/ui/Headline.astro';
+import WidgetWrapper from '#/components/ui/WidgetWrapper.astro';
+import Button from '#/components/ui/Button/Button.astro';
+import type { Testimonials as Props } from '#/types';
+import TestimonialCard from '../ui/TestimonialCard.astro';
+
+const {
+  title = '',
+  subtitle = '',
+  tagline = '',
+  testimonials = [],
+  callToAction,
+
+  id,
+  isDark = false,
+  classes = {},
+  bg
+} = Astro.props;
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  <Headline title={title} subtitle={subtitle} tagline={tagline} />
+  <div class="gap-6 grid lg:grid-cols-3 sm:grid-cols-2">
+    {
+      testimonials
+      && testimonials.map(t => (
+        <TestimonialCard {...t} />
+      ))
+    }
+  </div>
+  {
+    callToAction && (
+      <div class="font-medium mx-auto mt-8 flex w-fit justify-center md:mt-12">
+        <Button {...callToAction} />
+      </div>
+    )
+  }
+</WidgetWrapper>

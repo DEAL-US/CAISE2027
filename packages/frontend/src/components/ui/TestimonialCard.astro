@@ -1,0 +1,39 @@
+---
+import Avatar from './Avatar.astro';
+import ItemList from './ItemList.astro';
+import type { Testimonial as Props } from '#/types';
+
+const {
+  image,
+  name,
+  job,
+  title,
+  testimonial,
+  items
+} = Astro.props;
+---
+<div class="flex h-auto">
+  <div class="p-4 rounded-md flex grow flex-col shadow-xl items-stretch md:p-6 dark:border dark:border-slate-600 dark:shadow-none">
+
+    <div class="flex items-center">
+      {image && <Avatar image={image} />}
+      <div class="ml-3 grow rtl:ml-0 rtl:mr-3">
+        {name && <p class="text-base font-semibold">{name}</p>}
+        {job && <p class="text-xs text-muted">{job}</p>}
+      </div>
+    </div>
+
+    {(title || testimonial) && <hr class="my-4 border-slate-200 dark:border-slate-600" />}
+
+    {title && <h2 class="text-lg leading-6 font-medium pb-4">{title}</h2>}
+    {testimonial && (
+      <blockquote class="flex-auto">
+        <p class="text-muted text-justify">{testimonial}</p>
+      </blockquote>
+    )}
+    {((items?.length ?? 0) > 0) && <hr class="my-4 border-slate-200 dark:border-slate-600" />}
+    {items && (
+      <ItemList items={items} classes={{ description: 'text-pretty' }} />
+    )}
+  </div>
+</div>

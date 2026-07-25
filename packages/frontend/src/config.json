@@ -1,0 +1,31 @@
+{
+    "site": {
+        "name": "CAISE 2027"
+    },
+    "metadata": {
+        "title": {
+            "default": "23rd International Conference on Business Process Management (BPM 2025)",
+            "template": "%s — 23rd International Conference on Business Process Management (BPM 2025)"
+        },
+        "description": "BPM 2025 is the 23rd conference in a series that provides the most prestigious forum for researchers and practitioners in the field of Business Process Management.",
+        "robots": {
+            "index": true,
+            "follow": true
+        },
+        "openGraph": {
+            "site_name": "BPM 2025 Conference (Seville)",
+            "type": "website"
+        },
+        "twitter": {
+            "site": "@bpmconf",
+            "cardType": "summary"
+        }
+    },
+    "i18n": {
+        "language": "en",
+        "textDirection": "ltr"
+    },
+    "ui": {
+        "theme": "system"
+    }
+}

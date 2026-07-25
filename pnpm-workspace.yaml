@@ -1,0 +1,27 @@
+packages:
+  - packages/*
+
+saveExact: true
+engineStrict: true
+packageImportMethod: hardlink
+lockfileIncludeTarballUrl: true
+linkWorkspacePackages: deep
+injectWorkspacePackages: true
+shamefullyHoist: true
+fetchRetries: 15
+strictDepBuilds: false
+dedupePeers: true
+dedupeDirectDeps: true
+
+allowBuilds:
+  '@parcel/watcher': true
+  '@prisma/client': true
+  '@prisma/engines': true
+  esbuild: true
+  prisma: true
+  sharp: true
+  unrs-resolver: true
+
+catalogs:
+  development:
+    astro: 5.13.4

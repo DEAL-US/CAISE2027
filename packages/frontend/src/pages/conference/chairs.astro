@@ -1,0 +1,25 @@
+---
+import PageLayout from '#/layouts/PageLayout.astro';
+import Testimonials from '#/components/widgets/Testimonials.astro';
+import { conferenceChairs, toTestimonial } from '#/data/people';
+---
+
+<PageLayout metadata={{
+  title: 'Conference Chairs',
+  description: 'Chairs for this edition of the conference'
+}}>
+  {Object.entries(conferenceChairs()).map(([section, chairs], section_index) => (
+    <Testimonials
+      title={section}
+      id={encodeURIComponent(section.toLowerCase().replace(' ', '-'))}
+      testimonials={Object.entries(chairs).map(([name, info]) => {
+        const testimonial = toTestimonial(name, info, { includeTreatment: false });
+        /* Suggested by Astro audit */
+        if (testimonial.image) {
+          testimonial.image.loading = section_index >= 1 ? 'lazy' : 'eager';
+        }
+
+        return testimonial;
+      })} />
+  ))}
+</PageLayout>

@@ -1,0 +1,35 @@
+---
+import type { ExtendedImagePropsWithDescription, Widget } from '#/types';
+import { Image } from 'astro:assets';
+import WidgetWrapper from './WidgetWrapper.astro';
+import { isStr } from '@caise2027-website/shared/validation';
+
+export interface Props extends Widget {
+  images: ExtendedImagePropsWithDescription[];
+}
+
+const {
+  images,
+  classes = {},
+  bg
+} = Astro.props;
+---
+<WidgetWrapper
+  containerClass={`max-w-6xl mx-auto grid gap-6 row-gap-5 md:grid-cols-2 lg:grid-cols-3 -mb-6 justify-center items-center ${classes?.container ?? ''}`}
+  bg={bg}>
+  {images.map(i => (
+    <div>
+      {/* @ts-expect-error - Track https://github.com/withastro/astro/issues/10780 */}
+      <Image
+        class="mx-auto rounded-lg bg-gray-500 w-full shadow-lg"
+        height={500}
+        sizes="(max-width: 768px) 100vw, 432px"
+        {...i}
+        description={undefined}
+      />
+      <p class="py-2 text-center">
+        {i.description === true ? i.alt : isStr(i.description) ? i.description : ''}
+      </p>
+    </div>
+  ))}
+</WidgetWrapper>

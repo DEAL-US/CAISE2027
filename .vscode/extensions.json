@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "antfu.unocss",
+    "antfu.iconify",
+    "dbaeumer.vscode-eslint",
+    "unifiedjs.vscode-mdx",
+    "eamodio.gitlens",
+    "vue.volar",
+    "aaron-bond.better-comments",
+    "yoavbls.pretty-ts-errors"
+  ],
+  "unwantedRecommendations": []
+}

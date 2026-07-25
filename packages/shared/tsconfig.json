@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "@caise2027-website/configs/typescript"
+  ],
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "baseUrl": "."
+  },
+  "include": [
+    "src/**/*.ts",
+    "*.ts"
+  ]
+}

@@ -1,0 +1,25 @@
+---
+import PageLayout from '#/layouts/PageLayout.astro';
+import Testimonials from '#/components/widgets/Testimonials.astro';
+// import { organizingTeam, toTestimonial } from '#/data/people';
+---
+
+<!-- <PageLayout metadata={{
+  title: 'Organizing Team',
+  description: 'The team behind the organization of the conference'
+}}>
+  <Testimonials
+    testimonials={Object.entries(organizingTeam()).map(([name, p], index) => {
+      const testimonial = toTestimonial(name, p, {
+        includeTestimonial: false,
+        includeTreatment: false
+      });
+
+      /* Suggested by Astro audit */
+      if (testimonial.image) {
+        testimonial.image.loading = index >= 6 ? 'lazy' : 'eager';
+      }
+
+      return testimonial;
+    })} />
+</PageLayout> -->

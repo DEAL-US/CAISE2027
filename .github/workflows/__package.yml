@@ -1,0 +1,95 @@
+name: Packaging 📦
+
+on:
+  workflow_call:
+    inputs:
+      commit:
+        required: false
+        type: string
+      is_prerelease:
+        required: true
+        type: boolean
+
+env:
+  SITE_URL: https://www.bpm2025seville.org/
+  BASE_URL: /
+  DOCKER_BUILD_RECORD_UPLOAD: false
+
+jobs:
+  build:
+    name: Build 🏗️
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout ⬇️
+        uses: actions/checkout@v5.0.0
+        with:
+          show-progress: false
+          ref: ${{ inputs.commit || github.sha }}
+
+      - name: Setup node environment ⚙️
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: lts/*
+          check-latest: true
+
+      - name: Install dependencies 📦
+        run: corepack pnpm ci
+
+      - name: Build 🏗️
+        env:
+          STAGING: ${{ inputs.is_prerelease && 1 || 0 }}
+          BASE_URL: ${{ env.BASE_URL }}
+          SITE_URL: ${{ env.SITE_URL }}
+        run: corepack pnpm --filter @caise2027-website/frontend build
+
+      - name: Upload client artifact ⬆️💻
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          compression-level: 0
+          name: page
+          path: packages/frontend/dist
+
+  build_docker:
+    name: Build Docker image (${{ matrix.name }}) 🐳
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: payment-backend
+            dockerfile: packages/backend/Dockerfile
+            context: .
+            tags: caise27/payment-processing
+          # - name: conferia-backend
+          #   dockerfile: packages/conferia/backend/Dockerfile
+          #   context: packages/conferia/backend
+          #   tags: caise27/conferia
+
+    steps:
+      - name: Checkout ⬇️
+        uses: actions/checkout@v5.0.0
+        with:
+          show-progress: false
+          ref: ${{ inputs.commit || github.sha }}
+
+      - name: Configure Docker Buildx ⚙️
+        uses: docker/setup-buildx-action@v3.11.1
+
+      - name: Build images 🛠️
+        uses: docker/build-push-action@v6.18.0
+        id: image
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          platforms: linux/amd64
+          outputs: type=docker,dest=${{ matrix.name }}-docker_image.tar
+          tags: ${{ matrix.tags }}
+
+      - name: Upload Docker image as artifact ⬆️📦
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          compression-level: 0
+          name: ${{ matrix.name }}-docker_image
+          path: ${{ matrix.name }}-docker_image.tar

@@ -1,0 +1,103 @@
+---
+import type { ExtendedImageProps } from '#/types';
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import Blockquote from '#/components/widgets/Blockquote.astro';
+
+interface Props {
+  image: ExtendedImageProps | ImageMetadata;
+  isReversed?: boolean;
+}
+
+const {
+  image,
+  isReversed = false
+} = Astro.props;
+---
+
+{
+  (() => {
+    const imageLayout = (
+      <div
+        class="gradient lg:w-[38%] dark:[--bg-color:var(--colors-page)] lg:absolute"
+        class:list={{
+          'lg:left-0 lg:inset-0 gradient-left': isReversed,
+          'lg:right-0 lg:top-0 lg:bottom-0 gradient-right': !isReversed
+        }}>
+        {/* @ts-expect-error - Track https://github.com/withastro/astro/issues/10780 */}
+        <Image
+          {...image}
+          class:list={[
+            'h-full w-full object-cover',
+            'class' in image ? image?.class : undefined
+          ]}
+        />
+      </div>
+    );
+    const descriptionLayout = (
+      <div
+        class="p-4 min-w-[60%] lg:p-0"
+        class:list={{
+          'lg:ml-[40%]': isReversed,
+          'lg:mr-[40%]': !isReversed
+        }}>
+        <Blockquote>
+          <slot />
+        </Blockquote>
+      </div>
+    );
+
+    return isReversed
+      ? (
+          <>
+            {imageLayout}
+            {descriptionLayout}
+          </>
+        )
+      : (
+          <>
+            {descriptionLayout}
+            {imageLayout}
+          </>
+        );
+  })()
+}
+
+<style>
+.gradient {
+  --bg-color: var(--colors-blue-50);
+  --gradient-steps:
+    color-mix(in srgb, var(--bg-color) 0%, transparent) 0%,
+    color-mix(in srgb, var(--bg-color) 18.2%, transparent) 5.6%,
+    color-mix(in srgb, var(--bg-color) 34%, transparent) 9.9%,
+    color-mix(in srgb, var(--bg-color) 47.6%, transparent) 13.1%,
+    color-mix(in srgb, var(--bg-color) 59.3%, transparent) 15.7%,
+    color-mix(in srgb, var(--bg-color) 69%, transparent) 17.9%,
+    color-mix(in srgb, var(--bg-color) 77.1%, transparent) 20.2%,
+    color-mix(in srgb, var(--bg-color) 83.6%, transparent) 22.9%,
+    color-mix(in srgb, var(--bg-color) 88.8%, transparent) 26.3%,
+    color-mix(in srgb, var(--bg-color) 92.7%, transparent) 30.8%,
+    color-mix(in srgb, var(--bg-color) 95.6%, transparent) 36.7%,
+    color-mix(in srgb, var(--bg-color) 97.6%, transparent) 44.4%,
+    color-mix(in srgb, var(--bg-color) 98.9%, transparent) 54.3%,
+    color-mix(in srgb, var(--bg-color) 99.6%, transparent) 66.6%,
+    color-mix(in srgb, var(--bg-color) 99.9%, transparent) 81.7%,
+    color-mix(in srgb, var(--bg-color) 100%, transparent) 100%;
+}
+
+@media (min-width: 1024px) {
+  .gradient.gradient-left {
+    mask-image: linear-gradient(
+      to left,
+      var(--gradient-steps)
+    )
+  }
+
+  .gradient.gradient-right {
+    mask-image: linear-gradient(
+      to right,
+      var(--gradient-steps)
+    )
+  }
+}
+</style>

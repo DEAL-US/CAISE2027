@@ -1,0 +1,62 @@
+---
+import type { ItemList as Props } from '#/types';
+import { twMerge } from 'tailwind-merge';
+import Button from '#/components/ui/Button/Button.astro';
+import BSlot from '#/components/utils/BSlot.astro';
+
+const { items = [], classes = {} } = Astro.props;
+
+const {
+  container: containerClass = 'gap-10',
+  panel: panelClass = '',
+  title: titleClass = '',
+  description: descriptionClass = '',
+  icon: defaultIconClass = 'text-primary',
+  action: actionClass = ''
+} = classes;
+
+const mergedIconClasses = twMerge('w-7 h-7 mr-2 rtl:mr-0 rtl:ml-2', defaultIconClass);
+---
+
+{
+  items && (
+    <div
+      class={containerClass}>
+      {items.map(({ title, description, icon: iconClass, callsToAction, classes: itemClasses = {} }) => (
+        <div class="mt-4">
+          <div class={twMerge('flex', panelClass, itemClasses?.panel)}>
+            <div class="flex items-center justify-center">
+              <BSlot class={twMerge(mergedIconClasses, itemClasses?.icon)}>
+                {iconClass
+                  ? (
+                      <div>
+                        <div class={iconClass} />
+                      </div>
+                    )
+                  : <slot name="default-icon" />}
+              </BSlot>
+            </div>
+            <div>
+              {title && <h3 class={twMerge('text-xl font-bold', titleClass, itemClasses?.title)} set:html={title} />}
+              {description && (
+                <p
+                  class={twMerge(`${title ? 'mt-3' : ''} text-muted`, descriptionClass, itemClasses?.description)}
+                  set:html={description}
+                />
+              )}
+              {callsToAction && callsToAction.length && (
+                <div class="flex">
+                  {callsToAction.map(act => (
+                    <div class={twMerge(`${title || description ? 'mt-3' : ''}`, actionClass, itemClasses?.action)}>
+                      <Button variant="link" {...act} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
