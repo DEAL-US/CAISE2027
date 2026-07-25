@@ -22,7 +22,7 @@
   "devDependencies": {
     "@caise2027-website/configs": "workspace:*",
     "@types/nodemailer": "8.0.1",
-    "dotenv": "17.2.1"
+    "dotenv": "17.4.2"
   },
   "dependencies": {
     "@caise2027-website/shared": "workspace:*",
