@@ -5,7 +5,8 @@
   },
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
-      "installDockerComposeSwitch": false
+      "installDockerComposeSwitch": false,
+      "moby": false
     },
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
