@@ -3,7 +3,7 @@ import { availableParallelism } from 'node:os';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import UnoCSS from 'unocss/astro';
-import { rehypeHeadingIds } from '@astrojs/markdown-remark';
+import { unified, rehypeHeadingIds } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import compress from '@playform/compress';
 
@@ -20,9 +20,9 @@ export default defineConfig({
    */
   trailingSlash: 'always',
   markdown: {
-    rehypePlugins: [
-      rehypeHeadingIds
-    ]
+    processor: unified({
+      rehypePlugins: [rehypeHeadingIds],
+    }),
   },
   image: {
     dangerouslyProcessSVG: true
