@@ -12,3 +12,6 @@ RUN sudo apt update -qq && \
   sudo apt autoremove --purge -y && \
   curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo bash && \
   sudo install_packages nodejs
+
+# Needed by Astro compress
+RUN sudo install_packages fontconfig

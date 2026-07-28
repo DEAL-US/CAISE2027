@@ -24,6 +24,9 @@ export default defineConfig({
       rehypeHeadingIds
     ]
   },
+  image: {
+    dangerouslyProcessSVG: true
+  },
   integrations: [
     UnoCSS(),
     sitemap(),
