@@ -2,7 +2,7 @@ import type { HTMLAttributes, ComponentProps } from 'astro/types';
 import type { Props as AstroSeoProps } from '@astrolib/seo';
 import type { ImageMetadata, MarkdownInstance } from 'astro';
 import type { Image } from 'astro:assets';
-// import type { locations } from '#/data/program/locations';
+import type { locations } from '#/data/program/locations';
 
 export type AstroComponent = typeof Image;
 export type IconElement = `i-${string}:${string}`;
@@ -72,7 +72,7 @@ export interface ScheduleEvent {
   start: Date;
   end?: Date;
   description?: string;
-  //  location?: typeof locations[keyof typeof locations] | string;
+  location?: typeof locations[keyof typeof locations] | string;
   category: 'forum_1' | 'forum_2' | 'forum_3' | 'keynote'
     | 'conference_1' | 'conference_2' | 'workshop' | 'social'
     | 'lunch' | 'demos' | 'consortium' | 'bpm_forum' | 'journal_first'

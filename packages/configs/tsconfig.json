@@ -1,7 +1,12 @@
 {
   "extends": "./src/typescript.json",
   "compilerOptions": {
-    "lib": ["ESNext"]
+    "lib": ["ESNext"],
+    "types": ["node"],
+    "paths": {
+      "#/*": ["./src/*"]
+    },
+    
   },
   "include": [
     "src/**/*.ts",

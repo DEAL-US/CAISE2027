@@ -10,6 +10,6 @@ import pkg from './package.json' with { type: 'json' };
 export default [
   ...getBaseConfig(pkg.name),
   // ...getImportAliasConfig(),
-  ...getTSVueConfig(pkg.name, false, import.meta.dirname),
+  ...getTSVueConfig(false, import.meta.dirname),
   ...getNodeFiles(tsFiles)
 ];
