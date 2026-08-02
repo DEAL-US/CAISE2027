@@ -14,6 +14,6 @@ export default [
   ...getImportAliasConfig(),
   ...getTSVueConfig(pkg.name, false, import.meta.dirname),
   ...getAstroConfig(),
-  ...getNodeFiles(pkg.name, tsFiles),
+  ...getNodeFiles(tsFiles),
   ...unocss
 ];

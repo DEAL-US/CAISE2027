@@ -131,6 +131,7 @@ export function getImportAliasConfig() {
         '@dword-design/import-alias/prefer-alias': [
           'error',
           {
+            aliasForSubpaths: true,
             alias: {
               '#/*': './src/*'
             }

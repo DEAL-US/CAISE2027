@@ -13,8 +13,8 @@ import vue from 'eslint-plugin-vue';
 import promise from 'eslint-plugin-promise';
 import globals from 'globals';
 import vueParser from 'vue-eslint-parser';
+import { eqeqeqConfig, vueAndTsFiles, vueFiles, tsFiles } from '#/lint/shared';
 import { getAllPackagePaths } from '@caise2027-website/configs/utils';
-import { eqeqeqConfig, vueAndTsFiles, vueFiles, tsFiles } from '../shared';
 
 const recommendedKey = 'flat/recommended';
 
@@ -24,7 +24,7 @@ const recommendedKey = 'flat/recommended';
 const flatArrayOfObjects = (obj: unknown[]) => Object.assign({}, ...obj);
 
 /** Common TypeScript and Vue rules */
-const common = (packageName: string) => defineConfig([
+const common = () => defineConfig([
   {
     ...flatArrayOfObjects(tseslint.configs.strictTypeChecked),
     name: '(@caise2027-website/configs/lint/typescript-vue - typescript-eslint) Extended config from plugin (strict type checking)'
