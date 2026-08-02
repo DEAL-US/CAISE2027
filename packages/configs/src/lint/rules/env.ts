@@ -1,13 +1,13 @@
-import { getAllPackagePaths } from '@caise2027-website/configs/utils';
 import { defineConfig } from 'eslint/config';
 import eslintImportX from 'eslint-plugin-import-x';
 import globals from 'globals';
+import { getAllPackagePaths } from '@caise2027-website/configs/utils';
 
 /**
  * Gets the ESLint config from Node.js and development related files
  * @param files - Defaults to `*config.*` and files under `scripts` folder
  */
-export function getNodeFiles(packageName: string, files = ['*.config.*', 'scripts/**/*.ts']) {
+export function getNodeFiles(files = ['*.config.*', 'scripts/**/*.ts']) {
   return defineConfig([{
     name: '(@caise2027-website/configs/lint/env) Node.js and development-related files',
     files,

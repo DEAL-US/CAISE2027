@@ -14,8 +14,6 @@ export function getStaticPaths() {
   return [];
 }
 
-export const sitemap = false;
-
 const { product } = Astro.params;
 const formSubtitle = `
   <b>Accepted payment methods:</b> Visa, Mastercard, JCB, UnionPay and Discover
@@ -26,11 +24,13 @@ const formDescription = `
 `;
 ---
 
-<PageLayout
+<!-- <PageLayout
   metadata={{
     title: `Register for ${tickets[product - 1]?.title}`,
     description: `Register for ${tickets[product - 1]?.title} package of the conference!`
-  }}>
+  }}> -->
+
+<PageLayout>
   <Contact
     subtitle={formSubtitle}
     formProps={{

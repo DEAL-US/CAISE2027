@@ -21,15 +21,17 @@ export default defineConfig({
   trailingSlash: 'always',
   markdown: {
     processor: unified({
-      rehypePlugins: [rehypeHeadingIds],
-    }),
+      rehypePlugins: [rehypeHeadingIds]
+    })
   },
   image: {
     dangerouslyProcessSVG: true
   },
   integrations: [
     UnoCSS(),
-    sitemap(),
+    sitemap({
+      filter: page => !/\/registration\/\d+\/?$/.test(page)
+    }),
     mdx(),
     compress({
       CSS: true,

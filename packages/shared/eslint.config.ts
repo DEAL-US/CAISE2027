@@ -11,5 +11,5 @@ export default [
   ...getBaseConfig(pkg.name),
   ...getImportAliasConfig(),
   ...getTSVueConfig(pkg.name, false, import.meta.dirname),
-  ...getNodeFiles(pkg.name, tsFiles)
+  ...getNodeFiles(tsFiles)
 ];

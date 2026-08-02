@@ -8,7 +8,7 @@ import { isNil } from '@caise2027-website/shared/validation';
  * @param options.colors - Optional. An object mapping row indices to background color values.
  */
 export function generateTableMarkup(
-  { name = 'Table', description, rows = [], colors = {} }:
+  { name = 'Table', description, rows, colors = {} }:
   {
     name?: string;
     description?: string;

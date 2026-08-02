@@ -1,5 +1,5 @@
 {
-  "extends": "@caise2027-website/configs/typescript",
+  "extends": "./src/typescript.json",
   "compilerOptions": {
     "lib": ["ESNext"]
   },

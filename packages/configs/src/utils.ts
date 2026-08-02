@@ -15,10 +15,6 @@ const monorepoRoot = workspaceManifest ? dirname(workspaceManifest) : process.cw
 function getWorkspacePackagePatterns(workspaceManifestPath: string): string[] {
   const workspace = parse(readFileSync(workspaceManifestPath, 'utf8')) as { packages?: unknown };
 
-  if (!workspace || !Array.isArray(workspace.packages)) {
-    return [];
-  }
-
   return workspace.packages.filter((packagePattern): packagePattern is string => typeof packagePattern === 'string');
 }
 
