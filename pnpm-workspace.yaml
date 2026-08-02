@@ -7,6 +7,7 @@ packageImportMethod: hardlink
 lockfileIncludeTarballUrl: true
 linkWorkspacePackages: deep
 injectWorkspacePackages: true
+shamefullyHoist: true
 fetchRetries: 15
 strictDepBuilds: false
 dedupePeers: true
