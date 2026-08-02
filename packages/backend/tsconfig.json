@@ -3,9 +3,10 @@
     "@caise2027-website/configs/typescript"
   ],
   "compilerOptions": {
-    "baseUrl": ".",
     "lib": ["ESNext"],
-    "allowImportingTsExtensions": true
+    "paths": {
+      "#/*": ["./src/*"]
+    }
   },
   "include": [
     "src/**/*.ts",

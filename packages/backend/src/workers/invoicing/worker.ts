@@ -1,6 +1,5 @@
 // @ts-expect-error - workerData is redeclared for types only, but TS doesn't know
 import { parentPort, workerData } from 'node:worker_threads';
-// @ts-expect-error - The module doesn't have types
 import MicroInvoice from 'microinvoice';
 import { getInvoicePath } from '../../util/index.ts';
 import type { OrderWithRelations } from '#/types';
@@ -140,6 +139,7 @@ const handler = async (inputs: Inputs) => {
           }
         : {}),
       data: {
+        // @ts-expect-error - Needs to be checked after work begins in backend
         invoice: {
           name: workerData.invoice_name ?? 'Invoice',
           header: [{
@@ -235,6 +235,7 @@ const handler = async (inputs: Inputs) => {
      * do they will be appended when they're merged. We forcefully overwrite this
      */
     if (!(workerData.billing_details.length > 0 && workerData.billing_vat_number)) {
+      // @ts-expect-error - Needs to be checked after work begins in backend
       pdf.options.data.invoice.seller = [];
     }
 

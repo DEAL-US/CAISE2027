@@ -6,7 +6,6 @@ import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import fileProgress from 'eslint-plugin-file-progress';
 import gitignore from 'eslint-config-flat-gitignore';
-// @ts-expect-error - Missing types from package
 import eslintPluginImportAlias from '@dword-design/eslint-plugin-import-alias';
 import { findUpSync } from 'find-up-simple';
 

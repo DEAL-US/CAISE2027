@@ -4,11 +4,13 @@
     "@caise2027-website/configs/typescript"
   ],
   "compilerOptions": {
-    "baseUrl": ".",
     "types": [
       "src/env.d.ts",
       "unplugin-icons/types/astro",
     ],
+    "paths": {
+      "#/*": ["./src/*"]
+    }
   },
   "include": [
     "src/**/*.ts",

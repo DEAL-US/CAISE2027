@@ -13,7 +13,7 @@ import vue from 'eslint-plugin-vue';
 import promise from 'eslint-plugin-promise';
 import globals from 'globals';
 import vueParser from 'vue-eslint-parser';
-import { eqeqeqConfig, vueAndTsFiles, vueFiles, tsFiles } from '#/lint/shared';
+import { eqeqeqConfig, vueAndTsFiles, vueFiles, tsFiles } from '#/lint/shared.ts';
 import { getAllPackagePaths } from '@caise2027-website/configs/utils';
 
 const recommendedKey = 'flat/recommended';
@@ -199,10 +199,10 @@ const vue_config = defineConfig([
  * @param enableVue - Whether to apply the base config for Vue files
  * @returns
  */
-export function getTSVueConfig(packageName: string, enableVue = true, tsconfigRootDir = import.meta.dirname) {
+export function getTSVueConfig(enableVue = true, tsconfigRootDir = import.meta.dirname) {
   const result = [
     ...(enableVue ? vue_config : []),
-    ...common(packageName).map(conf => ({
+    ...common().map(conf => ({
       ...conf, files: enableVue ? vueAndTsFiles : tsFiles
     }))];
 

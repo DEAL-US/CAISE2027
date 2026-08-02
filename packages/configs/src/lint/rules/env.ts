@@ -18,7 +18,6 @@ export function getNodeFiles(files = ['*.config.*', 'scripts/**/*.ts']) {
       }
     },
     plugins: {
-      // @ts-expect-error - Missing types from package
       'import-x': eslintImportX
     },
     rules: {

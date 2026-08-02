@@ -3,8 +3,11 @@
     "@caise2027-website/configs/typescript"
   ],
   "compilerOptions": {
-    "lib": ["ESNext"],
-    "baseUrl": "."
+    "lib": ["ESNext", "DOM"],
+    "types": ["node"],
+    "paths": {
+      "#/*": ["./src/*"]
+    }
   },
   "include": [
     "src/**/*.ts",
