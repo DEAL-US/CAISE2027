@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "description": "The Caise 2027 Conference website",
-  "packageManager": "pnpm@11.17.0",
+  "packageManager": "pnpm@11.18.0",
   "engines": {
     "node": ">=24.11.0 <25.0.0",
-    "pnpm": "11.17.0",
+    "pnpm": "11.18.0",
     "npm": "npm is not supported. Please use pnpm",
     "yarn": "yarn is not supported. Please use pnpm"
   },
@@ -16,8 +16,8 @@
     "check": "corepack pnpm -r --if-present --no-bail check"
   },
   "devDependencies": {
-    "@eslint/config-inspector": "3.1.0",
-    "@iconify/json": "2.2.506",
+    "@eslint/config-inspector": "3.1.1",
+    "@iconify/json": "2.2.508",
     "@types/node": "26.1.2",
     "eslint": "10.8.0",
     "jiti": "2.7.0",
