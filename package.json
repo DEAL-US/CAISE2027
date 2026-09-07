@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "description": "The Caise 2027 Conference website",
-  "packageManager": "pnpm@11.21.0",
+  "packageManager": "pnpm@12.3.4",
   "engines": {
     "node": ">=24.11.0 <25.0.0",
-    "pnpm": "11.21.0",
+    "pnpm": "12.3.4",
     "npm": "npm is not supported. Please use pnpm",
     "yarn": "yarn is not supported. Please use pnpm"
   },
