@@ -4,6 +4,7 @@
   ],
   "compilerOptions": {
     "lib": ["ESNext"],
+    "types": ["node"],
     "paths": {
       "#/*": ["./src/*"]
     }
