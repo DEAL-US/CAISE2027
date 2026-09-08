@@ -1,41 +1,49 @@
 ---
 import PageLayout from '#/layouts/PageLayout.astro';
-import Content from '#/components/widgets/Content.astro';
+// import Content from '#/components/widgets/Content.astro';
 import CallToAction from '#/components/widgets/CallToAction.astro';
-import Steps from '#/components/widgets/Steps.astro';
-import Headline from '#/components/ui/Headline.astro';
-import { getPermalink } from '#/utils/permalinks';
-import WidgetWrapper from '#/components/ui/WidgetWrapper.astro';
+// import Steps from '#/components/widgets/Steps.astro';
+//import Headline from '#/components/ui/Headline.astro';
+// import { getPermalink } from '#/utils/permalinks';
+// import WidgetWrapper from '#/components/ui/WidgetWrapper.astro';
 // import Sponsors from '#/components/ui/Sponsors.astro';
-import { Image } from 'astro:assets';
+// import { Image } from 'astro:assets';
 // import Avatar from '#/components/ui/Avatar.astro';
-import Booklet from '#/components/widgets/Booklet.astro';
+// import Booklet from '#/components/widgets/Booklet.astro';
 
 // import SevilleCathedral from '#/assets/images/hero/cathedral.jpg';
-import BPMLogo from '@caise2027-website/assets/icon';
+// import BPMLogo from '@caise2027-website/assets/icon';
 // import ManuelResinas_img from '#/assets/images/people/resinas.jpg';
 // import Adela_img from '#/assets/images/people/ortega.jpg';
-import Blockquote from '#/components/widgets/Blockquote.astro';
+// import Blockquote from '#/components/widgets/Blockquote.astro';
 
-const pdfBooklet = '/program/Program_booklet.pdf';
-const cathedralText = 'Cathedral of Seville';
+// const pdfBooklet = '/program/Program_booklet.pdf';
+// const cathedralText = 'Cathedral of Seville';
 ---
 
 <PageLayout
+  metadata={{
+    ignoreTitleTemplate: true,
+  }}
   heroProps={{
-    title: '23<sup>rd</sup> International Conference on Business Process Management <br /> (BPM 2025)',
-    tagline: '31st Aug - 5th Sep 2025 | Seville, Spain',
-    actions: [
-      { variant: 'primary', text: 'App', href: getPermalink('/app-instructions/'), icon: 'i-tabler:apps' },
-      { variant: 'primary', text: 'Booklet', href: pdfBooklet, icon: 'i-tabler:download', target: '_blank' },
-      { variant: 'primary', text: 'Proceedings', href: getPermalink('/proceedings/'), icon: 'i-tabler:book' }
-    ]
+    title: 'CAiSE 27 <br />39<sup>th</sup> edition',
+    tagline: '7 - 11 June 2027 | Seville, Spain',
+    // actions: [
+    //   { variant: 'primary', text: 'App', href: getPermalink('/app-instructions/'), icon: 'i-tabler:apps' },
+    //   { variant: 'primary', text: 'Booklet', href: pdfBooklet, icon: 'i-tabler:download', target: '_blank' },
+    //   { variant: 'primary', text: 'Proceedings', href: getPermalink('/proceedings/'), icon: 'i-tabler:book' }
+    // ]
   }}>
   <Fragment slot="hero-subtitle">
-    BPM 2025 is the 23<sup>rd</sup> conference in a series that provides the most prestigious forum
-    for researchers and practitioners in the field of Business Process Management.
+    The objective of the CAiSE conference is to provide a forum for the exchange of experience,
+    research results, ideas and prototypes between the research community and industry, in the field of
+    information systems engineering.
+    <br />
+    <br />
+    The 39<sup>th</sup> Edition of the CAiSE conference series will be hosted in Seville.
   </Fragment>
 
+  {/* 
   <div class="flex w-full justify-center print:hidden lg:-mb-12" slot="hero-content">
     <div class="hero-picture-container mx-12 lg:-mb-60">
       <figure class="hero-picture border-4 border-white bg-white lg:border-8">
@@ -56,10 +64,11 @@ const cathedralText = 'Cathedral of Seville';
       </figure>
     </div>
   </div>
+  */}
 
   {/* Calendar */}
 
-  <Content
+  {/*   <Content
     title="Calendar"
     images={[
       // {
@@ -68,6 +77,11 @@ const cathedralText = 'Cathedral of Seville';
       //   description: true
       // }
     ]}
+    classes={{ container: '!pb-0' }}> */}
+
+{/* 
+  <Content
+    title="Calendar"
     classes={{ container: '!pb-0' }}>
     <Fragment slot="content">
       <p>
@@ -124,8 +138,10 @@ const cathedralText = 'Cathedral of Seville';
       />
     </Fragment>
   </Content>
+  */}
 
   {/* Program booklet */}
+  {/* 
   <Content
     title="Program booklet"
     classes={{ container: '!pt-6', content: 'justify-center' }}
@@ -135,9 +151,10 @@ const cathedralText = 'Cathedral of Seville';
       <Booklet />
     </Fragment>
   </Content>
+  */}
 
   { /* Cite */ }
-
+  {/* 
   <Content>
     <Fragment slot="content">
       <div class="flex gap-2 justify-center">
@@ -185,9 +202,11 @@ const cathedralText = 'Cathedral of Seville';
       </cite>
     </Fragment>
   </Content>
+  */}
 
   {/* Sponsors */}
 
+  {/* 
   <WidgetWrapper bg>
     <Headline
       classes={{ container: 'pt-6 !mb-0' }}
@@ -205,19 +224,12 @@ const cathedralText = 'Cathedral of Seville';
       ]}
     />
   </WidgetWrapper>
+  */}
 
   <CallToAction
     title="Let's get together!"
-    subtitle="Join us in Seville for BPM 2025 and transform the way you think about <br /> Business Process Management"
-    boxed={false}
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Registration info',
-        href: getPermalink('/registration')
-      }
-    ]}
-  >
+    subtitle="Join us in Seville!<br />Registrations will be open soon!"
+    boxed={false}>
   </CallToAction>
 </PageLayout>
 

@@ -75,7 +75,7 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
     <div class="py-6 md:py-8 md:flex md:items-center md:justify-between">
       {
         socialLinks?.length
-        && (
+        ? (
           <ul class="mb-4 flex -ml-2 md:mb-0 md:ml-4 rtl:ml-0 md:order-1 rtl:-mr-2 rtl:md:ml-0 rtl:md:mr-4">
             {socialLinks.map(({ ariaLabel, href, text, icon: iconClass }) => (
               <li>
@@ -90,7 +90,7 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
               </li>
             ))}
           </ul>
-        )
+        ) : (<></>)
       }
 
       <div class="text-sm mr-4 dark:text-muted">

@@ -8,7 +8,7 @@
     "last 2 versions"
   ],
   "scripts": {
-    "start": "astro dev",
+    "start": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview --host",
     "prod": "corepack pnpm build && corepack pnpm preview",

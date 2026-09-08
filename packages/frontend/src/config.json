@@ -4,20 +4,20 @@
     },
     "metadata": {
         "title": {
-            "default": "23rd International Conference on Business Process Management (BPM 2025)",
-            "template": "%s — 23rd International Conference on Business Process Management (BPM 2025)"
+            "default": "CAISE 2027 — 39th Edition of the International Conference on Advanced Information Systems Engineering",
+            "template": "%s — CAISE 2027"
         },
-        "description": "BPM 2025 is the 23rd conference in a series that provides the most prestigious forum for researchers and practitioners in the field of Business Process Management.",
+        "description": "BPM 2025 is the 39th Edition of the International Conference on Advanced Information Systems Engineering. The objective of the CAiSE conference is to provide a forum for the exchange of experience, research results, ideas and prototypes between the research community and industry, in the field of information systems engineering.",
         "robots": {
             "index": true,
             "follow": true
         },
         "openGraph": {
-            "site_name": "BPM 2025 Conference (Seville)",
+            "site_name": "Caise 2027 Conference (Seville)",
             "type": "website"
         },
         "twitter": {
-            "site": "@bpmconf",
+            "site": "@CAiSEConf",
             "cardType": "summary"
         }
     },
