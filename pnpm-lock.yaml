@@ -178,8 +178,8 @@ importers:
         specifier: 2.0.2
         version: 2.0.2
       nodemailer:
-        specifier: 10.0.0
-        version: 10.0.0
+        specifier: 10.0.8
+        version: 10.0.8
       prisma:
         specifier: 7.10.0
         version: 7.10.0(@types/react@19.2.18)(magicast@0.5.4)(react-dom@19.2.8)(react@19.2.8)(typescript@6.0.3)
@@ -4118,8 +4118,8 @@ packages:
     resolution: {integrity: sha512-wRNIrw4DmVLKQlbgOMdkMx27Wrpzes2hh5Jtbi2bjPd+4wJstWIqP5A+lscnqbm0xxmT5Bpg8Lec5ItEBwx6BQ==, tarball: https://registry.npmjs.org/node-releases/-/node-releases-2.0.51.tgz}
     engines: {node: '>=18'}
 
-  nodemailer@10.0.0:
-    resolution: {integrity: sha512-wdv+hXBg0iIPIOf108FaZyTxqjQpCvQeAJt9pHHTooPy/y3vQtI9eiImM9AIVKR3e/0FeMA1oueNfBjFJcaK+Q==, tarball: https://registry.npmjs.org/nodemailer/-/nodemailer-10.0.0.tgz}
+  nodemailer@10.0.8:
+    resolution: {integrity: sha512-uCZ0AtFDI46sHwJ6mhwNuIoA/KiTC0ZCzX7g01941+H9VMIXEiZjtgjQkzoBRTeQba0cIrKfwk31q99PfcIMRw==, tarball: https://registry.npmjs.org/nodemailer/-/nodemailer-10.0.8.tgz}
     engines: {node: '>=20.0.0'}
 
   normalize-path@3.0.0:
@@ -9710,7 +9710,7 @@ snapshots:
 
   node-releases@2.0.51: {}
 
-  nodemailer@10.0.0: {}
+  nodemailer@10.0.8: {}
 
   normalize-path@3.0.0: {}
 
