@@ -25,18 +25,15 @@ const mapUrl = `https://www.google.com/maps?q=${mapQuery}&z=16&output=embed`;
 const venuePhotos: ExtendedImageProps[] = [
   {
     src: VenueExterior,
-    alt: `${hotelName} seen from Calle Luis de Morales`,
-    
+    alt: `${hotelName} seen from Calle Luis de Morales`
   },
   {
     src: VenueLobby,
-    alt: `The main staircase in the lobby of the ${hotelName}`,
-    
+    alt: `The main staircase in the lobby of the ${hotelName}`
   },
   {
     src: VenueCorridor,
-    alt: `A corridor inside the ${hotelName}`,
-    
+    alt: `A corridor inside the ${hotelName}`
   }
 ];
 ---
@@ -76,7 +73,7 @@ const venuePhotos: ExtendedImageProps[] = [
         the Giralda and the Santa Cruz quarter — is about 15 minutes away.
       </p>
 
-      <div class="mt-8 overflow-hidden rounded-lg shadow-lg">
+      <div class="mt-8 rounded-lg shadow-lg overflow-hidden">
         <iframe
           src={mapUrl}
           title={`Map showing the location of ${hotelName}`}
