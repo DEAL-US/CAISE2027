@@ -6,6 +6,24 @@ import CristinaCabanillas from '#/assets/images/people/Cristina_Cabanillas.png';
 import EstefaniaSerral from '#/assets/images/people/Estefania_Serral.jpg';
 import FernandoFernandez from '#/assets/images/people/FernandoFernandez.jpg';
 import CarlosCapitan from '#/assets/images/people/CarlosCapitan.jpg';
+import AntonioRuizCortes from '#/assets/images/people/Ruiz-Cortes-Antonio.jpeg';
+import MaribelSantos from '#/assets/images/people/SANTOS-MARIBEL.jpg';
+import MassimoMecella from '#/assets/images/people/MECELLA-MASSIMO.jpg';
+import InmaHernandez from '#/assets/images/people/HERNANDEZ-SALMERON-INACULADA-C.jpg';
+import DanielAyala from '#/assets/images/people/AYALA-HERNANDEZ-DANIEL.jpg';
+import JanisStirna from '#/assets/images/people/STIRNA-JANIS.jpg';
+import AndreaBurattin from '#/assets/images/people/BURATTIN-ANDREA.webp';
+import KawtarBenghazi from '#/assets/images/people/BENGHAZI-KAWTAR.jpg';
+import ArikSenderovich from '#/assets/images/people/SENDEROVICH-ARIK.jpg';
+import SchahramDustdar from '#/assets/images/people/DUSTDAR-SCHAHRAM.jpg';
+import PaoloGiorgini from '#/assets/images/people/GIORGINI-PAOLO.jpg';
+import DominikBork from '#/assets/images/people/BORK-DOMINIK.jpg';
+import MariteKirikova from '#/assets/images/people/KIRIKOVA-MARITE.jpg';
+import FrancescoLeotta from '#/assets/images/people/LEOTTA-FRANCESCO.png';
+import GiancarloGuizzardi from '#/assets/images/people/GUIZZARDI-GIANCARLO.jpg';
+import ManuelWimmer from '#/assets/images/people/WIMMER-MANUEL.jpg';
+import JoseCalderon from '#/assets/images/people/CALDERON-JOSE.jpg';
+import DanielRuiz from '#/assets/images/people/Daniel_Ruiz.png';
 
 import type { Testimonial } from '#/types';
 
@@ -16,90 +34,53 @@ interface ConferenceMember {
   institution?: string;
   location?: string;
   email?: string;
+  /** Full URL to the person's Google Scholar profile. */
+  scholar?: string;
   bio?: string;
 }
 
-const treatment = 'Prof. Dr.';
 const USData = {
   institution: 'University of Seville',
   location: 'Seville, Spain'
 };
 
+/**
+ * Same institution as above, but listed without the city, which is how the
+ * chairs holding a non-local role are credited.
+ */
+const USDataNoCity = {
+  institution: 'University of Seville',
+  location: 'Spain'
+};
+
 const sharedPeopleData = {
   'Adela del Río Ortega': {
-    treatment,
+    scholar: 'https://scholar.google.es/citations?hl=es&user=Al0vo7sAAAAJ',
     image: Adela,
-    ...USData,
-    email: 'adeladelrio@us.es',
-    bio: `
-      Adela del Río Ortega is a professor at Universidad de Sevilla and a member of the ISA Research group,
-      where she initiated the Business Process Management research line with her PhD thesis.
-      She serves on the Steering Committee of the BPM conference and is known for her work on process performance indicators (PPIs)
-      and their automatic analysis. Her current research interests include process performance management,
-      RPA and personal productivity analytics. With over 50 publications in top computer science and information systems outlets,
-      she has developed two registered software tools valued at over €60k and participated in more than 10 externally funded projects.
-      She has also collaborated with various IT companies as a consultant and researcher.
-    `
+    ...USDataNoCity,
+    email: 'adeladelrio@us.es'
   },
   'Manuel Resinas': {
-    ...USData,
-    image: ManuelResinas,
-    email: 'resinas@us.es',
-    bio: `
-      Manuel Resinas is a Professor at the University of Seville, where he leads the Information Systems 
-      group in the Smart Computer Systems Research and Engineering lab. His current research interests 
-      include process performance and compliance management, personal productivity analytics, and the 
-      process of process mining. Previously, he worked on the analysis and management of service level 
-      agreements. His research is regularly published in journals like IEEE Trans. Serv. Comp. or BISE, 
-      and conferences like BPM or CAiSE. He has been general chair and PC chair of the BPM conference, 
-      and is currently associate editor in the BISE journal.        
-    `
+    scholar: 'https://scholar.google.es/citations?hl=es&user=Wjzs3WoAAAAJ',
+    ...USDataNoCity,
+    image: ManuelResinas
   },
   'Cristina Cabanillas': {
+    scholar: 'https://scholar.google.es/citations?user=DWEkhicAAAAJ&hl=es&oi=ao',
     image: CristinaCabanillas,
     ...USData,
-    email: 'cristinacabanillas@us.es',
-    job: 'Track II chair',
-    bio: `
-      Cristina Cabanillas is a Professor at the University of Seville and a member of the Information Systems group in the SCORE lab.
-      She worked for seven years at WU Vienna, where she got the Habilitation. She has coordinated three research projects and
-      a technology transfer project of competitive Austrian and Spanish calls. Her current research interests include
-      resource management in business processes; process mining, with a focus on easing process mining analysis tasks;
-      and business process compliance. She has over 70 academic publications and two registered software tools,
-      she has chaired a number of tracks and workshops in top international conferences, she has given invited talks in
-      international institutions, and she has collaborated with the Spanish public administration, national and
-      international companies.
-    `
+    email: 'cristinacabanillas@us.es'
   },
   'Bedilia Estrada Torres': {
+    scholar: 'https://scholar.google.es/citations?hl=es&user=1bPY9SYAAAAJ',
     ...USData,
     image: BediliaEstrada,
-    email: 'iestrada@us.es',
-    bio: `
-      Bedilia Estrada Torres is an assistant professor at the Department of Languages and Computer Systems
-      and a member of the ISA Research Group at the University of Seville, Spain.
-      She received her international PhD in Computer Engineering in 2018.
-      Her research interests include business process management, the analysis, modeling, and management
-      of process performance indicators in different scenarios, such as structured processes,
-      variability in process families, knowledge-intensive processes, their relationship with
-      decision-making processes, and the use of chatbots in process management. Bedilia collaborated and
-      conducted research stays in Brazil and Estonia and has participated in more than ten Spanish and
-      European research, development, and innovation projects. She serves as a program committee member
-      in business process management conferences and as a peer reviewer in scientific journals.
-    `
+    email: 'iestrada@us.es'
   },
   'Carlos Capitán Agudo': {
     ...USData,
     image: CarlosCapitan,
-    email: 'ccagudo@us.es',
-    bio: `
-      Carlos Capitán-Agudo is a graduate in health engineering, and he received a MSc in software engineering at the University of Seville.
-      For his final degree work, he was awarded in the national competition XVIII “Arquimedes” of introduction to scientific research.
-      Currently, he is a PhD student at the University of Seville. His thesis aims to facilitate time performance analyses in process mining,
-      and it is under the supervision of Manuel Resinas, and Cristina Cabanillas. He has co-authored publications in conferences such as
-      BPMNDS, BPM, and ICSOC. One of the publications he co-authored received the Best Student Paper Award at BPM 2022.
-      His current research interests include process performance, neuronal networks, and explainable artificial intelligence.
-    `
+    email: 'ccagudo@us.es'
   }
 } satisfies Record<string, ConferenceMember>;
 
@@ -112,92 +93,155 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
   'General chairs': {
     'Cristina Cabanillas': sharedPeopleData['Cristina Cabanillas'],
     'Antonio Ruiz Cortés': {
-      ...USData
+      ...USData,
+      image: AntonioRuizCortes,
+      email: 'aruiz@us.es',
+      scholar: 'https://scholar.google.es/citations?user=Ka-FHBQAAAAJ&hl=es&oi=ao'
     }
   },
   'Program chairs': {
-    'Maribel Santos': {
+    'Maribel Yasmina Santos': {
+      scholar: 'https://scholar.google.es/citations?user=wmG-0k0AAAAJ&hl=es&oi=ao',
+      image: MaribelSantos,
+      institution: 'University of Minho',
       location: 'Portugal'
+    },
+    'Massimo Mecella': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=x844E6sAAAAJ',
+      image: MassimoMecella,
+      institution: 'Sapienza Università di Roma',
+      location: 'Italy'
     }
   },
   'Local Organising': {
-    'Inmaculada Hernández': {
-      ...USData
+    'Inma Hernández': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=nThy9VsAAAAJ',
+      ...USData,
+      image: InmaHernandez,
+      email: 'inmahernandez@us.es'
     },
     'Daniel Ayala': {
-      ...USData
+      scholar: 'https://scholar.google.es/citations?hl=es&user=Pv2WnYAAAAAJ',
+      ...USData,
+      image: DanielAyala,
+      email: 'dayala1@us.es'
     }
   },
   'Workshops': {
     'Janis Stirna': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=8aR_MtEAAAAJ',
+      image: JanisStirna,
+      institution: 'University of Stockholm',
       location: 'Sweden'
     },
     'Andrea Burattin': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=gaiAPWYAAAAJ',
+      image: AndreaBurattin,
+      institution: 'Technical University of Denmark',
       location: 'Denmark'
     },
     'Kawtar Benghazi': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=jobOUSsAAAAJ',
+      image: KawtarBenghazi,
+      institution: 'University of Granada',
       location: 'Spain'
     }
   },
   'Tutorials': {
     'Arik Senderovich': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=89TT1cgAAAAJ',
+      image: ArikSenderovich,
+      institution: 'York University',
       location: 'Canada'
     },
     'Estefanía Serral Asensio': {
+      scholar: 'https://scholar.google.es/citations?user=5YyRdNEAAAAJ&hl=es&oi=ao',
       image: EstefaniaSerral,
       institution: 'KU Leuven',
-      location: 'Leuven, Belgium',
-      email: 'estefania.serralasensio@kuleuven.be',
-      bio: `
-        Estefanía Serral is an Associate Professor at KU Leuven (Belgium). She has a highly international and
-        interdisciplinary profile. Her research center in improving businesses and societal challenges using
-        the Internet of Things in combination with Business Process Management and/or data analytics.
-        In 2018, she was also an Assistant professor at TU/e, The Netherlands. From 2012 to 2014, she led the
-        Semantic Knowledge Representation and Integration research group at the CDL-Lab
-        at the Technical University of Vienna (Austria). Until 2012, she worked in the ProS Research Center
-        at the Technical University of Valencia (Spain), where she designed a novel method for developing
-        ubiquitous systems using Model-Driven Development (MDD) and Semantic technologies.
-        Prof. Serral has many publications in high-ranking conferences and journals,
-        such as CAiSE, ER, UIC, PMC, ESWA, SOSYM, MTAP, etc.
-        She completed her PhD in Computer science in 2011; a Master Degree on Software Engineering,
-        Formal Methods and Information Systems in 2008; and a bachelor degree in Computer science in 2006.
-      `
+      location: 'Belgium'
     }
   },
   'Panels': {
     'Manuel Resinas': sharedPeopleData['Manuel Resinas'],
     'Schahram Dustdar': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=0n5S6uUAAAAJ',
+      image: SchahramDustdar,
+      institution: 'TU Wien',
       location: 'Austria'
     }
   },
   'Doctoral Consortium': {
     'Paolo Giorgini': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=ulB0WtkAAAAJ',
+      image: PaoloGiorgini,
+      institution: 'University of Trento',
       location: 'Italy'
     },
     'Adela del Río Ortega': sharedPeopleData['Adela del Río Ortega'],
     'Dominik Bork': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=tp-fFq0AAAAJ',
+      image: DominikBork,
+      institution: 'TU Wien',
       location: 'Austria'
     }
   },
   'Forum': {
     'Marite Kirikova': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=XSP8XvsAAAAJ',
+      image: MariteKirikova,
+      institution: 'Riga Technical University',
       location: 'Latvia'
     },
     'Francesco Leotta': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=Z216gywAAAAJ',
+      image: FrancescoLeotta,
+      institution: 'Sapienza Università di Roma',
       location: 'Italy'
     }
   },
   'Journal First': {
-    'María Teresa Gómez-López': {
-      location: 'Spain'
-    },
     'Giancarlo Guizzardi': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=nnfVBt8AAAAJ',
+      image: GiancarloGuizzardi,
+      institution: 'University of Twente',
       location: 'Netherlands'
     }
   },
-  'Awards & Communications': {
+  'Research Projects Exhibition': {
+    'María José Escalona': {
+      scholar: 'https://scholar.google.es/citations?user=30qXvJMAAAAJ&hl=es&oi=ao',
+      ...USDataNoCity
+    }
+  },
+  'Proceedings chairs': {
+    'Flavia Monti': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=PegkmvcAAAAJ',
+      institution: 'Sapienza Università di Roma',
+      location: 'Italy'
+    },
+    'Giovanni Meroni': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=YSjeTXEAAAAJ',
+      institution: "Università degli Studi dell'Insubria",
+      location: 'Italy'
+    },
+    'Bedilia Estrada Torres': {
+      ...sharedPeopleData['Bedilia Estrada Torres'],
+      ...USDataNoCity
+    }
+  },
+  'PhD Awards': {
     'Manuel Wimmer': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=YZDY1psAAAAJ',
+      image: ManuelWimmer,
+      institution: 'JKU Linz',
       location: 'Austria'
+    }
+  },
+  'Communications & Social': {
+    'José Calderón': {
+      ...USDataNoCity,
+      image: JoseCalderon,
+      job: 'Social Events Chair'
     },
     'Fernando Fernández': {
       ...USData,
@@ -205,9 +249,11 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       image: FernandoFernandez,
       job: 'Web'
     },
-    'Bedilia Estrada Torres': {
-      ...sharedPeopleData['Bedilia Estrada Torres'],
-      job: 'Social Media'
+    'Daniel Ruiz López': {
+      ...USData,
+      email: 'druiz7@us.es',
+      image: DanielRuiz,
+      job: 'Web'
     },
     'Carlos Capitán Agudo': {
       ...sharedPeopleData['Carlos Capitán Agudo'],
@@ -256,6 +302,16 @@ export function toTestimonial(
             icon: 'i-tabler:mail',
             description: `<a href="mailto:${m.email}" class="underline">${m.email}</a>`,
             classes
+          } as const])
+        : [])
+    ],
+    profiles: [
+      /* The icon name is spelled out here so UnoCSS emits it. */
+      ...(m.scholar
+        ? ([{
+            icon: 'i-academicons:google-scholar',
+            href: m.scholar,
+            label: 'Google Scholar'
           } as const])
         : [])
     ],

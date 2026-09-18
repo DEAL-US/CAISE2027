@@ -9,16 +9,48 @@ const {
   job,
   title,
   testimonial,
-  items
+  items,
+  profiles
 } = Astro.props;
 ---
 <div class="flex h-auto">
   <div class="p-4 rounded-md flex grow flex-col shadow-xl items-stretch md:p-6 dark:border dark:border-slate-600 dark:shadow-none">
 
     <div class="flex items-center">
-      {image && <Avatar image={image} />}
+      {image
+        ? <Avatar image={image} />
+        : (
+            /* Keeps the card's layout identical while a photo is missing,
+               instead of collapsing the avatar and shifting the name. */
+            <div
+              class:list={[
+                'h-20 w-20 shrink-0 rounded-full border-4 flex items-center justify-center',
+                'border-slate-200 bg-slate-100 text-slate-400',
+                'dark:border-slate-600 dark:bg-slate-700 dark:text-slate-500'
+              ]}
+              aria-hidden="true">
+              <div class="i-tabler:user h-10 w-10" />
+            </div>
+          )}
       <div class="ml-3 grow rtl:ml-0 rtl:mr-3">
-        {name && <p class="text-base font-semibold">{name}</p>}
+        <div class="flex items-center gap-x-3">
+          {name && <p class="text-base font-semibold">{name}</p>}
+          {profiles?.map(p => (
+            <a
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} on ${p.label}`}
+              title={p.label}
+              class:list={[
+                'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full',
+                'bg-primary text-white transition hover:bg-secondary',
+                'focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2'
+              ]}>
+              <div class:list={['profile-icon', p.icon, p.iconClass ?? 'h-5 w-5']} />
+            </a>
+          ))}
+        </div>
         {job && <p class="text-xs text-muted">{job}</p>}
       </div>
     </div>
@@ -37,3 +69,19 @@ const {
     )}
   </div>
 </div>
+
+<style>
+/**
+ * UnoCSS paints icons as a mask sized `100% 100%`, which stretches any glyph
+ * whose aspect ratio differs from its box -- academicons' Scholar cap is
+ * 384x512. Sizing the mask to `contain` keeps the glyph in proportion, so the
+ * box can stay square at whatever size we want. Plain CSS, not `--at-apply`:
+ * the directive transformer does not run on what the dev server serves first.
+ */
+.profile-icon {
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+</style>
