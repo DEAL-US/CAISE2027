@@ -50,8 +50,9 @@ const {
         {
           callsToAction && callsToAction.length && (
             callsToAction.map(c => (
-              <div class="text-primary mb-8 mt-[-25px]">
-                <Button variant="link" {...c} />
+              <div class="text-primary mb-8">
+                {/* `link` stays the default, but an explicit variant wins. */}
+                <Button {...{ variant: 'link', ...c }} />
               </div>
             ))
           )

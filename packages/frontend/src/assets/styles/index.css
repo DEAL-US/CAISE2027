@@ -13,6 +13,17 @@
   hover:text-white dark:text-white dark:bg-primary dark:border-primary dark:hover:border-secondary dark:hover:bg-secondary;
 }
 
+/*
+ * `Button` maps the `secondary` variant to this class, so it must exist: while
+ * it did not, every button using that variant -- and it used to be the default
+ * -- silently fell back to the bare `.btn` outline. The site now uses
+ * `btn-primary` throughout; this is here so the variant stays valid.
+ */
+.btn-secondary {
+  --at-apply: font-semibold bg-secondary text-white border-secondary hover:bg-primary hover:border-primary
+  hover:text-white dark:text-white dark:bg-secondary dark:border-secondary dark:hover:border-primary dark:hover:bg-primary;
+}
+
 .btn-tertiary {
   --at-apply: text-muted border-none shadow-none hover:text-gray-900 dark:text-gray-400 dark:hover:text-white;
 }
