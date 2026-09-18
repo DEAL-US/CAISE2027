@@ -210,12 +210,18 @@ const {
   }
 
   header.expanded {
-    --at-apply: fixed;
+    position: fixed;
   }
 
+  /**
+   * Plain CSS on purpose: `--at-apply` is only resolved by UnoCSS's directive
+   * transformer, which does not run on the styles the dev server serves first.
+   * That left the dropdowns dead until a full reload, and broken again after
+   * every view transition.
+   */
   .dropdown:focus .dropdown-menu,
   .dropdown:focus-within .dropdown-menu,
   .dropdown:hover .dropdown-menu {
-    --at-apply: block;
+    display: block;
   }
 </style>
