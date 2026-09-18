@@ -9,6 +9,10 @@
     "./hero": {
       "types": "./hero/hero.d.ts",
       "default": "./hero/hero.jpg"
+    },
+    "./logo": {
+      "types": "./logo/logo.d.ts",
+      "default": "./logo/logo.svg"
     }
   },
   "devDependencies": {

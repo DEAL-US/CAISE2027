@@ -31,7 +31,9 @@ const { metadata, heroProps = {}, heroImage } = Astro.props;
       bg={heroImage ?? SevilleHeroImage}
       {...heroProps}
     >
+      <slot name="hero-title" slot="title" />
       <slot name="hero-subtitle" slot="subtitle" />
+      <slot name="hero-subheading" slot="subheading" />
       <slot name="hero-content" slot="content" />
     </Hero>
   </slot>

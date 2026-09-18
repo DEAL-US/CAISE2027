@@ -10,6 +10,7 @@ import { isStr } from '@caise2027-website/shared/validation';
 const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
+  subheading = await Astro.slots.render('subheading'),
   tagline,
 
   content = await Astro.slots.render('content'),
@@ -41,6 +42,11 @@ const { src } = bg ? await getImage({ src: bg } as UnresolvedImageTransform) : {
             <Fragment set:html={content} />
           </div>
         )}
+        {/**
+          * Only a `subtitle` gets the radial plate behind it. A `subheading`
+          * deliberately does not: on the dark hero the gradient resolves to
+          * `--colors-dark`, which reads as a navy halo around the title.
+          */}
         <div class={subtitle && 'text-bg-shadow'}>
           {
             tagline && (
@@ -53,11 +59,12 @@ const { src } = bg ? await getImage({ src: bg } as UnresolvedImageTransform) : {
           {
             title && (
               <h1
-                class="text-5xl leading-tight tracking-tighter font-bold font-heading mb-4 md:text-6xl dark:text-gray-200"
+                class="text-5xl leading-tight tracking-tighter font-bold font-heading mb-4 md:text-6xl text-brand"
                 set:html={title}
               />
             )
           }
+          {subheading && <h3 class="text-xl mb-6 dark:text-slate-300" set:html={subheading} />}
           <div class="mx-auto max-w-3xl">
             {subtitle && <p class="text-xl mb-6 dark:text-slate-300" set:html={subtitle} />}
             {

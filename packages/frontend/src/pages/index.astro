@@ -5,9 +5,10 @@ import CallToAction from '#/components/widgets/CallToAction.astro';
 // import Steps from '#/components/widgets/Steps.astro';
 //import Headline from '#/components/ui/Headline.astro';
 // import { getPermalink } from '#/utils/permalinks';
-// import WidgetWrapper from '#/components/ui/WidgetWrapper.astro';
+import WidgetWrapper from '#/components/ui/WidgetWrapper.astro';
 // import Sponsors from '#/components/ui/Sponsors.astro';
-// import { Image } from 'astro:assets';
+import { Image } from 'astro:assets';
+import CAiSELogo from '@caise2027-website/assets/logo';
 // import Avatar from '#/components/ui/Avatar.astro';
 // import Booklet from '#/components/widgets/Booklet.astro';
 
@@ -26,7 +27,6 @@ import CallToAction from '#/components/widgets/CallToAction.astro';
     ignoreTitleTemplate: true,
   }}
   heroProps={{
-    title: 'CAiSE 27 <br />39<sup>th</sup> edition',
     tagline: '7 - 11 June 2027 | Seville, Spain',
     // actions: [
     //   { variant: 'primary', text: 'App', href: getPermalink('/app-instructions/'), icon: 'i-tabler:apps' },
@@ -34,14 +34,50 @@ import CallToAction from '#/components/widgets/CallToAction.astro';
     //   { variant: 'primary', text: 'Proceedings', href: getPermalink('/proceedings/'), icon: 'i-tabler:book' }
     // ]
   }}>
-  <Fragment slot="hero-subtitle">
-    The objective of the CAiSE conference is to provide a forum for the exchange of experience,
-    research results, ideas and prototypes between the research community and industry, in the field of
-    information systems engineering.
-    <br />
-    <br />
-    The 39<sup>th</sup> Edition of the CAiSE conference series will be hosted in Seville.
+  <Fragment slot="hero-title">
+    <Image
+      src={CAiSELogo}
+      alt="CAiSE 27"
+      width={520}
+      class="mx-auto"
+      loading="eager"
+    />
   </Fragment>
+
+  <Fragment slot="hero-subheading">
+    International Conference on Advanced Information Systems Engineering
+  </Fragment>
+
+  {/* Conference theme */}
+
+  <WidgetWrapper containerClass="max-w-6xl">
+    <div class="mx-auto max-w-3xl p-6 rounded-md text-center">
+      <div class="text-justify mb-0 md:mb-0 md:mx-auto">
+        <h2
+          class="text-4xl md:text-4xl font-bold font-heading tracking-tighter mb-4 text-brand">
+          Theme: Hybrid Intelligent Information Systems Engineering
+        </h2>
+        <p class="mt-4 text-lg text-muted dark:text-slate-400">
+          Hybrid Intelligent Information Systems Engineering is considered a multidisciplinary field
+          that combines data-driven (e.g., machine learning, deep learning) and knowledge-driven
+          (e.g., symbolic reasoning, ontologies, rules) approaches to support intelligent, adaptive,
+          and explainable decision-making in complex cyber-physical environments. It is concerned
+          with the design, development, integration, and management of information systems that
+          ensure data and information management, interoperability, scalability, and alignment with
+          organisational and domain-specific requirements.
+        </p>
+        <p class="mt-4 text-lg text-muted dark:text-slate-400">
+          Within this field, Information Systems Engineering (IS Engineering) provides the
+          foundational principles, methods, and frameworks that enable the integration of hybrid
+          intelligence into organisational environments, ensuring that these systems are semantically
+          grounded through data and information models; architecturally coherent and interoperable
+          across heterogeneous components; governed and aligned with organisational processes,
+          policies, and decision-making needs; and, sustainable and evolvable across the full
+          lifecycle of data, models, and knowledge.
+        </p>
+      </div>
+    </div>
+  </WidgetWrapper>
 
   {/* 
   <div class="flex w-full justify-center print:hidden lg:-mb-12" slot="hero-content">

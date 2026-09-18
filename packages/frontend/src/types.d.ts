@@ -134,10 +134,28 @@ export interface Price {
   ribbonTitle?: string;
 }
 
+/**
+ * An external profile of a person, rendered as a round icon button.
+ * The icon name must appear as a literal somewhere in the sources, so
+ * UnoCSS picks it up (see `toTestimonial` in `#/data/people`).
+ */
+export interface ProfileLink {
+  icon: string;
+  href: string;
+  label: string;
+  /**
+   * Size classes for the icon box. Icon masks are stretched to fill their box,
+   * so a glyph that is not square needs a box matching its aspect ratio.
+   * Defaults to a square box.
+   */
+  iconClass?: string;
+}
+
 export interface Testimonial {
   title?: string;
   testimonial?: string;
   items?: Item[];
+  profiles?: ProfileLink[];
   name?: string;
   job?: string;
   image?: ExtendedImageProps;
@@ -197,6 +215,11 @@ export interface Form {
 // WIDGETS
 export interface Hero extends BetterOmit<Headline, 'classes'>, BetterOmit<Widget, 'isDark' | 'classes'> {
   content?: string;
+  /**
+   * Secondary heading rendered right below the title, spanning the full
+   * width of the hero instead of the narrower subtitle column.
+   */
+  subheading?: string;
   actions?: string | CallToAction[];
   image?: ExtendedImageProps;
 }
