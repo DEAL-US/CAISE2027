@@ -6,6 +6,13 @@ import ImportantDates from '#/components/widgets/ImportantDates.astro';
 
 const matches = import.meta.glob('./*.mdx', { eager: true });
 const posts = Object.values(matches) as CallForPapers[];
+
+/**
+ * Each call gets its own section, headed by the call it belongs to. With a
+ * single call that heading only restates the page, so it is left out until
+ * there is more than one set of deadlines to tell apart.
+ */
+const showCallHeadings = posts.length > 1;
 ---
 
 <PageLayout
@@ -18,7 +25,7 @@ const posts = Object.values(matches) as CallForPapers[];
   {posts.sort((a: CallForPapers, b: CallForPapers) => a.frontmatter.order - b.frontmatter.order).map(post =>
     (
       <Content
-        title={post.frontmatter.title}>
+        title={showCallHeadings ? post.frontmatter.title : undefined}>
         <Fragment slot="content">
           <ImportantDates importantDates={post.frontmatter.importantDates} />
         </Fragment>
