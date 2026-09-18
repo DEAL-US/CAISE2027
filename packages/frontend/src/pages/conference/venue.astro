@@ -1,0 +1,93 @@
+---
+import PageLayout from '#/layouts/PageLayout.astro';
+import Content from '#/components/widgets/Content.astro';
+import type { ExtendedImageProps } from '#/types';
+import VenueExterior from '#/assets/images/venue/exterior.jpg';
+import VenueLobby from '#/assets/images/venue/lobby.jpg';
+import VenueCorridor from '#/assets/images/venue/corridor.jpg';
+
+const hotelName = 'Hotel Meliá Lebreros Sevilla';
+const bookingUrl = 'https://www.melia.com/en/hotels/spain/seville/melia-lebreros';
+
+/**
+ * Coordinates taken from the hotel's Google Maps entry. `output=embed` renders
+ * an interactive map without needing a Maps API key.
+ */
+const mapQuery = encodeURIComponent('Meliá Lebreros, Calle Luis de Morales, 2, Sevilla');
+const mapUrl = `https://www.google.com/maps?q=${mapQuery}&z=16&output=embed`;
+
+/**
+ * Photographs of the venue, rendered as a gallery to the right of the text.
+ * To add one: drop the file in `#/assets/images/venue/`, import it at the top
+ * of this file and push it here -- the gallery is skipped while this is empty,
+ * so the page renders correctly without any.
+ */
+const venuePhotos: ExtendedImageProps[] = [
+  {
+    src: VenueExterior,
+    alt: `${hotelName} seen from Calle Luis de Morales`,
+    
+  },
+  {
+    src: VenueLobby,
+    alt: `The main staircase in the lobby of the ${hotelName}`,
+    
+  },
+  {
+    src: VenueCorridor,
+    alt: `A corridor inside the ${hotelName}`,
+    
+  }
+];
+---
+
+<PageLayout
+  metadata={{
+    title: 'Conference Venue',
+    description: `CAiSE 2027 will be held at the ${hotelName}, in Seville's Nervión district`
+  }}
+  heroProps={{
+    tagline: hotelName
+  }}>
+  <Content
+    id="location"
+    title="Location"
+    images={venuePhotos}
+    callsToAction={[{
+      /* `Button` adds rel="noopener noreferrer" itself for _blank targets. */
+      variant: 'primary',
+      text: 'Book now',
+      href: bookingUrl,
+      target: '_blank',
+      icon: 'i-tabler:external-link'
+    }]}>
+    <Fragment slot="content">
+      <p>
+        The conference takes place in Nervión, Seville's main business and shopping district. The
+        hotel stands 400 m from Santa Justa, the city's high-speed rail station, with a metro stop
+        200 m away and the Nervión Plaza shopping centre and El Corte Inglés right across the
+        street.
+      </p>
+      <br />
+      <p>
+        The hotel is located at <strong>Calle Luis de Morales, 2</strong>, next to the Ramón
+        Sánchez-Pizjuán stadium. The historic centre — the
+        <a href="https://www.catedraldesevilla.es/" target="_blank" rel="noopener noreferrer">Cathedral of Seville</a>,
+        the Giralda and the Santa Cruz quarter — is about 15 minutes away.
+      </p>
+
+      <div class="mt-8 overflow-hidden rounded-lg shadow-lg">
+        <iframe
+          src={mapUrl}
+          title={`Map showing the location of ${hotelName}`}
+          width="100%"
+          height="360"
+          style="border:0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </Fragment>
+  </Content>
+</PageLayout>

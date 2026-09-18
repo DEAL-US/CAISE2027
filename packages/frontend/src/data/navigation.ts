@@ -50,27 +50,6 @@ export function isInAppPage(currentUrl: URL): boolean {
 export function getHeaderData(currentUrl: URL): HeaderData {
   const initialData: HeaderData = {
     links: [
-      {
-        text: 'Conference',
-        links: [
-          {
-            text: 'Conference Chairs',
-            href: getPermalink('/conference/chairs')
-          },
-          // {
-          //   text: 'Program Committee',
-          //   href: getPermalink('/conference/committees/program')
-          // },
-          // {
-          //   text: 'Steering Committee',
-          //   href: getPermalink('/conference/committees/steering')
-          // },
-          // {
-          //   text: 'Organizing Team',
-          //   href: getPermalink('/conference/organization')
-          // }
-        ]
-      },
       // {
       //   text: 'Program',
       //   links: [
@@ -120,6 +99,51 @@ export function getHeaderData(currentUrl: URL): HeaderData {
             href: getPermalink('/calls/dates')
           },
           ...calls()
+        ]
+      },
+      {
+        text: 'Logistics',
+        /**
+         * Ordered by when an attendee runs into each step, not by how often
+         * the page is opened. `Visa information` sits high because it is the
+         * only deadline here that cannot be recovered: roughly ten weeks of
+         * processing, plus two for the invitation letter. Everything below it
+         * can be fixed by paying more for a flight, a hotel or a taxi.
+         */
+        links: [
+          {
+            text: 'Conference Venue',
+            href: getPermalink('/conference/venue')
+          },
+          {
+            text: 'Visa information',
+            href: getPermalink('/conference/visa')
+          },
+          {
+            text: 'How to get there',
+            href: getPermalink('/conference/getting-there')
+          },
+          {
+            text: 'Where to stay',
+            href: getPermalink('/conference/where-to-stay')
+          },
+          {
+            text: 'Getting around',
+            href: getPermalink('/conference/getting-around')
+          },
+          {
+            text: 'The city of Seville',
+            href: getPermalink('/conference/the-city')
+          }
+        ]
+      },
+      {
+        text: 'Committees',
+        links: [
+          {
+            text: 'Organizing Committees',
+            href: getPermalink('/conference/chairs')
+          }
         ]
       },
       // {

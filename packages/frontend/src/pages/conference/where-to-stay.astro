@@ -1,0 +1,37 @@
+---
+import PageLayout from '#/layouts/PageLayout.astro';
+import Content from '#/components/widgets/Content.astro';
+import { getPermalink } from '#/utils/permalinks';
+
+import ReceptionImage from '#/assets/images/hero/reception.jpg';
+---
+
+<PageLayout
+  metadata={{
+    title: 'Where to stay',
+    description: 'Accommodation recommendations for the attendees of the conference'
+  }}
+  heroImage={ReceptionImage}>
+  <Content
+    title="Coming soon"
+    callsToAction={[
+      {
+        variant: 'primary',
+        text: 'See the conference venue',
+        href: getPermalink('/conference/venue'),
+        icon: 'i-tabler:chevron-right'
+      }
+    ]}>
+    <Fragment slot="content">
+      <p>
+        We are still putting together a list of recommended hotels near the venue, along with the rates
+        negotiated for attendees. It will be published here well before registration opens.
+      </p>
+      <br />
+      <p>
+        In the meantime, the conference hotel itself takes bookings directly — you will find the details,
+        and how to reach it, on the venue page.
+      </p>
+    </Fragment>
+  </Content>
+</PageLayout>

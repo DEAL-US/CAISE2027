@@ -1,0 +1,157 @@
+---
+import PageLayout from '#/layouts/PageLayout.astro';
+import Compass from '#/assets/images/hero/compass.jpg';
+import Content from '#/components/widgets/Content.astro';
+
+import PassportImg from '#/assets/images/visa/visa.jpg';
+import NonEU from '#/assets/images/visa/non-eu.jpg';
+import PassportImg2 from '#/assets/images/visa/passport.jpg';
+import EuropeFlag from '#/assets/images/visa/eu.jpg';
+import Invitation from '#/assets/images/visa/invitation.jpg';
+---
+
+<PageLayout
+  metadata={{
+    title: 'Visa information',
+    description: 'If you need a Visa for reaching Seville, we can help you to get one'
+  }}
+  heroImage={Compass}>
+
+  <Content
+    bg
+    images={[
+      {
+        src: PassportImg,
+        alt: 'Map with a passport',
+        loading: 'eager'
+      }
+    ]}>
+    <p slot="content">
+      International registrants should be particularly aware and careful about visa requirements
+      and should plan travel well in advance.
+    </p>
+  </Content>
+
+  <Content
+    title="EU/EEA Nationals"
+    id="eu"
+    isReversed
+    images={[
+      {
+        src: EuropeFlag,
+        alt: 'European Union flag'
+      }
+    ]}>
+    <p slot="content">
+      Holders of an EEA (EU Member States, Iceland, Liechtenstein, and Norway) or Swiss passport do not require a visa.
+      Nationals from EU-countries as well as Switzerland and Liechtenstein may stay for an unlimited time.
+    </p>
+  </Content>
+
+  <Content
+    title="Non-EU/EEA Nationals"
+    id="non-eu"
+    bg
+    images={[
+      {
+        src: NonEU,
+        alt: 'United States passport'
+      }
+    ]}
+    callsToAction={[
+      {
+        text: 'Find requisites from country of origin',
+        href: 'https://www.exteriores.gob.es/en/ServiciosAlCiudadano/Paginas/Servicios-consulares.aspx',
+        icon: 'i-tabler:chevron-right',
+        variant: 'primary'
+      }]}>
+    <Fragment slot="content">
+      <p>
+        Nationals of other countries may need a Schengen visa to enter Spain, depending on their
+        nationality and the length of their stay. Please check the requirements that apply to your
+        country of origin with your nearest Spanish embassy or consulate, well in advance of the
+        conference.
+      </p>
+      <br />
+      <p>
+        The following website is from the <b>Foreign Affairs and Cooperation Ministry</b>, all information without guarantee.
+      </p>
+    </Fragment>
+  </Content>
+
+  <Content
+    title="How do I apply for a visa?"
+    id="apply"
+    isReversed
+    images={[
+      {
+        src: PassportImg2,
+        alt: 'An image with a couple of passports'
+      }
+    ]}>
+    <Fragment slot="content">
+      <p>
+        Please calculate around 10 weeks processing time for your visa application.
+        See <a href="#invitation-letter" class="underline">below</a> if you need an invitation letter for your visa application.
+      </p>
+      <br />
+      <p>
+        Please contact your embassy for more information on the specific requirements of applications from your country.
+        We ask for your understanding that we cannot offer visa assistance to family members of CAiSE 2027 attendees.
+      </p>
+    </Fragment>
+  </Content>
+
+  <Content
+    title="How can I get an invitation letter?"
+    id="invitation-letter"
+    bg
+    classes={{
+      icon: 'shrink-0 mt-1 text-primary w-6 h-6'
+    }}
+    images={[
+      {
+        src: Invitation,
+        alt: 'Person holding a letter with the sentence "Join us!"'
+      }
+    ]}
+    items={[
+      {
+        description: 'Name (as it appears on your passport) and mailing address',
+        icon: 'i-tabler:point-filled'
+      },
+      {
+        description: 'Your passport ID and date of birth',
+        icon: 'i-tabler:point-filled'
+      },
+      {
+        description: 'Your registration confirmation number',
+        icon: 'i-tabler:point-filled'
+      },
+      {
+        description: 'The title of your accepted paper (if applicable)',
+        icon: 'i-tabler:point-filled'
+      },
+      {
+        description: 'EasyChair ID (if applicable, if you submitted to a workshop also the workshop name)',
+        icon: 'i-tabler:point-filled'
+      },
+      {
+        description: 'An email address to where we can send the letter',
+        icon: 'i-tabler:point-filled'
+      }
+    ]}>
+    <Fragment slot="content">
+      <p>
+        For registered participants and authors of accepted papers, we can provide an invitation letter for visas.
+        Please fill the "Additional comments" field with the required information
+        during the registration process so we can get in touch with you.
+        Please note that it can take up to two weeks to receive the invitation letter.
+      </p>
+      <br />
+      <p>
+        We will need:
+      </p>
+    </Fragment>
+  </Content>
+</PageLayout>

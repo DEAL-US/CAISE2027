@@ -1,0 +1,335 @@
+---
+import PageLayout from '#/layouts/PageLayout.astro';
+import Content from '#/components/widgets/Content.astro';
+
+import AirportTerminal from '#/assets/images/arriving/terminal.jpg';
+import TussamEA from '#/assets/images/arriving/tussam-EA.png';
+import Teletaxi from '#/assets/images/arriving/teletaxi.png';
+import PlaneImg from '#/assets/images/hero/plane.png';
+import ALSALogo from '#/assets/images/arriving/logo-alsa.jpg';
+import RenfeLogo from '#/assets/images/arriving/renfe-logo.jpeg';
+import TrainlineLogo from '#/assets/images/arriving/trainline-logo.svg';
+import IberiaLogo from '#/assets/images/arriving/iberia-logo.jpg';
+import IryoLogo from '#/assets/images/arriving/iryo.png';
+import SantaJusta from '#/assets/images/arriving/santa-justa.png';
+---
+
+<PageLayout
+  metadata={{
+    title: 'How to get there',
+    description: 'Some of the means of transportation to arrive in Seville for the conference'
+  }}
+  heroImage={PlaneImg}>
+  <Content
+    bg
+    images={[
+      {
+        src: AirportTerminal,
+        alt: 'Person waiting at an airport lounge',
+        loading: 'eager'
+      }
+    ]}>
+    <Fragment slot="content">
+      <p class="text-2xl">
+        Seville is the capital of the southern region of Spain, Andalucía.
+        Therefore, it not only has its own airport but also is well connected with airports nearby such as the Malaga Airport or the Madrid Barajas Airport.
+      </p>
+      <br />
+      <p class="text-2xl">
+        There are many ways to arrive in Seville. There are direct flights to Seville Airport from 42 cities, many of them outside Spain,
+        serving more than 15 airlines. There are also frequent connections with Madrid (MAD) and Barcelona (BCN),
+        which are the main airports in Spain.
+      </p>
+      <br />
+      <p class="text-2xl">
+        A robust rail network connects Seville with most of other regions of Spain.
+        Therefore, an alternative is flying to either Madrid (MAD) or Malaga (AGP) and then taking a train to Seville.
+        There is a direct train that connects Malaga with Seville in 2 hours and a High Speed Train (AVE) that connects Madrid with Seville in less than 2:30 hours.
+      </p>
+    </Fragment>
+  </Content>
+
+  <Content
+    title="From Seville airport (SVQ)"
+    id="from-seville-airport-svq"
+    items={[
+      {
+        image: {
+          src: TussamEA,
+          alt: 'Airport bus'
+        },
+        title: 'Airport bus (TUSSAM)',
+        description: `Operate from the Airport from 05.20 A.M. to around 00.50 A.M. approximately.
+          A single ticket costs 4 euros, round trip costs 6 euros. The journey time is approximately 35 minutes.`,
+        icon: 'i-mdi:bus',
+        callsToAction: [
+          {
+            text: 'Check the schedule',
+            href: 'https://www.tussam.es/es/avisos-generales/horario-linea-especial-aeropuerto',
+            icon: 'i-tabler:calendar-time',
+            variant: 'primary'
+          }
+        ]
+      },
+      {
+        image: {
+          src: Teletaxi,
+          alt: 'Teletaxi logo, the business that helps arrange taxis in Seville'
+        },
+        title: 'Taxi',
+        description: `Outside Seville Airport terminal there are several taxis waiting for the passengers.
+        Travel time to the city center of Seville is about 30 minutes and costs around 20-31 euros.`,
+        icon: 'i-mdi:taxi',
+        callsToAction: [
+          {
+            text: 'Learn more',
+            href: 'https://www.aena.es/en/sevilla/getting-there/taxi.html',
+            icon: 'i-tabler:chevron-right',
+            variant: 'primary'
+          }
+        ]
+      }
+    ]} />
+
+  <Content
+    title="From Malaga airport (AGP)"
+    id="from-malaga-airport-agp"
+    items={[
+      {
+        image: {
+          src: ALSALogo,
+          alt: 'ALSA logo, the company that operates the bus line from Malaga to Seville'
+        },
+        title: 'ALSA',
+        description: `ALSA operates a bus line that goes from Malaga Airport to Seville’s main bus station: <b>Plaza de Armas</b>.
+        Their fares are usually around 20-30 euros and the total travel time is around 3 hours.`,
+        icon: 'i-mdi:bus',
+        callsToAction: [
+          {
+            text: 'Purchase tickets',
+            href: 'https://www.alsa.com/en/web/bus/airports/malaga-costa-del-sol',
+            icon: 'i-icon-park-solid:tickets-two',
+            variant: 'primary'
+          }
+        ]
+      },
+      {
+        image: {
+          src: RenfeLogo,
+          alt: "Renfe logo, Spain's national state-owned railway company"
+        },
+        title: 'AVE (high speed train)',
+        description: `
+          <p>
+            Passengers can access to Malaga Airport Train Station from the square located outside arrivals
+            and from the sidewalk of the departures of Terminal 3.
+          </p>
+          <br />
+          <p>
+            <b>RENFE C1</b> (Cercanías) is the line that links Malaga airport with <b>Maria Zambrano</b> train station in about 8 minutes.
+            <b>By purchasing a ticket for an AVE train, you can take Cercanías lines for free in Málaga and Seville</b> (read more below).
+          </p>
+          <br />
+          <p>
+            High speed trains are regular during labour days and a bit more sparse during the weekend.
+            You can buy your ticket at the station or in advance through their official website.
+            Note that these trains tend to full, so buying in advance is recommended.
+          </p>
+          <p>
+            Prices may vary depending on the fare, but you can expect an estimate of 46 euros per single ticket and a travel duration of 2 hours.
+          </p>
+        `,
+        icon: 'i-material-symbols:train',
+        callsToAction: [
+          {
+            text: 'Purchase tickets',
+            href: 'https://www.renfe.com/es/en',
+            icon: 'i-icon-park-solid:tickets-two',
+            variant: 'primary'
+          },
+          {
+            text: "About free 'Cercanías'",
+            href: 'https://blog.renfe.com/asi-puedes-canjear-el-combinado-cercanias/',
+            icon: 'i-material-symbols:info-outline',
+            variant: 'primary'
+          },
+          {
+            text: 'Airport → AVE connection',
+            href: 'https://www.aena.es/en/malaga-costa-del-sol/getting-there/trains.html',
+            icon: 'i-icon-park-solid:connection',
+            variant: 'primary'
+          }
+        ]
+      }
+    ]} />
+
+  <Content
+    title="From Madrid airport (MAD)"
+    id="from-madrid-airport-mad"
+    items={[
+      {
+        image: {
+          src: IberiaLogo,
+          alt: 'Logo of Iberia Express, one of the companies that operates flights between Madrid and Seville'
+        },
+        title: 'Iberia Express',
+        description: 'Iberia Express operates daily connections from Madrid to Seville. The estimated flight duration is 1 hour.',
+        icon: 'i-tabler:plane-tilt',
+        callsToAction: [
+          {
+            text: 'Purchase tickets',
+            href: 'https://www.iberiaexpress.com/',
+            icon: 'i-icon-park-solid:tickets-two',
+            variant: 'primary'
+          },
+          {
+            text: 'Find other airlines',
+            href: 'https://www.aena.es/en/adolfo-suarez-madrid-barajas/airlines-and-destinations/airlines.html',
+            icon: 'i-tabler:chevron-right',
+            variant: 'primary'
+          }
+        ]
+      },
+      {
+        image: {
+          src: RenfeLogo,
+          alt: "Renfe logo, Spain's national state-owned railway company"
+        },
+        title: 'AVE (high speed train)',
+        description: `
+          <p>
+            <b>RENFE C1 and C10</b> (Cercanías) lines connects Adolfo Suárez - Madrid Barajas airport with
+            <b>Puerta de Atocha - Almudena Grandes</b> train station.
+            <b>By purchasing a ticket for an AVE train, you can take Cercanías lines for free in Madrid and Seville</b> (read more below).
+          </p>
+          <br />
+          <p>
+            High speed trains are regular during labour days and a bit more sparse during the weekend.
+            You can buy your ticket at the station or in advance through their official website (highly recommended).
+          </p>
+          <p>
+            Prices may vary depending on the fare, but you can expect an estimate of 56 euros per single ticket and a travel duration of 2 hours.
+          </p>
+        `,
+        icon: 'i-material-symbols:train',
+        callsToAction: [
+          {
+            text: 'Purchase tickets',
+            href: 'https://www.renfe.com/es/en',
+            icon: 'i-icon-park-solid:tickets-two',
+            variant: 'primary'
+          },
+          {
+            text: "About free 'Cercanías'",
+            href: 'https://blog.renfe.com/asi-puedes-canjear-el-combinado-cercanias/',
+            icon: 'i-material-symbols:info-outline',
+            variant: 'primary'
+          },
+          {
+            text: 'Airport → AVE connection',
+            href: 'https://www.aena.es/en/adolfo-suarez-madrid-barajas/getting-there/trains.html',
+            icon: 'i-icon-park-solid:connection',
+            variant: 'primary'
+          }
+        ]
+      },
+      {
+        image: {
+          src: IryoLogo,
+          alt: 'Logo of Iryo, another operator of high-speed trains in Spain'
+        },
+        title: 'Iryo (high speed train)',
+        description: `
+          <p>Iryo is an alternative high speed train operator</p>
+          <br />
+          <p>
+            <b>RENFE C1 and C10</b> (Cercanías) lines connects Adolfo Suárez Madrid-Barajas airport with
+            <b>Puerta de Atocha - Almudena Grandes</b> train station.
+            <b>By purchasing a ticket for an Iryo train, you can take Cercanías lines for free in Madrid and Seville</b> (read more below).
+          </p>
+          <br />
+          <p>
+            High speed trains are regular during labour days and a bit more sparse during the weekend.
+            You can buy your ticket at the station or in advance through their official website (highly recommended).
+          </p>
+          <p>
+            Prices may vary depending on the fare, but you can expect an estimate of 30 euros per single ticket and a travel duration of 2 hours.
+          </p>
+        `,
+        icon: 'i-material-symbols:train',
+        callsToAction: [
+          {
+            text: 'Purchase tickets',
+            href: 'https://iryo.eu/en',
+            icon: 'i-icon-park-solid:tickets-two',
+            variant: 'primary'
+          },
+          {
+            text: "About free 'Cercanías'",
+            href: 'https://iryo.eu/en/conecta',
+            icon: 'i-material-symbols:info-outline',
+            variant: 'primary'
+          },
+          {
+            text: 'Airport → Iryo connection',
+            href: 'https://www.aena.es/en/adolfo-suarez-madrid-barajas/getting-there/trains.html',
+            icon: 'i-icon-park-solid:connection',
+            variant: 'primary'
+          }
+        ]
+      }
+    ]} />
+
+  <Content
+    title="Other options"
+    bg
+    items={[
+      {
+        image: {
+          src: TrainlineLogo,
+          alt: 'Trainline logo'
+        },
+        title: 'Trainline',
+        description: 'If you want to check other train offerings, you can book your ticket through Trainline.',
+        icon: 'i-material-symbols:train',
+        callsToAction: [
+          {
+            text: 'Find tickets',
+            href: 'https://www.thetrainline.com/es/descuentos-ofertas',
+            icon: 'i-material-symbols:search-rounded',
+            variant: 'primary'
+          }
+        ]
+      }
+    ]} />
+
+  <Content
+    title="Santa Justa train station (Seville)"
+    id="train-station"
+    isReversed
+    callsToAction={[
+      {
+        text: 'Learn more',
+        href: 'https://www.adif.es/w/sevilla-santa-justa',
+        icon: 'i-tabler:chevron-right',
+        variant: 'primary'
+      }
+    ]}
+    images={[
+      {
+        src: SantaJusta,
+        alt: 'Santa Justa train station'
+      }
+    ]}>
+    <Fragment slot="content">
+      <p>
+        If you decide to arrive by train, Santa Justa Train Station will be your destination.
+        It is located less than 2 kilometres away from the city center and many different bus lines have stops nearby.
+      </p>
+      <br />
+      <p>
+        Directions from here will vary depending on your accommodation.
+      </p>
+    </Fragment>
+  </Content>
+</PageLayout>
