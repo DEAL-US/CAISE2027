@@ -47,7 +47,7 @@ export function isInAppPage(currentUrl: URL): boolean {
  * Generates the object that programatically creates the navigation
  * header data
  */
-export function getHeaderData(currentUrl: URL): HeaderData {
+export function getHeaderData(_currentUrl: URL): HeaderData {
   const initialData: HeaderData = {
     links: [
       // {
@@ -145,7 +145,7 @@ export function getHeaderData(currentUrl: URL): HeaderData {
             href: getPermalink('/conference/chairs')
           }
         ]
-      },
+      }
       // {
       //   text: 'Venue',
       //   links: [
@@ -262,7 +262,7 @@ export const getFooterData = (): FooterData => ({
         },
         ...calls()
       ]
-    },
+    }
     // {
     //   title: 'Venue',
     //   links: [
@@ -318,11 +318,12 @@ export const getFooterData = (): FooterData => ({
   //     ]
   //   }
   // ],
-  // secondaryLinks: [
-  //   { text: 'Legal', href: getPermalink('/terms/legal') },
-  //   { text: 'T&Cs', href: getPermalink('/terms/registration') },
-  //   { text: 'Privacy', href: getPermalink('/terms/privacy') },
-  //   { text: 'Sitemap', href: getAsset('/sitemap-index.xml') }
+  ],
+  secondaryLinks: [
+    { text: 'Legal', href: getPermalink('/terms/legal') },
+    { text: 'T&Cs', href: getPermalink('/terms/registration') },
+    { text: 'Privacy', href: getPermalink('/terms/privacy') },
+    { text: 'Sitemap', href: getAsset('/sitemap-index.xml') }
   ],
   socialLinks: [
     { ariaLabel: 'X', icon: 'i-tabler:brand-x', href: 'https://x.com/CAiSEConf' }
