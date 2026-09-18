@@ -3,7 +3,19 @@ import config, { defaultPreset } from '@caise2027-website/configs/uno';
 
 export default defineConfig({
   ...config,
-  safelist: ['i-svg-spinners:ring-resize'],
+  /**
+   * UnoCSS does not extract class names from string literals inside `<script>`
+   * blocks, so anything only ever toggled from JavaScript has to be listed
+   * here. `h-screen` and `!overflow-hidden` are toggled by `BasicScripts` when
+   * the mobile menu opens: without them the header kept `bg-page` but no
+   * height, so the menu floated over the page with the content showing
+   * through, and the body still scrolled behind it.
+   */
+  safelist: [
+    'i-svg-spinners:ring-resize',
+    'h-screen',
+    '!overflow-hidden'
+  ],
   theme: {
     colors: {
       'page': '#ffffff',
