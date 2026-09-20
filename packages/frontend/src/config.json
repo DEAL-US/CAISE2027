@@ -26,6 +26,6 @@
         "textDirection": "ltr"
     },
     "ui": {
-        "theme": "system"
+        "theme": "light"
     }
 }

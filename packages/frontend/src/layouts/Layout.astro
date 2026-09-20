@@ -1,7 +1,7 @@
 ---
 import '#/assets/styles/index.css';
 
-import { i18n } from '#/config.json';
+import { i18n, ui } from '#/config.json';
 
 import CommonMeta from '#/components/utils/CommonMeta.astro';
 import Favicons from '#/components/utils/Favicons.astro';
@@ -25,6 +25,43 @@ const { language, textDirection } = i18n;
     <CommonMeta />
     <Favicons />
     <Metadata {...metadata} />
+    {/**
+      * Inline and synchronous on purpose: this has to run before the first
+      * paint. `BasicScripts` is a bundled module that only applies the theme
+      * once `window.load` fires -- after images and fonts -- so the page was
+      * painted light and then flipped, a visible flash on every load.
+      *
+      * Exposed on `window` so the toggle and the view-transition handler in
+      * `BasicScripts` reuse this exact rule instead of restating it.
+      */}
+    <script is:inline define:vars={{ configuredTheme: ui.theme }}>
+      window.__applyTheme = theme => {
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      };
+
+      window.__initTheme = () => {
+        let stored = null;
+
+        try {
+          stored = localStorage.theme;
+        } catch {
+          /* Storage can throw in private mode or with cookies blocked. */
+        }
+
+        if (configuredTheme.endsWith(':only') || (!stored && configuredTheme !== 'system')) {
+          window.__applyTheme(configuredTheme.replace(':only', ''));
+        } else if (
+          stored === 'dark'
+          || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+          window.__applyTheme('dark');
+        } else {
+          window.__applyTheme('light');
+        }
+      };
+
+      window.__initTheme();
+    </script>
     <BasicScripts />
     <ClientRouter fallback="animate" />
   </head>

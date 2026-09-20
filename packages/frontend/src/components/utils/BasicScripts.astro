@@ -6,26 +6,17 @@
   const dark_class = 'dark';
   const light_class = 'light';
 
-  function applyTheme(theme: string) {
-    if (theme === dark_class) {
-      document.documentElement.classList.add(dark_class);
-    } else {
-      document.documentElement.classList.remove(dark_class);
+  /**
+   * Applying the theme lives in the inline script in `Layout.astro`, which has
+   * to run before the first paint. Restating the rule here would let the two
+   * drift apart, so this reuses it.
+   */
+  declare global {
+    interface Window {
+      __applyTheme: (theme: string) => void;
+      __initTheme: () => void;
     }
   }
-
-  function initTheme() {
-    if ((ui.theme && ui.theme.endsWith(':only')) || (!localStorage.theme && ui.theme !== 'system')) {
-      applyTheme(ui.theme.replace(':only', ''));
-    } else if (
-      localStorage.theme === dark_class
-      || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      applyTheme(dark_class);
-    } else {
-      applyTheme(light_class);
-    }
-  };
 
   function attachEvent<K extends keyof HTMLElementEventMap>(
     selector: string | NodeListOf<Element> | Element[] | string[] | Document | Element,
@@ -97,8 +88,15 @@
         return;
       }
 
-      const isApplied = document.documentElement.classList.toggle(dark_class);
-      localStorage.theme = isApplied ? dark_class : light_class;
+      const next = document.documentElement.classList.contains(dark_class) ? light_class : dark_class;
+
+      window.__applyTheme(next);
+
+      try {
+        localStorage.theme = next;
+      } catch {
+        /* Storage can throw in private mode; the theme still applies. */
+      }
     });
 
     screenSize.addEventListener('change', () => {
@@ -113,13 +111,13 @@
 
     attachEvent(document, 'scroll', () => applyHeaderStylesOnScroll());
 
-    initTheme();
+    window.__initTheme();
     applyHeaderStylesOnScroll();
   };
 
   window.addEventListener('load', onLoad, { once: true });
   document.addEventListener('astro:after-swap', () => {
-    initTheme();
+    window.__initTheme();
     onLoad();
   });
 </script>
