@@ -24,6 +24,14 @@ import GiancarloGuizzardi from '#/assets/images/people/GUIZZARDI-GIANCARLO.jpg';
 import ManuelWimmer from '#/assets/images/people/WIMMER-MANUEL.jpg';
 import JoseCalderon from '#/assets/images/people/CALDERON-JOSE.jpg';
 import DanielRuiz from '#/assets/images/people/Daniel_Ruiz.png';
+import MariaJoseEscalona from '#/assets/images/people/Maria_Jose_Escalona.jpg';
+import FlaviaMonti from '#/assets/images/people/Flavia-Monti.webp';
+import GiovanniMeroni from '#/assets/images/people/Giovanni-Meroni.webp';
+import DjordjeDjurica from '#/assets/images/people/Djordje_Djurica.jpg';
+import TianwaChen from '#/assets/images/people/Tianwa_Chen.jpg';
+import IstvanDavid from '#/assets/images/people/Istvan_David.jpg';
+import AndreaDelgado from '#/assets/images/people/Andrea_Delgado.jpg';
+
 
 import type { Testimonial } from '#/types';
 
@@ -33,7 +41,7 @@ interface ConferenceMember {
   image?: ImageMetadata;
   institution?: string;
   location?: string;
-  email?: string;
+  //email?: string;
   /** Full URL to the person's Google Scholar profile. */
   scholar?: string;
   bio?: string;
@@ -41,7 +49,7 @@ interface ConferenceMember {
 
 const USData = {
   institution: 'University of Seville',
-  location: 'Seville, Spain'
+  location: 'Spain'
 };
 
 /**
@@ -58,7 +66,7 @@ const sharedPeopleData = {
     scholar: 'https://scholar.google.es/citations?hl=es&user=Al0vo7sAAAAJ',
     image: Adela,
     ...USDataNoCity,
-    email: 'adeladelrio@us.es'
+    //email: 'adeladelrio@us.es'
   },
   'Manuel Resinas': {
     scholar: 'https://scholar.google.es/citations?hl=es&user=Wjzs3WoAAAAJ',
@@ -69,18 +77,18 @@ const sharedPeopleData = {
     scholar: 'https://scholar.google.es/citations?user=DWEkhicAAAAJ&hl=es&oi=ao',
     image: CristinaCabanillas,
     ...USData,
-    email: 'cristinacabanillas@us.es'
+    //email: 'cristinacabanillas@us.es'
   },
   'Bedilia Estrada Torres': {
     scholar: 'https://scholar.google.es/citations?hl=es&user=1bPY9SYAAAAJ',
     ...USData,
     image: BediliaEstrada,
-    email: 'iestrada@us.es'
+    //email: 'iestrada@us.es'
   },
   'Carlos Capitán Agudo': {
     ...USData,
     image: CarlosCapitan,
-    email: 'ccagudo@us.es'
+    //email: 'ccagudo@us.es'
   }
 } satisfies Record<string, ConferenceMember>;
 
@@ -93,24 +101,24 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
   'General chairs': {
     'Cristina Cabanillas': sharedPeopleData['Cristina Cabanillas'],
     'Antonio Ruiz Cortés': {
+      scholar: 'https://scholar.google.es/citations?user=Ka-FHBQAAAAJ&hl=es&oi=ao',
       ...USData,
       image: AntonioRuizCortes,
-      email: 'aruiz@us.es',
-      scholar: 'https://scholar.google.es/citations?user=Ka-FHBQAAAAJ&hl=es&oi=ao'
+      //email: 'aruiz@us.es'
     }
   },
   'Program chairs': {
-    'Maribel Yasmina Santos': {
-      scholar: 'https://scholar.google.es/citations?user=wmG-0k0AAAAJ&hl=es&oi=ao',
-      image: MaribelSantos,
-      institution: 'University of Minho',
-      location: 'Portugal'
-    },
     'Massimo Mecella': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=x844E6sAAAAJ',
       image: MassimoMecella,
       institution: 'Sapienza Università di Roma',
       location: 'Italy'
+    },
+    'Maribel Yasmina Santos': {
+      scholar: 'https://scholar.google.es/citations?user=wmG-0k0AAAAJ&hl=es&oi=ao',
+      image: MaribelSantos,
+      institution: 'University of Minho',
+      location: 'Portugal'
     }
   },
   'Local Organising': {
@@ -118,13 +126,13 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       scholar: 'https://scholar.google.es/citations?hl=es&user=nThy9VsAAAAJ',
       ...USData,
       image: InmaHernandez,
-      email: 'inmahernandez@us.es'
+      //email: 'inmahernandez@us.es'
     },
     'Daniel Ayala': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=Pv2WnYAAAAAJ',
       ...USData,
       image: DanielAyala,
-      email: 'dayala1@us.es'
+      //email: 'dayala1@us.es'
     }
   },
   'Workshops': {
@@ -210,17 +218,21 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
   'Research Projects Exhibition': {
     'María José Escalona': {
       scholar: 'https://scholar.google.es/citations?user=30qXvJMAAAAJ&hl=es&oi=ao',
-      ...USDataNoCity
+      image: MariaJoseEscalona,
+      institution: 'University of Seville',
+      location: 'Spain'
     }
   },
   'Proceedings chairs': {
     'Flavia Monti': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=PegkmvcAAAAJ',
+      image: FlaviaMonti,
       institution: 'Sapienza Università di Roma',
       location: 'Italy'
     },
     'Giovanni Meroni': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=YSjeTXEAAAAJ',
+      image: GiovanniMeroni,
       institution: "Università degli Studi dell'Insubria",
       location: 'Italy'
     },
@@ -237,27 +249,51 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       location: 'Austria'
     }
   },
-  'Communications & Social': {
+  'Web and Social Media': {
     'José Calderón': {
       ...USDataNoCity,
-      image: JoseCalderon,
-      job: 'Social Events Chair'
-    },
-    'Fernando Fernández': {
-      ...USData,
-      email: 'ferferga@us.es',
-      image: FernandoFernandez,
-      job: 'Web'
+      image: JoseCalderon
     },
     'Daniel Ruiz López': {
       ...USData,
-      email: 'druiz7@us.es',
-      image: DanielRuiz,
-      job: 'Web'
+      //email: 'druiz7@us.es',
+      image: DanielRuiz
     },
-    'Carlos Capitán Agudo': {
-      ...sharedPeopleData['Carlos Capitán Agudo'],
-      job: 'Publicity'
+    'Fernando Fernández': {
+      ...USData,
+      //email: 'ferferga@us.es',
+      image: FernandoFernandez
+    }
+  },
+  /**
+   * The four members without an institution or an email are pending: only
+   * their country is confirmed so far.
+   */
+  'Publicity': {
+    'Djordje Djurica': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=jjrLeQIAAAAJ',
+      image: DjordjeDjurica,
+      institution: 'University of Economics and Business',
+      location: 'Austria'
+    },
+    'Andrea Delgado': {
+      scholar: 'https://scholar.google.es/citations?user=1q26cxcAAAAJ&hl=es&oi=sra',
+      image: AndreaDelgado,
+      institution: 'University of the Republic',
+      location: 'Uruguay'
+    },
+    'Tianwa Chen': {
+      scholar: 'https://scholar.google.es/citations?user=AhGeJUcAAAAJ&hl=es&oi=ao',
+      image: TianwaChen,
+      institution: 'University of the Sunshine Coast',
+      location: 'Australia'
+    },
+    'Carlos Capitán Agudo': sharedPeopleData['Carlos Capitán Agudo'],
+    'Istvan David': {
+      scholar: 'https://scholar.google.es/citations?user=NsRgDcUAAAAJ&hl=es&oi=ao',
+      image: IstvanDavid,
+      institution: 'McMaster University',
+      location: 'Canada'
     }
   }
 });
