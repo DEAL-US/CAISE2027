@@ -169,8 +169,8 @@ importers:
         specifier: 1.15.11
         version: 1.15.11
       image-size:
-        specifier: 2.0.2
-        version: 2.0.2
+        specifier: 2.0.4
+        version: 2.0.4
       listhen:
         specifier: 1.10.1
         version: 1.10.1(srvx@0.12.5)
@@ -3503,9 +3503,9 @@ packages:
     resolution: {integrity: sha512-BAg6QkE8W+TuQLrrw0Ugr7HegXduRuuj8/ti2kSOc+jz1dmx8/WNcjr6XGnq5YpDWxFwwaavqD0+jIUOKelTsw==, tarball: https://registry.npmjs.org/ignore/-/ignore-7.0.6.tgz}
     engines: {node: '>= 4'}
 
-  image-size@2.0.2:
-    resolution: {integrity: sha512-IRqXKlaXwgSMAMtpNzZa1ZAe8m+Sa1770Dhk8VkSsP9LS+iHD62Zd8FQKs8fbPiagBE7BzoFX23cxFnwshpV6w==, tarball: https://registry.npmjs.org/image-size/-/image-size-2.0.2.tgz}
-    engines: {node: '>=16.x'}
+  image-size@2.0.4:
+    resolution: {integrity: sha512-QRUkFFsRV/6fuESxb9Vkq+a0LkSrgKXuc2NEqfikiXxxN/G3tjWt5EVUlMaImRBZRZK/jRBEbYvpPYZL8t08Zw==, tarball: https://registry.npmjs.org/image-size/-/image-size-2.0.4.tgz}
+    engines: {node: '>=18'}
     hasBin: true
 
   import-meta-resolve@4.2.0:
@@ -8873,7 +8873,7 @@ snapshots:
 
   ignore@7.0.6: {}
 
-  image-size@2.0.2: {}
+  image-size@2.0.4: {}
 
   import-meta-resolve@4.2.0: {}
 
