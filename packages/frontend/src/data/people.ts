@@ -97,6 +97,17 @@ const sharedPeopleData = {
  */
 type ConferenceMemberData = Partial<Record<keyof typeof sharedPeopleData, ConferenceMember>> & Record<string, ConferenceMember>;
 
+/** Shared contact addresses shown below the corresponding committee heading. */
+export const conferenceCommitteeContacts: Record<string, string> = {
+  'General chairs': 'caise2027@easychair.org',
+  'Program chairs': 'caise2027-main@easychair.org',
+  Workshops: 'caise2027-workshops@easychair.org',
+  Tutorials: 'caise2027-tutorials@easychair.org',
+  Panels: 'caise2027-panels@easychair.org',
+  'Doctoral Consortium': 'caise2027-dc@easychair.org',
+  Forum: 'caise2027-forum@easychair.org'
+};
+
 export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
   'General chairs': {
     'Cristina Cabanillas': sharedPeopleData['Cristina Cabanillas'],
