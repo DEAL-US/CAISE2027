@@ -323,6 +323,8 @@ export const getFooterData = (): FooterData => ({
     { text: 'Legal', href: getPermalink('/terms/legal') },
     { text: 'T&Cs', href: getPermalink('/terms/registration') },
     { text: 'Privacy', href: getPermalink('/terms/privacy') },
+    // Handled by `CookieBanner`, which reopens the banner instead of navigating
+    { text: 'Cookies', href: '#cookie-settings' },
     { text: 'Sitemap', href: getAsset('/sitemap-index.xml') }
   ],
   socialLinks: [
