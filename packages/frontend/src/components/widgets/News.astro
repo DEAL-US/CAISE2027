@@ -1,0 +1,34 @@
+---
+import { twMerge } from 'tailwind-merge';
+import { formatNewsDate, sortedNews } from '#/data/news';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+{sortedNews.length > 0 && (
+  <aside
+    id="news"
+    class={twMerge('scroll-mt-[72px] rounded-md border border-gray-300 p-6 dark:border-slate-600 flex flex-col', className)}>
+    <h2 class="text-3xl text-brand-blue tracking-tighter font-bold font-heading mb-4 dark:text-blue-300">
+      News
+    </h2>
+    <ul class="flex-1 overflow-y-auto">
+      {sortedNews.map(({ date, text, href }) => (
+        <li class="py-2 border-b border-gray-200 flex gap-3 items-start last:border-b-0 dark:border-slate-700">
+          <span class="i-tabler:check text-brand-blue mt-0.5 shrink-0 h-5 w-5 dark:text-blue-300" aria-hidden="true" />
+          <p>
+            <time datetime={date} class="text-muted font-medium dark:text-slate-400">{formatNewsDate(date)}:</time>
+            {' '}
+            {href
+              ? <a href={href} class="text-brand hover:underline">{text}</a>
+              : <span>{text}</span>}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </aside>
+)}
