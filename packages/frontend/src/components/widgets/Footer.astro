@@ -75,22 +75,23 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
     <div class="py-6 md:py-8 md:flex md:items-center md:justify-between">
       {
         socialLinks?.length
-        ? (
-          <ul class="mb-4 flex -ml-2 md:mb-0 md:ml-4 rtl:ml-0 md:order-1 rtl:-mr-2 rtl:md:ml-0 rtl:md:mr-4">
-            {socialLinks.map(({ ariaLabel, href, text, icon: iconClass }) => (
-              <li>
-                <a
-                  class="text-sm text-muted p-2.5 rounded-lg inline-flex items-center dark:text-gray-400 focus:outline-hidden hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-                  aria-label={ariaLabel}
-                  href={href}
-                >
-                  {iconClass && <div class={`${iconClass} h-5 w-5`} />}
-                  <Fragment set:html={text} />
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (<></>)
+          ? (
+              <ul class="mb-4 flex -ml-2 md:mb-0 md:ml-4 rtl:ml-0 md:order-1 rtl:-mr-2 rtl:md:ml-0 rtl:md:mr-4">
+                {socialLinks.map(({ ariaLabel, href, text, icon: iconClass }) => (
+                  <li>
+                    <a
+                      class="text-sm text-muted p-2.5 rounded-lg inline-flex items-center dark:text-gray-400 focus:outline-hidden hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                      aria-label={ariaLabel}
+                      href={href}
+                    >
+                      {iconClass && <div class={`${iconClass} h-5 w-5`} />}
+                      <Fragment set:html={text} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )
+          : (<></>)
       }
 
       <div class="text-sm mr-4 dark:text-muted">

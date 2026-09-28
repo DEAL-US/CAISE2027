@@ -32,7 +32,6 @@ import TianwaChen from '#/assets/images/people/Tianwa_Chen.jpg';
 import IstvanDavid from '#/assets/images/people/Istvan_David.jpg';
 import AndreaDelgado from '#/assets/images/people/Andrea_Delgado.jpg';
 
-
 import type { Testimonial } from '#/types';
 
 interface ConferenceMember {
@@ -41,7 +40,7 @@ interface ConferenceMember {
   image?: ImageMetadata;
   institution?: string;
   location?: string;
-  //email?: string;
+  email?: string;
   /** Full URL to the person's Google Scholar profile. */
   scholar?: string;
   bio?: string;
@@ -65,8 +64,8 @@ const sharedPeopleData = {
   'Adela del Río Ortega': {
     scholar: 'https://scholar.google.es/citations?hl=es&user=Al0vo7sAAAAJ',
     image: Adela,
-    ...USDataNoCity,
-    //email: 'adeladelrio@us.es'
+    ...USDataNoCity
+    // email: 'adeladelrio@us.es'
   },
   'Manuel Resinas': {
     scholar: 'https://scholar.google.es/citations?hl=es&user=Wjzs3WoAAAAJ',
@@ -76,19 +75,19 @@ const sharedPeopleData = {
   'Cristina Cabanillas': {
     scholar: 'https://scholar.google.es/citations?user=DWEkhicAAAAJ&hl=es&oi=ao',
     image: CristinaCabanillas,
-    ...USData,
-    //email: 'cristinacabanillas@us.es'
+    ...USData
+    // email: 'cristinacabanillas@us.es'
   },
   'Bedilia Estrada Torres': {
     scholar: 'https://scholar.google.es/citations?hl=es&user=1bPY9SYAAAAJ',
     ...USData,
-    image: BediliaEstrada,
-    //email: 'iestrada@us.es'
+    image: BediliaEstrada
+    // email: 'iestrada@us.es'
   },
   'Carlos Capitán Agudo': {
     ...USData,
-    image: CarlosCapitan,
-    //email: 'ccagudo@us.es'
+    image: CarlosCapitan
+    // email: 'ccagudo@us.es'
   }
 } satisfies Record<string, ConferenceMember>;
 
@@ -101,11 +100,11 @@ type ConferenceMemberData = Partial<Record<keyof typeof sharedPeopleData, Confer
 export const conferenceCommitteeContacts: Record<string, string> = {
   'General chairs': 'caise2027@easychair.org',
   'Program chairs': 'caise2027-main@easychair.org',
-  Workshops: 'caise2027-workshops@easychair.org',
-  Tutorials: 'caise2027-tutorials@easychair.org',
-  Panels: 'caise2027-panels@easychair.org',
+  'Workshops': 'caise2027-workshops@easychair.org',
+  'Tutorials': 'caise2027-tutorials@easychair.org',
+  'Panels': 'caise2027-panels@easychair.org',
   'Doctoral Consortium': 'caise2027-dc@easychair.org',
-  Forum: 'caise2027-forum@easychair.org'
+  'Forum': 'caise2027-forum@easychair.org'
 };
 
 export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
@@ -114,8 +113,8 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
     'Antonio Ruiz Cortés': {
       scholar: 'https://scholar.google.es/citations?user=Ka-FHBQAAAAJ&hl=es&oi=ao',
       ...USData,
-      image: AntonioRuizCortes,
-      //email: 'aruiz@us.es'
+      image: AntonioRuizCortes
+      // email: 'aruiz@us.es'
     }
   },
   'Program chairs': {
@@ -136,14 +135,14 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
     'Inma Hernández': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=nThy9VsAAAAJ',
       ...USData,
-      image: InmaHernandez,
-      //email: 'inmahernandez@us.es'
+      image: InmaHernandez
+      // email: 'inmahernandez@us.es'
     },
     'Daniel Ayala': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=Pv2WnYAAAAAJ',
       ...USData,
-      image: DanielAyala,
-      //email: 'dayala1@us.es'
+      image: DanielAyala
+      // email: 'dayala1@us.es'
     }
   },
   'Workshops': {
@@ -267,12 +266,12 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
     },
     'Daniel Ruiz López': {
       ...USData,
-      //email: 'druiz7@us.es',
+      // email: 'druiz7@us.es',
       image: DanielRuiz
     },
     'Fernando Fernández': {
       ...USData,
-      //email: 'ferferga@us.es',
+      // email: 'ferferga@us.es',
       image: FernandoFernandez
     }
   },
