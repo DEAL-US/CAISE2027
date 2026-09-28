@@ -31,6 +31,7 @@ import DjordjeDjurica from '#/assets/images/people/Djordje_Djurica.jpg';
 import TianwaChen from '#/assets/images/people/Tianwa_Chen.jpg';
 import IstvanDavid from '#/assets/images/people/Istvan_David.jpg';
 import AndreaDelgado from '#/assets/images/people/Andrea_Delgado.jpg';
+import MariaTeresaGomezLopez from '#/assets/images/people/Maria_Teresa_Gomez_Lopez.png';
 
 import type { Testimonial } from '#/types';
 
@@ -223,6 +224,11 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       image: GiancarloGuizzardi,
       institution: 'University of Twente',
       location: 'Netherlands'
+    },
+    'María Teresa Gómez-López': {
+      scholar: 'https://scholar.google.com/citations?user=qSd_60AAAAAJ&hl=en',
+      ...USData,
+      image: MariaTeresaGomezLopez
     }
   },
   'Research Projects Exhibition': {
@@ -283,7 +289,7 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
     'Djordje Djurica': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=jjrLeQIAAAAJ',
       image: DjordjeDjurica,
-      institution: 'University of Economics and Business',
+      institution: 'WU Wien',
       location: 'Austria'
     },
     'Andrea Delgado': {
