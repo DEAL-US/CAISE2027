@@ -1,0 +1,61 @@
+---
+/**
+ * Google Tag Manager, which in turn loads Google Analytics.
+ *
+ * Nothing is requested from Google until the visitor accepts analytics cookies
+ * in `CookieBanner` (Consent Mode "basic"), which then calls
+ * `window.__loadAnalytics`. It is also limited to the production domain, so
+ * local runs and Cloudflare preview deployments don't end up in the statistics.
+ *
+ * The `<noscript>` iframe Tag Manager suggests is left out on purpose: it would
+ * load the container for visitors without JavaScript, who can't give consent.
+ */
+const gtmId = 'GTM-NWN7Q5Q3';
+const productionHost = 'caise2027seville.org';
+---
+
+<script is:inline define:vars={{ gtmId, productionHost }}>
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function () {
+    // Tag Manager expects the `arguments` object itself, not an array
+    window.dataLayer.push(arguments);
+  };
+
+  window.__loadAnalytics = () => {
+    if (window.__analyticsLoaded || !location.hostname.endsWith(productionHost)) {
+      return;
+    }
+
+    window.__analyticsLoaded = true;
+    window.gtag('consent', 'update', { analytics_storage: 'granted' });
+    window.dataLayer.push({ 'gtm.start': Date.now(), 'event': 'gtm.js' });
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtm.js?id=${gtmId}`;
+    document.head.appendChild(script);
+  };
+
+  // Client-side navigation re-runs inline scripts; the defaults only go once
+  if (!window.__consentDefaultSet) {
+    window.__consentDefaultSet = true;
+    window.gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied'
+    });
+
+    let consent = null;
+
+    try {
+      consent = localStorage.getItem('cookie-consent');
+    } catch {
+      /* Storage can throw in private mode or with cookies blocked. */
+    }
+
+    if (consent === 'granted') {
+      window.__loadAnalytics();
+    }
+  }
+</script>

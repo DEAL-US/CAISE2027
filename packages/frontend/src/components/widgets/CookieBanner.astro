@@ -1,0 +1,114 @@
+---
+import { getPermalink } from '#/utils/permalinks';
+---
+
+{/**
+  * Persisted across client-side navigation so it keeps its state, and hidden
+  * until the script below finds that the visitor hasn't chosen yet. Both
+  * buttons share the same style: rejecting has to be as easy as accepting.
+  */}
+<div
+  id="cookie-banner"
+  transition:persist="cookie-banner"
+  role="region"
+  aria-label="Cookie consent"
+  class="p-4 border-t border-gray-200 bg-white hidden shadow-lg inset-x-0 bottom-0 fixed z-50 dark:border-slate-700 dark:bg-slate-900 print:hidden"
+>
+  <div class="mx-auto flex flex-col gap-4 max-w-7xl md:flex-row md:items-center md:justify-between">
+    <p class="text-sm text-muted max-w-3xl dark:text-slate-300">
+      We would like to use Google Analytics cookies to understand how this website is used.
+      They are only set if you accept them. You can change your choice at any time from the
+      "Cookies" link at the bottom of the page. More details in
+      our <a class="underline" href={getPermalink('/terms/privacy')}>privacy policy</a>.
+    </p>
+    <div class="flex shrink-0 gap-3">
+      <button type="button" class="btn btn-primary" data-cookie-consent="denied">Reject</button>
+      <button type="button" class="btn btn-primary" data-cookie-consent="granted">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'cookie-consent';
+
+  type Consent = 'granted' | 'denied';
+
+  declare global {
+    interface Window {
+      __loadAnalytics?: () => void;
+      gtag?: (...args: unknown[]) => void;
+    }
+  }
+
+  function readConsent(): string | null {
+    try {
+      return localStorage.getItem(STORAGE_KEY);
+    } catch {
+      return null;
+    }
+  }
+
+  function storeConsent(consent: Consent) {
+    try {
+      localStorage.setItem(STORAGE_KEY, consent);
+    } catch {
+      /* Without storage the banner simply shows again on the next visit. */
+    }
+  }
+
+  function setBannerVisible(visible: boolean) {
+    document.getElementById('cookie-banner')?.classList.toggle('hidden', !visible);
+  }
+
+  /**
+   * Google Analytics sets its cookies on the root domain, so both the current
+   * host and the domain without `www.` are cleared.
+   */
+  function clearAnalyticsCookies() {
+    const domains = [location.hostname, `.${location.hostname.replace(/^www\./, '')}`];
+
+    document.cookie
+      .split(';')
+      .map(cookie => cookie.split('=')[0]?.trim() ?? '')
+      .filter(name => name.startsWith('_ga'))
+      .forEach((name) => {
+        domains.forEach((domain) => {
+          document.cookie = `${name}=; Max-Age=0; path=/; domain=${domain}`;
+        });
+      });
+  }
+
+  function choose(consent: Consent) {
+    storeConsent(consent);
+    setBannerVisible(false);
+
+    if (consent === 'granted') {
+      window.__loadAnalytics?.();
+    } else {
+      window.gtag?.('consent', 'update', { analytics_storage: 'denied' });
+      clearAnalyticsCookies();
+    }
+  }
+
+  /**
+   * Delegated, so it keeps working after client-side navigation swaps the page.
+   * Listening in the capture phase lets the "Cookies" link be handled before
+   * Astro's router turns it into a navigation to `#cookie-settings`.
+   */
+  document.addEventListener('click', (e) => {
+    const target = e.target instanceof Element ? e.target : null;
+    const choice = target?.closest<HTMLElement>('[data-cookie-consent]');
+
+    if (choice) {
+      choose(choice.dataset.cookieConsent === 'granted' ? 'granted' : 'denied');
+    } else if (target?.closest('a[href$="#cookie-settings"]')) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      setBannerVisible(true);
+    }
+  }, { capture: true });
+
+  if (!readConsent()) {
+    setBannerVisible(true);
+  }
+</script>
