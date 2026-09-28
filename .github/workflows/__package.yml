@@ -11,7 +11,7 @@ on:
         type: boolean
 
 env:
-  SITE_URL: https://www.bpm2025seville.org/
+  SITE_URL: https://www.caise2027seville.org/
   BASE_URL: /
   DOCKER_BUILD_RECORD_UPLOAD: false
 

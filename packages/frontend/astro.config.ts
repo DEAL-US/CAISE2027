@@ -11,7 +11,7 @@ export default defineConfig({
   /* @unocss-ignore */
   output: 'static',
   base: process.env.CI && process.env.STAGING ? process.env.BASE_URL : '/',
-  site: process.env.CI && process.env.STAGING ? process.env.SITE_URL ?? '/' : 'https://www.bpm2025seville.org',
+  site: process.env.CI && process.env.STAGING ? process.env.SITE_URL ?? '/' : 'https://www.caise2027seville.org',
   /**
    * GitHub Pages forces the use of trailing slashes: when they're not used, Astro
    * makes the redirection straightforward. However, this affects our SEO, since
