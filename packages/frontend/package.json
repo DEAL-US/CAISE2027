@@ -23,6 +23,7 @@
     "@caise2027-website/assets": "workspace:*",
     "@caise2027-website/frontend": "workspace:*",
     "@fontsource-variable/inter": "5.3.0",
+    "three": "0.186.1",
     "world-countries": "5.1.0"
   },
   "devDependencies": {
@@ -36,6 +37,7 @@
     "@caise2027-website/shared": "workspace:*",
     "@iconify/json": "2.2.525",
     "@playform/compress": "0.2.5",
+    "@types/three": "0.186.0",
     "@unocss/astro": "catalog:development",
     "astro": "catalog:development",
     "linkedom": "0.18.13",
