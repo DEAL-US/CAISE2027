@@ -47,9 +47,9 @@ const {
   ]}
   data-aw-sticky-header={isSticky || undefined}
   data-aw-forced-mobile-header={forceMobile || undefined}>
-  {/* Needed so the expanded menu is correctly shown when scrolled down */}
   <div class:list={[
     'inset-0 absolute parent-[.scroll]:bg-page',
+    { 'parent-[:not(.scroll)]:(md:bg-white/30 md:backdrop-blur-sm)': !forceMobile },
     { 'parent-[.scroll]:(md:bg-white/90 md:backdrop-blur-md)': !forceMobile },
     'parent-[.scroll.dark]:(bg-page border-b border-gray-500/20 shadow-none)',
     'dark:parent-[.scroll]:(bg-page border-b border-gray-500/20 shadow-none)',
@@ -196,6 +196,9 @@ const {
 </header>
 
 <style>
+  header:not(.scroll) nav {
+    color: #d71921;
+  }
   header.scroll > div:first-child {
     box-shadow: 0 0.375rem 1.5rem 0 rgb(140 152 164 / 13%);
   }

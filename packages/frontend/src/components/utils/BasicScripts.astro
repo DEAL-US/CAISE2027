@@ -1,10 +1,10 @@
 <script>
-  import { ui } from '#/config.json';
-  import { isStr, isArray } from '@caise2027-website/shared/validation';
+  import { ui } from "#/config.json";
+  import { isStr, isArray } from "@caise2027-website/shared/validation";
 
-  const header_sticky_attribute = 'data-aw-sticky-header';
-  const dark_class = 'dark';
-  const light_class = 'light';
+  const header_sticky_attribute = "data-aw-sticky-header";
+  const dark_class = "dark";
+  const light_class = "light";
 
   /**
    * Applying the theme lives in the inline script in `Layout.astro`, which has
@@ -19,19 +19,22 @@
   }
 
   function attachEvent<K extends keyof HTMLElementEventMap>(
-    selector: string | NodeListOf<Element> | Element[] | string[] | Document | Element,
+    selector:
+      string | NodeListOf<Element> | Element[] | string[] | Document | Element,
     event: K,
-    fn: (e: HTMLElementEventMap[K] | Event, elem: Element) => void
+    fn: (e: HTMLElementEventMap[K] | Event, elem: Element) => void,
   ): void {
     const matches: Element[] = [];
 
     if (isStr(selector)) {
       matches.push(...[...document.querySelectorAll(selector)]);
     } else if (isArray(selector)) {
-      matches.push(...selector
-        .flatMap(
-          sel => isStr(sel) ? [...document.querySelectorAll(sel)] : sel)
-        .filter(Boolean)
+      matches.push(
+        ...selector
+          .flatMap((sel) =>
+            isStr(sel) ? [...document.querySelectorAll(sel)] : sel,
+          )
+          .filter(Boolean),
       );
     } else {
       matches.push(selector as Element);
@@ -39,29 +42,31 @@
 
     if (matches && matches.length) {
       matches.forEach((elem) => {
-        elem.addEventListener(event, e => fn(e, elem), { passive: true });
+        elem.addEventListener(event, (e) => fn(e, elem), { passive: true });
       });
     }
   }
 
   function onLoad() {
-    const toggle = document.querySelector('[data-aw-toggle-menu]');
-    const header = document.querySelector('header');
-    const headerWithNav = document.querySelector('header nav');
-    const headerLastChild = document.querySelector('header > div > div:last-child');
-    const screenSize = window.matchMedia('(max-width: 1023px)');
+    const toggle = document.querySelector("[data-aw-toggle-menu]");
+    const header = document.querySelector("header");
+    const headerWithNav = document.querySelector("header nav");
+    const headerLastChild = document.querySelector(
+      "header > div > div:last-child",
+    );
+    const screenSize = window.matchMedia("(max-width: 1023px)");
 
     function toggleMobileMenu() {
       window.requestAnimationFrame(() => {
-        toggle?.classList.toggle('expanded');
-        header?.classList.toggle('expanded');
-        document.body.classList.toggle('!overflow-hidden');
-        header?.classList.toggle('h-screen');
-        header?.classList.toggle('bg-page');
-        headerWithNav?.classList.toggle('hidden');
-        headerLastChild?.classList.toggle('hidden');
+        toggle?.classList.toggle("expanded");
+        header?.classList.toggle("expanded");
+        document.body.classList.toggle("!overflow-hidden");
+        header?.classList.toggle("h-screen");
+        header?.classList.toggle("bg-page");
+        headerWithNav?.classList.toggle("hidden");
+        headerLastChild?.classList.toggle("hidden");
       });
-    };
+    }
 
     function applyHeaderStylesOnScroll(scrollPos: number = window.scrollY) {
       window.requestAnimationFrame(() => {
@@ -69,26 +74,24 @@
           return;
         }
 
-        const isScrolled = scrollPos > (header.offsetHeight / 2);
+        const isScrolled = scrollPos > header.offsetHeight / 2;
 
-        header.classList.toggle('scroll', isScrolled);
-        header.classList.toggle(dark_class, !isScrolled
-          && !screenSize.matches
-          && !header.hasAttribute('data-aw-forced-mobile-header')
-        );
+        header.classList.toggle("scroll", isScrolled);
       });
     }
 
     if (headerWithNav && toggle) {
-      attachEvent(toggle, 'click', toggleMobileMenu);
+      attachEvent(toggle, "click", toggleMobileMenu);
     }
 
-    attachEvent('[data-aw-toggle-color-scheme]', 'click', () => {
-      if (ui.theme.endsWith(':only')) {
+    attachEvent("[data-aw-toggle-color-scheme]", "click", () => {
+      if (ui.theme.endsWith(":only")) {
         return;
       }
 
-      const next = document.documentElement.classList.contains(dark_class) ? light_class : dark_class;
+      const next = document.documentElement.classList.contains(dark_class)
+        ? light_class
+        : dark_class;
 
       window.__applyTheme(next);
 
@@ -99,9 +102,9 @@
       }
     });
 
-    screenSize.addEventListener('change', () => {
+    screenSize.addEventListener("change", () => {
       if (!screenSize.matches) {
-        if (header?.classList.contains('expanded')) {
+        if (header?.classList.contains("expanded")) {
           toggleMobileMenu();
         }
       }
@@ -109,14 +112,14 @@
       applyHeaderStylesOnScroll();
     });
 
-    attachEvent(document, 'scroll', () => applyHeaderStylesOnScroll());
+    attachEvent(document, "scroll", () => applyHeaderStylesOnScroll());
 
     window.__initTheme();
     applyHeaderStylesOnScroll();
-  };
+  }
 
-  window.addEventListener('load', onLoad, { once: true });
-  document.addEventListener('astro:after-swap', () => {
+  window.addEventListener("load", onLoad, { once: true });
+  document.addEventListener("astro:after-swap", () => {
     window.__initTheme();
     onLoad();
   });
