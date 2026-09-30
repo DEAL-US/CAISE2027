@@ -1,17 +1,17 @@
 ---
-import { Image } from "astro:assets";
-import Button from "#/components/ui/Button/Button.astro";
-import type { Hero as Props } from "#/types";
+import { Image } from 'astro:assets';
+import Button from '#/components/ui/Button/Button.astro';
+import type { Hero as Props } from '#/types';
 
 const {
-  title = await Astro.slots.render("title"),
-  subtitle = await Astro.slots.render("subtitle"),
-  subheading = await Astro.slots.render("subheading"),
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  subheading = await Astro.slots.render('subheading'),
   tagline,
-  content = await Astro.slots.render("content"),
-  actions = await Astro.slots.render("actions"),
+  content = await Astro.slots.render('content'),
+  actions = await Astro.slots.render('actions'),
   image,
-  id,
+  id
 } = Astro.props;
 ---
 
@@ -27,7 +27,7 @@ const {
     <div class="pt-0 pointer-events-none md:pt-[76px]"></div>
     <div class="py-12 md:py-20">
       <div
-        class={`mx-auto pb-10 text-center md:pb-16 ${content ? "lg:flex" : "max-w-10xl"}`}
+        class={`mx-auto pb-10 text-center md:pb-16 ${content ? 'lg:flex' : 'max-w-10xl'}`}
       >
         {
           content && (
@@ -43,7 +43,7 @@ const {
            * `--colors-dark`, which reads as a navy halo around the title.
            */
         }
-        <div class={subtitle && "text-bg-shadow"}>
+        <div class={subtitle && 'text-bg-shadow'}>
           {
             tagline && (
               <p
@@ -63,7 +63,7 @@ const {
           {
             subheading && (
               <h3
-                class="text-xl mb-6 font-bold dark:text-slate-900"
+                class="text-xl font-bold mb-6 dark:text-slate-900"
                 set:html={subheading}
               />
             )
@@ -80,18 +80,20 @@ const {
             {
               actions && (
                 <div class="m-auto flex flex-col flex-nowrap gap-4 sm:flex-row sm:justify-center">
-                  {Array.isArray(actions) ? (
-                    actions.map((action) => (
-                      <div class="flex w-full sm:w-auto">
-                        <Button
-                          {...(action || {})}
-                          class="action-button w-full sm:mb-0"
-                        />
-                      </div>
-                    ))
-                  ) : (
-                    <Fragment set:html={actions} />
-                  )}
+                  {Array.isArray(actions)
+                    ? (
+                        actions.map(action => (
+                          <div class="flex w-full sm:w-auto">
+                            <Button
+                              {...(action || {})}
+                              class="action-button w-full sm:mb-0"
+                            />
+                          </div>
+                        ))
+                      )
+                    : (
+                        <Fragment set:html={actions} />
+                      )}
                 </div>
               )
             }
@@ -108,12 +110,13 @@ const {
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-12 h-12 m-auto"
+              class="m-auto h-12 w-12"
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M19 9l-7 7-7-7"></path>
+                d="M19 9l-7 7-7-7">
+              </path>
             </svg>
           </div>
         </div>

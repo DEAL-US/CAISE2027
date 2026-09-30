@@ -14,6 +14,7 @@ export interface Props {
   links?: MenuLink[];
   actions?: CallToAction[];
   isSticky?: boolean;
+  isIndex?: boolean;
   isDark?: boolean;
   isFullWidth?: boolean;
   /**
@@ -31,6 +32,7 @@ const {
   links = headerData.links,
   actions = headerData.actions,
   isSticky = false,
+  isIndex = false,
   isDark = false,
   isFullWidth = false,
   forceMobile = false,
@@ -42,14 +44,15 @@ const {
 
 <header
   class:list={[
-    { sticky: isSticky, relative: !isSticky, dark: isDark },
+    { 'sticky': isSticky, 'relative': !isSticky, 'dark': isDark, 'is-index': isIndex },
     'top-0 z-50 flex-none mx-auto w-full border-b border-gray-50/0 parent'
   ]}
   data-aw-sticky-header={isSticky || undefined}
   data-aw-forced-mobile-header={forceMobile || undefined}>
   <div class:list={[
     'inset-0 absolute parent-[.scroll]:bg-page',
-    { 'parent-[:not(.scroll)]:(md:bg-white/30 md:backdrop-blur-sm)': !forceMobile },
+    { 'parent-[:not(.scroll)]:(md:bg-white/30 md:backdrop-blur-sm)': isIndex && !forceMobile },
+    { 'parent-[:not(.scroll)]:md:backdrop-blur-sm': !isIndex && !forceMobile },
     { 'parent-[.scroll]:(md:bg-white/90 md:backdrop-blur-md)': !forceMobile },
     'parent-[.scroll.dark]:(bg-page border-b border-gray-500/20 shadow-none)',
     'dark:parent-[.scroll]:(bg-page border-b border-gray-500/20 shadow-none)',
@@ -196,7 +199,7 @@ const {
 </header>
 
 <style>
-  header:not(.scroll) nav {
+  header.is-index:not(.scroll) nav {
     color: #d71921;
   }
   header.scroll > div:first-child {

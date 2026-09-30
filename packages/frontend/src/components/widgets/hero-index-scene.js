@@ -1,10 +1,11 @@
-import * as THREE from "three";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
-import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { BokehPass } from "three/addons/postprocessing/BokehPass.js";
-import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+/* global document, window, screen, HTMLCanvasElement, DeviceOrientationEvent, requestAnimationFrame, cancelAnimationFrame */
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 // Evalúa ventanas de al menos un segundo de animación activa.
 function createFpsGuard(minFps = 4, lowDuration = 3000, warmup = 1500) {
@@ -30,9 +31,8 @@ function createFpsGuard(minFps = 4, lowDuration = 3000, warmup = 1500) {
       lowTime = fps < minFps ? lowTime + elapsed : 0;
       elapsed = 0;
       frames = 0;
-      console.log(`FPS: ${fps.toFixed(1)} (lowTime=${lowTime}ms)`);
       return lowTime >= lowDuration;
-    },
+    }
   };
 }
 // Each navigation gets its own scene and event listeners.
@@ -60,7 +60,7 @@ async function initScene() {
   cleanupScene?.();
   cleanupScene = undefined;
   // Constantes para tener a mano el elemento contenedor
-  const canvas = document.querySelector("#scene");
+  const canvas = document.querySelector('#scene');
   if (!(canvas instanceof HTMLCanvasElement) || !canvas.parentElement) return;
   const container = canvas.parentElement;
   const events = new AbortController();
@@ -84,29 +84,29 @@ async function initScene() {
     renderer?.dispose();
   };
   cleanupScene = release;
-  
+
   renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true,
-    alpha: true,
+    alpha: true
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  
+
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.NeutralToneMapping;
   renderer.toneMappingExposure = 1.5;
-  
+
   try {
     draco.setDecoderPath(
-      "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/libs/draco/gltf/",
+      'https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/libs/draco/gltf/'
     );
-  
+
     const loader = new GLTFLoader();
     loader.setDRACOLoader(draco);
-  
-    const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
-    const gltf = await loader.loadAsync(base + "models/Sevilla-comp.glb")
+
+    const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+    const gltf = await loader.loadAsync(base + 'models/Sevilla-comp.glb')
       .finally(() => draco.dispose());
     if (disposed) {
       disposeModel(gltf.scene);
@@ -118,8 +118,8 @@ async function initScene() {
     const scene = new THREE.Scene();
     scene.add(gltf.scene); // Conserva la cámara, los objetos y la luz exportada.
     const camera = gltf.cameras[0];
-    if (!camera) throw new Error("El GLB no contiene ninguna cámara.");
-  
+    if (!camera) throw new Error('El GLB no contiene ninguna cámara.');
+
     // Relleno suave para las superficies que no reciben sol.
     scene.add(new THREE.HemisphereLight(0xeef4ff, 0x00caff, 2));
     scene.updateMatrixWorld(true);
@@ -135,7 +135,7 @@ async function initScene() {
           ? object.material
           : [object.material];
         for (const material of materials) {
-          if (material.name === "base") {
+          if (material.name === 'base') {
             // Normales de cara: evita suavizar entre paredes y tejados.
             // Los triangulos coplanares reciben la misma iluminacion.
             material.flatShading = true;
@@ -156,29 +156,29 @@ async function initScene() {
         top: radius,
         bottom: -radius,
         near: radius * 0.1,
-        far: radius * 4,
+        far: radius * 4
       });
       sun.shadow.camera.updateProjectionMatrix();
       sun.shadow.normalBias = radius * 0.0005;
       sun.shadow.bias = -0.00005;
     }
-  
+
     // GLTFLoader elimina el punto del nombre de Blender.
-    const object =
-      scene.getObjectByName("Water.003") ??
-      scene.getObjectByName(
-        THREE.PropertyBinding.sanitizeNodeName("Water.003"),
-      );
-    if (!object) throw new Error("No se encuentra Water.003 en la escena.");
-  
+    const object
+      = scene.getObjectByName('Water.003')
+        ?? scene.getObjectByName(
+          THREE.PropertyBinding.sanitizeNodeName('Water.003')
+        );
+    if (!object) throw new Error('No se encuentra Water.003 en la escena.');
+
     const pivot = new THREE.Group();
     pivot.position.copy(
-      scene.worldToLocal(object.getWorldPosition(new THREE.Vector3())),
+      scene.worldToLocal(object.getWorldPosition(new THREE.Vector3()))
     );
     scene.add(pivot);
     pivot.attach(camera); // Conserva el encuadre original al cambiar de padre.
-    pivot.rotation.order = "YXZ";
-  
+    pivot.rotation.order = 'YXZ';
+
     // Profundidad de campo: distancias medidas sobre el eje de la cámara.
     scene.updateMatrixWorld(true);
     const focusPoint = center.clone();
@@ -186,28 +186,28 @@ async function initScene() {
     const dof = new BokehPass(scene, camera, {
       focus: targetFocus,
       aperture: 0.0025, // Menor valor = menor profundidad de campo.
-      maxblur: 0.006, // Radio máximo como fracción del ancho de pantalla.
+      maxblur: 0.006 // Radio máximo como fracción del ancho de pantalla.
     });
     dof.materialBokeh.defines.PERSPECTIVE_CAMERA = camera.isPerspectiveCamera
       ? 1
       : 0;
     // El shader original fuerza alfa 1; conserva la transparencia del canvas.
     dof.materialBokeh.fragmentShader = dof.materialBokeh.fragmentShader.replace(
-      "gl_FragColor.a = 1.0;",
-      "",
+      'gl_FragColor.a = 1.0;',
+      ''
     );
     composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
     composer.addPass(dof);
     composer.addPass(new OutputPass()); // Conserva ACES y la salida sRGB.
-  
+
     let dofEnabled = true;
     const fpsGuard = createFpsGuard(25, 3000, 1500);
     function renderScene(delta = 0) {
       if (dofEnabled) composer.render(delta);
       else renderer.render(scene, camera);
     }
-  
+
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
     let pointerInside = false;
@@ -217,9 +217,9 @@ async function initScene() {
     const focusPlaneHeight = bounds.min.y;
     const focusPlane = new THREE.Plane(
       new THREE.Vector3(0, 1, 0),
-      -focusPlaneHeight,
+      -focusPlaneHeight
     );
-  
+
     function pickFocus() {
       if (!dofEnabled || !pointerInside || !focusDirty) return;
       focusDirty = false;
@@ -227,92 +227,92 @@ async function initScene() {
       raycaster.setFromCamera(pointer, camera);
       const hit = raycaster.ray.intersectPlane(focusPlane, focusPoint);
       if (
-        !hit ||
-        hit.x < bounds.min.x ||
-        hit.x > bounds.max.x ||
-        hit.z < bounds.min.z ||
-        hit.z > bounds.max.z
+        !hit
+        || hit.x < bounds.min.x
+        || hit.x > bounds.max.x
+        || hit.z < bounds.min.z
+        || hit.z > bounds.max.z
       )
         return;
       const depth = -camera.worldToLocal(focusPoint).z;
       if (depth >= camera.near && depth <= camera.far) targetFocus = depth;
       // Fuera del rectángulo del mapa conserva el último enfoque.
     }
-  
+
     const maxAngle = THREE.MathUtils.degToRad(5);
     const target = new THREE.Vector2();
     const current = new THREE.Vector2();
-    const isMobile =
-      navigator.maxTouchPoints > 0 &&
-      window.matchMedia("(pointer: coarse)").matches;
+    const isMobile
+      = navigator.maxTouchPoints > 0
+        && window.matchMedia('(pointer: coarse)').matches;
     const gyroOrigin = new THREE.Vector2();
     let gyroHasOrigin = false;
     let gyroEnabled = false;
     let previousTime = null;
-  
+
     function signedAngleDelta(angle, origin) {
       return THREE.MathUtils.euclideanModulo(angle - origin + 180, 360) - 180;
     }
-  
+
     function handleOrientation(event) {
       if (!isMobile || event.beta === null || event.gamma === null) return;
-  
+
       if (!gyroHasOrigin) {
         gyroOrigin.set(event.beta, event.gamma);
         gyroHasOrigin = true;
         return;
       }
-  
+
       const beta = signedAngleDelta(event.beta, gyroOrigin.x);
       const gamma = signedAngleDelta(event.gamma, gyroOrigin.y);
       const screenAngle = THREE.MathUtils.degToRad(
-        screen.orientation?.angle ?? window.orientation ?? 0,
+        screen.orientation?.angle ?? window.orientation ?? 0
       );
-      const horizontal =
-        gamma * Math.cos(screenAngle) + beta * Math.sin(screenAngle);
-      const vertical =
-        beta * Math.cos(screenAngle) - gamma * Math.sin(screenAngle);
-  
+      const horizontal
+        = gamma * Math.cos(screenAngle) + beta * Math.sin(screenAngle);
+      const vertical
+        = beta * Math.cos(screenAngle) - gamma * Math.sin(screenAngle);
+
       target
         .set(
           THREE.MathUtils.degToRad(horizontal),
-          THREE.MathUtils.degToRad(vertical),
+          THREE.MathUtils.degToRad(vertical)
         )
         .clampLength(0, maxAngle);
       requestMotion();
     }
-  
+
     function startGyroscope() {
-      if (disposed || !isMobile || gyroEnabled || !("DeviceOrientationEvent" in window))
+      if (disposed || !isMobile || gyroEnabled || !('DeviceOrientationEvent' in window))
         return;
       gyroEnabled = true;
-      window.addEventListener("deviceorientation", handleOrientation, { signal });
+      window.addEventListener('deviceorientation', handleOrientation, { signal });
     }
-  
+
     async function requestGyroscopePermission() {
-      if (!isMobile || gyroEnabled || !("DeviceOrientationEvent" in window))
+      if (!isMobile || gyroEnabled || !('DeviceOrientationEvent' in window))
         return;
-      if (typeof DeviceOrientationEvent.requestPermission !== "function") {
+      if (typeof DeviceOrientationEvent.requestPermission !== 'function') {
         startGyroscope();
         return;
       }
       try {
-        if ((await DeviceOrientationEvent.requestPermission()) === "granted")
+        if ((await DeviceOrientationEvent.requestPermission()) === 'granted')
           startGyroscope();
       } catch (error) {
-        console.warn("No se pudo activar el control por giroscopio.", error);
+        console.warn('No se pudo activar el control por giroscopio.', error);
       }
     }
-  
+
     // Android suele permitir el sensor directamente. En iOS la petición
     // debe ejecutarse dentro de un gesto del usuario (el primer toque).
     if (
-      isMobile &&
-      "DeviceOrientationEvent" in window &&
-      typeof DeviceOrientationEvent.requestPermission !== "function"
+      isMobile
+      && 'DeviceOrientationEvent' in window
+      && typeof DeviceOrientationEvent.requestPermission !== 'function'
     )
       startGyroscope();
-  
+
     function animate(time) {
       if (disposed) return;
       if (document.hidden) {
@@ -328,7 +328,7 @@ async function initScene() {
         dofEnabled = false; // Permanece desactivado hasta recargar.
         dof.enabled = false;
         console.info(
-          "Profundidad de campo desactivada: menos de 4 FPS durante 3 segundos.",
+          'Profundidad de campo desactivada: menos de 4 FPS durante 3 segundos.'
         );
       }
       const delta = Math.min(elapsed / 1000, 0.05);
@@ -344,16 +344,16 @@ async function initScene() {
       focus.value = THREE.MathUtils.lerp(
         focus.value,
         targetFocus,
-        1 - Math.exp(-6 * delta),
+        1 - Math.exp(-6 * delta)
       );
-      const focusSettled =
-        !dofEnabled || Math.abs(focus.value - targetFocus) < 0.0001;
+      const focusSettled
+        = !dofEnabled || Math.abs(focus.value - targetFocus) < 0.0001;
       if (focusSettled) focus.value = targetFocus;
       renderScene(delta);
       // Descansa solo cuando han terminado tanto el giro como el enfoque.
       frame = settled && focusSettled ? 0 : requestAnimationFrame(animate);
     }
-  
+
     function requestMotion() {
       if (!disposed && !frame && !document.hidden) {
         previousTime = null; // No cuenta el tiempo que estuvo quieto.
@@ -361,42 +361,42 @@ async function initScene() {
         frame = requestAnimationFrame(animate);
       }
     }
-  
+
     function updatePointer(event) {
       const x = THREE.MathUtils.clamp(
         (event.clientX / window.innerWidth) * 2 - 1,
         -1,
-        1,
+        1
       );
       const y = THREE.MathUtils.clamp(
         (event.clientY / window.innerHeight) * 2 - 1,
         -1,
-        1,
+        1
       );
       pointer.set(x, -y); // Coordenadas de pantalla para el raycaster.
       pointerInside = true;
       focusDirty = true;
-  
+
       // En móvil el toque sólo controla el DOF; el giro viene del sensor.
-      if (!isMobile && event.pointerType === "mouse")
+      if (!isMobile && event.pointerType === 'mouse')
         target.set(x, y).clampLength(0, 1).multiplyScalar(maxAngle);
       requestMotion();
     }
-  
-    window.addEventListener("pointerdown", (event) => {
+
+    window.addEventListener('pointerdown', (event) => {
       updatePointer(event);
       void requestGyroscopePermission();
     }, { signal });
-    window.addEventListener("pointermove", updatePointer, { signal });
-  
+    window.addEventListener('pointermove', updatePointer, { signal });
+
     function resetMotion() {
       pointerInside = false;
       if (!isMobile) target.set(0, 0);
       requestMotion();
     }
-    document.documentElement.addEventListener("pointerleave", resetMotion, { signal });
-    window.addEventListener("blur", resetMotion, { signal });
-    document.addEventListener("visibilitychange", () => {
+    document.documentElement.addEventListener('pointerleave', resetMotion, { signal });
+    window.addEventListener('blur', resetMotion, { signal });
+    document.addEventListener('visibilitychange', () => {
       if (frame) cancelAnimationFrame(frame);
       frame = 0;
       previousTime = null;
@@ -406,15 +406,15 @@ async function initScene() {
         requestMotion();
       }
     }, { signal });
-    screen.orientation?.addEventListener("change", () => {
+    screen.orientation?.addEventListener('change', () => {
       gyroHasOrigin = false;
     }, { signal });
-  
+
     // Conserva la altura del encuadre de la cámara ortográfica original.
     const halfHeight = camera.isOrthographicCamera
       ? (camera.top - camera.bottom) / 2
       : 0;
-  
+
     function resize() {
       const { width, height } = container.getBoundingClientRect();
       if (width === 0 || height === 0) return;
@@ -422,7 +422,7 @@ async function initScene() {
       // false evita que Three.js sobrescriba el tamaño CSS del canvas. Si no se hace así, el canvas se estira y la imagen se deforma.
       renderer.setSize(width, height, false);
       composer.setSize(width, height);
-  
+
       if (camera.isOrthographicCamera) {
         camera.left = -halfHeight * aspect;
         camera.right = halfHeight * aspect;
@@ -437,29 +437,29 @@ async function initScene() {
       renderScene();
       requestMotion();
     }
-  
-    window.addEventListener("resize", resize, { signal });
+
+    window.addEventListener('resize', resize, { signal });
     resize();
     // Solo se mueve la cámara: reutiliza las sombras calculadas al cargar.
     renderer.shadowMap.autoUpdate = false;
-    document.getElementById("scene-overlay").style.display = "block";
+    document.getElementById('scene-overlay').style.display = 'block';
   } catch (error) {
     if (disposed) return;
     release();
     console.error(error);
-    const message = document.createElement("p");
-    message.textContent =
-      "No se pudo cargar Sevilla.glb. Consulta la consola del navegador.";
-    message.style.cssText =
-      "position:fixed;top:1rem;left:1rem;color:#900;background:white;padding:1rem";
+    const message = document.createElement('p');
+    message.textContent
+      = 'No se pudo cargar Sevilla.glb. Consulta la consola del navegador.';
+    message.style.cssText
+      = 'position:fixed;top:1rem;left:1rem;color:#900;background:white;padding:1rem';
     container.append(message);
   }
 }
 
-document.addEventListener("astro:before-swap", () => {
+document.addEventListener('astro:before-swap', () => {
   cleanupScene?.();
   cleanupScene = undefined;
 });
-document.addEventListener("astro:page-load", () => {
+document.addEventListener('astro:page-load', () => {
   void initScene().catch(console.error);
 });
