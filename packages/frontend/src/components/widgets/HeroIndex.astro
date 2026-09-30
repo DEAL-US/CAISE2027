@@ -183,7 +183,8 @@ const {
     height: 100vh;
   }
 
-  .action-button {
+  /* Override shared button variants regardless of stylesheet order on navigation. */
+  #hero :global(.action-button) {
     background: rgba(22, 71, 126, 0.5);
     border: solid 3px rgb(22, 71, 126);
     backdrop-filter: blur(5px);
