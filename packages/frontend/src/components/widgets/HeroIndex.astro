@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import scenePlaceholder from '#/assets/images/hero/3d-placeholder.webp';
 import Button from '#/components/ui/Button/Button.astro';
 import type { Hero as Props } from '#/types';
 
@@ -22,6 +23,15 @@ const {
   <div id="container">
     <div id="scene-overlay"></div>
     <canvas id="scene"></canvas>
+    <div class="scene-placeholder" aria-hidden="true">
+      <Image
+        src={scenePlaceholder}
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+        class="h-full w-full object-cover"
+      />
+    </div>
   </div>
   <div id="hero" class="mx-auto px-12 relative sm:px-6">
     <div class="pt-0 pointer-events-none md:pt-[76px]"></div>
@@ -143,6 +153,27 @@ const {
 </section>
 
 <style>
+  .scene-placeholder {
+    position: absolute;
+    inset: -30px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 1;
+    filter: blur(15px);
+    transition: opacity 0.7s ease, filter 0.7s ease;
+  }
+
+  #container.scene-ready .scene-placeholder {
+    opacity: 0;
+    filter: blur(0px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scene-placeholder {
+      transition: none;
+    }
+  }
+
   canvas {
     display: block;
     width: 100%;
@@ -161,6 +192,7 @@ const {
   }
   #container {
     position: absolute;
+    z-index: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -180,6 +212,7 @@ const {
   }
 
   #hero {
+    z-index: 1;
     height: 100vh;
   }
 

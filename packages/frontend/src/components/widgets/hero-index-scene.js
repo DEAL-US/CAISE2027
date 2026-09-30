@@ -63,6 +63,7 @@ async function initScene() {
   const canvas = document.querySelector('#scene');
   if (!(canvas instanceof HTMLCanvasElement) || !canvas.parentElement) return;
   const container = canvas.parentElement;
+  container.classList.remove('scene-ready');
   const events = new AbortController();
   const { signal } = events;
   let disposed = false;
@@ -74,6 +75,7 @@ async function initScene() {
   const release = () => {
     if (disposed) return;
     disposed = true;
+    container.classList.remove('scene-ready');
     events.abort();
     cancelAnimationFrame(frame);
     if (composer) {
@@ -435,6 +437,8 @@ async function initScene() {
       focusDirty = true;
       pickFocus();
       renderScene();
+      // Reveal the canvas only after a successful render at its actual size.
+      container.classList.add('scene-ready');
       requestMotion();
     }
 
