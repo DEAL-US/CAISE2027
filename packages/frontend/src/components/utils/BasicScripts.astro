@@ -77,6 +77,14 @@
         const isScrolled = scrollPos > header.offsetHeight / 2;
 
         header.classList.toggle("scroll", isScrolled);
+        if (!header.classList.contains("is-index")) {
+          header.classList.toggle(
+            dark_class,
+            !isScrolled &&
+              !screenSize.matches &&
+              !header.hasAttribute("data-aw-forced-mobile-header"),
+          );
+        }
       });
     }
 
