@@ -100,14 +100,12 @@ async function initScene() {
   renderer.toneMappingExposure = 1.5;
 
   try {
+    const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     draco.setDecoderPath(
-      'https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/libs/draco/gltf/'
+      base + 'draco/'
     );
-
     const loader = new GLTFLoader();
     loader.setDRACOLoader(draco);
-
-    const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     const gltf = await loader.loadAsync(base + 'models/Sevilla-comp.glb')
       .finally(() => draco.dispose());
     if (disposed) {
