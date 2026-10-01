@@ -301,7 +301,7 @@ async function initScene() {
         if ((await DeviceOrientationEvent.requestPermission()) === 'granted')
           startGyroscope();
       } catch (error) {
-        console.warn('No se pudo activar el control por giroscopio.', error);
+        console.warn('Could not activate gyroscope.', error);
       }
     }
 
@@ -464,12 +464,6 @@ async function initScene() {
     if (disposed) return;
     release();
     console.error(error);
-    const message = document.createElement('p');
-    message.textContent
-      = 'No se pudo cargar Sevilla.glb. Consulta la consola del navegador.';
-    message.style.cssText
-      = 'position:fixed;top:1rem;left:1rem;color:#900;background:white;padding:1rem';
-    container.append(message);
   }
 }
 
