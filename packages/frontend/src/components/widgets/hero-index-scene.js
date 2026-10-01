@@ -8,7 +8,7 @@ import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 // Evalúa ventanas de al menos un segundo de animación activa.
-function createFpsGuard(minFps = 4, lowDuration = 3000, warmup = 1500) {
+function createFpsGuard(minFps = 25, lowDuration = 3000, warmup = 1500) {
   let elapsed = 0,
     frames = 0,
     lowTime = 0;
@@ -202,6 +202,7 @@ async function initScene() {
     composer.addPass(new OutputPass()); // Conserva ACES y la salida sRGB.
 
     let dofEnabled = true;
+    let resolutionReduced = false;
     const fpsGuard = createFpsGuard(25, 3000, 1500);
     function renderScene(delta = 0) {
       if (dofEnabled) composer.render(delta);
@@ -325,11 +326,25 @@ async function initScene() {
       const elapsed = previousTime === null ? 0 : time - previousTime;
       previousTime = time;
       if (dofEnabled && fpsGuard.sample(elapsed)) {
-        dofEnabled = false; // Permanece desactivado hasta recargar.
-        dof.enabled = false;
-        console.info(
-          'Profundidad de campo desactivada: menos de 4 FPS durante 3 segundos.'
-        );
+        // Cada nivel requiere su propia ventana de bajo rendimiento.
+        // Conserva la calidad elegida hasta recargar para evitar oscilaciones.
+        fpsGuard.reset();
+        if (!resolutionReduced) {
+          resolutionReduced = true;
+          const pixelRatio = renderer.getPixelRatio() / 2;
+          // Reduce también los buffers del blur, conservando el tamaño CSS.
+          renderer.setPixelRatio(pixelRatio);
+          composer.setPixelRatio(pixelRatio);
+          console.info(
+            'Resolution reduced to half to keep performance.'
+          );
+        } else {
+          dofEnabled = false;
+          dof.enabled = false;
+          console.info(
+            'DoF disabled to keep performance.'
+          );
+        }
       }
       const delta = Math.min(elapsed / 1000, 0.05);
       current.lerp(target, 1 - Math.exp(-8 * delta));
