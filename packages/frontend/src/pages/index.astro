@@ -27,14 +27,33 @@ import CAiSELogo from '@caise2027-website/assets/logo';
   metadata={{
     ignoreTitleTemplate: true
   }}
+  isIndex={true}
   heroProps={{
-    tagline: '7 - 11 June 2027 | Seville, Spain'
-    // actions: [
-    //   { variant: 'primary', text: 'App', href: getPermalink('/app-instructions/'), icon: 'i-tabler:apps' },
-    //   { variant: 'primary', text: 'Booklet', href: pdfBooklet, icon: 'i-tabler:download', target: '_blank' },
-    //   { variant: 'primary', text: 'Proceedings', href: getPermalink('/proceedings/'), icon: 'i-tabler:book' }
-    // ]
-  }}>
+    tagline: '7 - 11 June 2027 | Seville, Spain',
+    actions: [
+      {
+        variant: 'primary',
+        text: 'Important dates',
+        href: '/calls/dates/',
+        icon: 'i-tabler:calendar'
+      },
+      {
+        variant: 'primary',
+        text: 'Call for papers',
+        href: '/calls/papers/',
+        icon: 'i-tabler:file-spark',
+        target: '_blank'
+      },
+      {
+        variant: 'primary',
+        text: 'Venue',
+        href: '/conference/venue/',
+        icon: 'i-tabler:map-pin',
+        target: '_blank'
+      }
+    ]
+  }}
+>
   <Fragment slot="hero-title">
     <Image
       src={CAiSELogo}
@@ -55,36 +74,44 @@ import CAiSELogo from '@caise2027-website/assets/logo';
     <div class="gap-10 grid lg:grid-cols-5">
       <div class="text-justify lg:col-span-3">
         <h2
-          class="text-4xl text-brand tracking-tighter font-bold font-heading mb-4 text-left md:text-4xl">
+          class="text-4xl text-brand tracking-tighter font-bold font-heading mb-4 text-left md:text-4xl"
+        >
           Theme: Hybrid Intelligent Information Systems Engineering
         </h2>
         <p class="text-lg text-muted mt-4 dark:text-slate-400">
-          Hybrid Intelligent Information Systems Engineering is considered a multidisciplinary field
-          that combines data-driven (e.g., machine learning, deep learning) and knowledge-driven
-          (e.g., symbolic reasoning, ontologies, rules) approaches to support intelligent, adaptive,
-          and explainable decision-making in complex cyber-physical environments. It is concerned
-          with the design, development, integration, and management of information systems that
-          ensure data and information management, interoperability, scalability, and alignment with
-          organisational and domain-specific requirements.
+          Hybrid Intelligent Information Systems Engineering is considered a
+          multidisciplinary field that combines data-driven (e.g., machine
+          learning, deep learning) and knowledge-driven (e.g., symbolic
+          reasoning, ontologies, rules) approaches to support intelligent,
+          adaptive, and explainable decision-making in complex cyber-physical
+          environments. It is concerned with the design, development,
+          integration, and management of information systems that ensure data
+          and information management, interoperability, scalability, and
+          alignment with organisational and domain-specific requirements.
         </p>
         <p class="text-lg text-muted mt-4 dark:text-slate-400">
-          Within this field, Information Systems Engineering (IS Engineering) provides the
-          foundational principles, methods, and frameworks that enable the integration of hybrid
-          intelligence into organisational environments, ensuring that these systems are semantically
-          grounded through data and information models; architecturally coherent and interoperable
-          across heterogeneous components; governed and aligned with organisational processes,
-          policies, and decision-making needs; and, sustainable and evolvable across the full
-          lifecycle of data, models, and knowledge.
+          Within this field, Information Systems Engineering (IS Engineering)
+          provides the foundational principles, methods, and frameworks that
+          enable the integration of hybrid intelligence into organisational
+          environments, ensuring that these systems are semantically grounded
+          through data and information models; architecturally coherent and
+          interoperable across heterogeneous components; governed and aligned
+          with organisational processes, policies, and decision-making needs;
+          and, sustainable and evolvable across the full lifecycle of data,
+          models, and knowledge.
         </p>
       </div>
-      {/* On desktop the news box matches the theme text height and scrolls inside */}
+      {
+        /* On desktop the news box matches the theme text height and scrolls inside */
+      }
       <div class="lg:col-span-2 lg:relative">
         <News class="max-h-[28rem] lg:max-h-none lg:inset-0 lg:absolute" />
       </div>
     </div>
   </WidgetWrapper>
 
-  {/*
+  {
+    /*
   <div class="flex w-full justify-center print:hidden lg:-mb-12" slot="hero-content">
     <div class="hero-picture-container mx-12 lg:-mb-60">
       <figure class="hero-picture border-4 border-white bg-white lg:border-8">
@@ -105,11 +132,13 @@ import CAiSELogo from '@caise2027-website/assets/logo';
       </figure>
     </div>
   </div>
-  */}
+  */
+  }
 
   {/* Calendar */}
 
-  {/*   <Content
+  {
+    /*   <Content
     title="Calendar"
     images={[
       // {
@@ -118,9 +147,11 @@ import CAiSELogo from '@caise2027-website/assets/logo';
       //   description: true
       // }
     ]}
-    classes={{ container: '!pb-0' }}> */}
+    classes={{ container: '!pb-0' }}> */
+  }
 
-  {/*
+  {
+    /*
   <Content
     title="Calendar"
     classes={{ container: '!pb-0' }}>
@@ -179,10 +210,12 @@ import CAiSELogo from '@caise2027-website/assets/logo';
       />
     </Fragment>
   </Content>
-  */}
+  */
+  }
 
   {/* Program booklet */}
-  {/*
+  {
+    /*
   <Content
     title="Program booklet"
     classes={{ container: '!pt-6', content: 'justify-center' }}
@@ -192,10 +225,12 @@ import CAiSELogo from '@caise2027-website/assets/logo';
       <Booklet />
     </Fragment>
   </Content>
-  */}
+  */
+  }
 
-  { /* Cite */ }
-  {/*
+  {/* Cite */}
+  {
+    /*
   <Content>
     <Fragment slot="content">
       <div class="flex gap-2 justify-center">
@@ -243,11 +278,13 @@ import CAiSELogo from '@caise2027-website/assets/logo';
       </cite>
     </Fragment>
   </Content>
-  */}
+  */
+  }
 
   {/* Sponsors */}
 
-  {/*
+  {
+    /*
   <WidgetWrapper bg>
     <Headline
       classes={{ container: 'pt-6 !mb-0' }}
@@ -265,75 +302,84 @@ import CAiSELogo from '@caise2027-website/assets/logo';
       ]}
     />
   </WidgetWrapper>
-  */}
+  */
+  }
 
   <CallToAction
     title="Let's get together!"
     subtitle="Join us in Seville!<br />Registrations will be open soon!"
-    boxed={false}>
-  </CallToAction>
+    boxed={false}
+  />
 </PageLayout>
 
 <style>
-/**
+  /**
  * Polaroid-style pictures, animated on page load to slide down from the top of the page.
  */
-.hero-picture {
-  --rest-angle: -9deg;
-  --slide-start-x: 0%;
-  --slide-start-y: 0%;
-  --slide-end-x: 0%;
-  --slide-end-y: -10%;
-  display: inline-block;
-  max-width: 30vw;
-  position: relative;
-  /* @ unocss-ignore */
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  /* @ unocss-ignore */
-  transform: translate(var(--slide-end-x), var(--slide-end-y)) rotate(var(--rest-angle));
-  animation: 0.5s slideDown ease-out;
-  transition-property: transform, filter;
-  transition-duration: 0.3s;
-  z-index: 11;
-}
-
-.hero-picture--odd {
-  --slide-end-x: -50%;
-  --rest-angle: 6deg;
-  animation-duration: 0.9s;
-  z-index: 0;
-}
-
-.hero-picture:hover, .hero-picture:focus-within {
-  /* @ unocss-ignore */
-  transform: translate(var(--slide-end-x), var(--slide-end-y)) rotate(0) scale(1.25);
-  /* @ unocss-ignore */
-  filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.5));
-  z-index: 12;
-}
-
-@media (prefers-reduced-motion: reduce) {
   .hero-picture {
-    animation-iteration-count: 0;
+    --rest-angle: -9deg;
+    --slide-start-x: 0%;
+    --slide-start-y: 0%;
+    --slide-end-x: 0%;
+    --slide-end-y: -10%;
+    display: inline-block;
+    max-width: 30vw;
+    position: relative;
+    /* @ unocss-ignore */
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    /* @ unocss-ignore */
+    transform: translate(var(--slide-end-x), var(--slide-end-y))
+      rotate(var(--rest-angle));
+    animation: 0.5s slideDown ease-out;
+    transition-property: transform, filter;
+    transition-duration: 0.3s;
+    z-index: 11;
   }
-}
 
-@media (min-width: 1024px) {
   .hero-picture--odd {
-    --slide-end-x: 20%;
-    --slide-end-y: -80%;
+    --slide-end-x: -50%;
+    --rest-angle: 6deg;
+    animation-duration: 0.9s;
+    z-index: 0;
   }
-}
 
-@keyframes slideDown {
-  0% {
-    transform: translate(var(--slide-start-x), var(--slide-start-y)) rotate(0);
+  .hero-picture:hover,
+  .hero-picture:focus-within {
+    /* @ unocss-ignore */
+    transform: translate(var(--slide-end-x), var(--slide-end-y)) rotate(0)
+      scale(1.25);
+    /* @ unocss-ignore */
+    filter: drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.5));
+    z-index: 12;
   }
-  50% {
-    transform: translate(calc(var(--slide-start-x) + var(--slide-end-x) / 2), calc(var(--slide-start-y) + var(--slide-end-y) / 2)) rotate(calc(-1 * var(--rest-angle) / 4));
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-picture {
+      animation-iteration-count: 0;
+    }
   }
-  100% {
-    transform: translate(var(--slide-end-x), var(--slide-end-y)) rotate(var(--rest-angle));
+
+  @media (min-width: 1024px) {
+    .hero-picture--odd {
+      --slide-end-x: 20%;
+      --slide-end-y: -80%;
+    }
   }
-}
+
+  @keyframes slideDown {
+    0% {
+      transform: translate(var(--slide-start-x), var(--slide-start-y)) rotate(0);
+    }
+    50% {
+      transform: translate(
+          calc(var(--slide-start-x) + var(--slide-end-x) / 2),
+          calc(var(--slide-start-y) + var(--slide-end-y) / 2)
+        )
+        rotate(calc(-1 * var(--rest-angle) / 4));
+    }
+    100% {
+      transform: translate(var(--slide-end-x), var(--slide-end-y))
+        rotate(var(--rest-angle));
+    }
+  }
 </style>
