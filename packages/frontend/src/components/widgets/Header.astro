@@ -38,6 +38,13 @@ const {
   showRssFeed = false,
   position = 'center'
 } = Astro.props;
+
+/**
+ * Links to other websites (such as co-located events) open in a new tab, so
+ * visitors don't lose their place in the conference site.
+ */
+const externalLinkProps = (href?: string) =>
+  href && /^https?:\/\//.test(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 ---
 
 <header
@@ -104,7 +111,7 @@ const {
               {links?.length
                 ? (
                     <>
-                      <span class="px-4 py-3 flex cursor-pointer items-center dark:hover:text-white">
+                      <span class="px-4 py-3 flex cursor-pointer whitespace-nowrap items-center dark:hover:text-white">
                         {text}{' '}
                         <div class:list={[
                           'i-tabler:chevron-down ml-0.5 h-3.5 w-3.5 hidden rtl:ml-0 rtl:mr-0.5',
@@ -124,6 +131,7 @@ const {
                                 { 'lg:hover:bg-gray-100': !forceMobile }
                               ]}
                               href={href2}
+                              {...externalLinkProps(href2)}
                             >
                               {text2}
                             </a>
@@ -138,6 +146,7 @@ const {
                         'dark:hover:text-white px-4 py-3 flex items-center'
                       ]}
                       href={href}
+                      {...externalLinkProps(href)}
                     >
                       {text}
                     </a>

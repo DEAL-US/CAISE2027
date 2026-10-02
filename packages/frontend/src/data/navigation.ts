@@ -145,6 +145,15 @@ export function getHeaderData(_currentUrl: URL): HeaderData {
             href: getPermalink('/conference/chairs')
           }
         ]
+      },
+      {
+        text: 'Co-located Events',
+        links: [
+          {
+            text: 'EMMSAD 2027',
+            href: 'https://www.emmsad.org/'
+          }
+        ]
       }
       // {
       //   text: 'Venue',
