@@ -32,6 +32,8 @@ import TianwaChen from '#/assets/images/people/Tianwa_Chen.jpg';
 import IstvanDavid from '#/assets/images/people/Istvan_David.jpg';
 import AndreaDelgado from '#/assets/images/people/Andrea_Delgado.jpg';
 import MariaTeresaGomezLopez from '#/assets/images/people/Maria_Teresa_Gomez_Lopez.png';
+import OscarPastor from '#/assets/images/people/oscar_pastor.jpg';
+import MoniqueSnoeck from '#/assets/images/people/monik_snoeck.jpg';
 
 import type { Testimonial } from '#/types';
 
@@ -258,11 +260,23 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
     }
   },
   'PhD Awards': {
+    'Oscar Pastor': {
+      scholar: 'https://scholar.google.es/citations?user=JSQuVBYAAAAJ&hl=es&oi=ao',
+      image: OscarPastor,
+      institution: 'Universitat Politècnica de València',
+      location: 'Spain'
+    },
     'Manuel Wimmer': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=YZDY1psAAAAJ',
       image: ManuelWimmer,
       institution: 'JKU Linz',
       location: 'Austria'
+    },
+    'Monique Snoeck': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=d25wDdMAAAAJ',
+      image: MoniqueSnoeck,
+      institution: 'KU Leuven',
+      location: 'Belgium'
     }
   },
   'Web and Social Media': {
