@@ -7,7 +7,7 @@
             "default": "CAISE 2027 — 39th Edition of the International Conference on Advanced Information Systems Engineering",
             "template": "%s — CAISE 2027"
         },
-        "description": "BPM 2025 is the 39th Edition of the International Conference on Advanced Information Systems Engineering. The objective of the CAiSE conference is to provide a forum for the exchange of experience, research results, ideas and prototypes between the research community and industry, in the field of information systems engineering.",
+        "description": "CAiSE 2027 is the 39th International Conference on Advanced Information Systems Engineering, bringing together the research community and industry to exchange experience, research results, ideas, and prototypes in information systems engineering.",
         "robots": {
             "index": true,
             "follow": true
