@@ -1,0 +1,72 @@
+---
+title: 'Call for Workshops'
+layout: '#/layouts/MarkdownLayout.astro'
+showHeading: false
+order: 2
+importantDates:
+  "Submission of workshop proposals": 1 November 2026
+  "Workshop notifications": 15 November 2026
+  "CAiSE 2027 Workshops": June 7-8, 2027
+description: CAiSE 2027, the 39th edition of the CAiSE series, invites proposals for workshops to be held in conjunction with the main conference.
+action:
+  variant: 'primary'
+  text: 'Submit a workshop proposal'
+  href: https://easychair.org/conferences/?conf=caise2027
+---
+import ImportantDates from '#/components/widgets/ImportantDates.astro';
+import CallToAction from '#/components/widgets/CallToAction.astro';
+
+CAiSE is the premier conference series on Advanced Information Systems (IS) Engineering. It covers all relevant topics in the area, including methodologies and approaches for IS engineering, innovative platforms, architectures, and technologies, and engineering of specific kinds of IS. CAiSE conferences also have the tradition of hosting workshops in related fields. Workshops are intended to focus on topics and provide ample room for discussions of innovative ideas and developments.
+
+CAiSE 2027, the 39th edition of the CAiSE series, invites proposals for workshops to be held in conjunction with the main conference, related to the CAiSE topics, covering new emerging topics, and targeting innovative papers in special focus areas.
+
+Workshop organizers are strongly encouraged to focus their events on topics that are not already explicitly addressed by the two co-located working conferences BPMDS and EMMSAD.
+
+Prospective workshop organizers should specify whether they plan an event with Springer LNBIP or CEUR-WS proceedings.
+
+## Springer Proceedings Workshops
+
+These workshops are expected to present early results that are promising and that can trigger discussions and further collaborations. The proceedings of these workshops are intended to be published in a joint volume in the Springer LNBIP series. Submissions must conform to the Springer LNCS/LNBIP format and should not exceed 12 pages. According to Springer's standards, the overall acceptance rate cannot exceed 45%-50%.
+
+## CEUR-WS Proceedings Workshops
+
+This type of workshop should emphasize discussions, facilitated by paper presentations revolving around novel ideas and early-stage research. Since the main criterion for paper acceptance in such workshops is relevance and potential to spark discussion, papers will be submitted to CEUR-WS.org for online publication if the preconditions for publication at CEUR-WS.org are met.
+
+## Proposal Submission
+
+Workshop proposals should be submitted via EasyChair at the following address: [https://easychair.org/conferences/?conf=caise2027](https://easychair.org/conferences/?conf=caise2027)
+
+Please select the **Author** role and the **CAISE2027 Workshops Track**. Prior contact with the workshop chairs ([caise2027-workshops@easychair.org](mailto:caise2027-workshops@easychair.org)) is encouraged.
+
+The organizer(s) of approved workshops will be responsible for advertising their own workshop, eliciting high-quality and relevant submissions, organizing the reviewing process of their workshop's papers according to the principles and guidelines of CAiSE, and collecting camera-ready copies of accepted papers (verifying that they comply with the formatting rules). Organizers (including co-organizers) are expected to attend their entire workshop.
+
+## Detailed Instructions for Workshop Proposers
+
+The proposal (up to 1000 words) should cover the following points:
+
+- **Workshop title, duration** (1 day or 2 days), **preferred date** (7th-8th June 2027).
+- **Workshop type:** Springer or CEUR-WS proceedings.
+- **Information on the organizers:** PC chairs, other organizers who will be present at the workshop or are otherwise involved, including the person responsible for web presence and communication. Please include names, addresses, and affiliations, indicating the main responsible person. The submission should include a one-paragraph biographical sketch for each organizer, describing relevant qualifications and experience. Please specify at least one PC chair. PC chairs will not be allowed to submit papers to the workshop, but other organizers (who will have no oversight over the review process) are welcome to do so.
+- **Purpose:** What are the main goals of the workshop? Please list the workshop topics. How does the focus of the workshop differ from the main conference? How does the focus of the workshop differ from other potential CAiSE events?
+- **Organization of the workshop:** Specify the type of contributions, distribution into sessions, type of sessions, etc. Mention if you plan to have any keynote speakers. Include any unusual requirements regarding infrastructure and room layout.
+- **Tentative list of PC members.**
+- **An estimate of the number of papers to be accepted and the number of attendees.** If applicable, short information on previous editions of the workshop series (this should include submission, acceptance, and attendance information). Short information on your plans for advertising your workshop and making it highly visible.
+
+## Services Provided by CAiSE
+
+- **EasyChair installation** for managing workshop submissions. Each organizer will be made chair of their own workshop.
+- **Publication of papers:** In a Springer LNBIP volume and in a CEUR-WS.org online volume depending on the workshop type.
+- **Local organizational infrastructure and administrative support:** Registration, badges, refreshments, beamers, screens, etc.
+- **Advertisement for the workshop:** On the CAiSE 2027 homepage and mailings.
+
+Please note that the workshop may be cancelled if the number of registrations is less than 10. Also, for workshops on similar topics, two or more workshops may be suggested to merge.
+
+## Questions and Inquiries
+
+Questions about eligibility and other inquiries can be sent to the CAiSE'27 Workshops chairs at [caise2027-workshops@easychair.org](mailto:caise2027-workshops@easychair.org).
+
+## Key Dates
+
+<ImportantDates importantDates={frontmatter.importantDates}/>
+
+<CallToAction actions={[frontmatter.action]} boxed={false} classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }} />
