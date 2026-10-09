@@ -29,7 +29,7 @@
     "@prisma/client": "7.10.0",
     "consola": "3.4.2",
     "destr": "2.0.5",
-    "h3": "1.15.11",
+    "h3": "2.0.2",
     "image-size": "2.0.2",
     "listhen": "1.10.1",
     "microinvoice": "2.0.2",
