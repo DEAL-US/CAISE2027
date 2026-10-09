@@ -1,0 +1,252 @@
+---
+import { Image } from 'astro:assets';
+import scenePlaceholder from '#/assets/images/hero/3d-placeholder.webp';
+import Button from '#/components/ui/Button/Button.astro';
+import type { Hero as Props } from '#/types';
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  subheading = await Astro.slots.render('subheading'),
+  tagline,
+  content = await Astro.slots.render('content'),
+  actions = await Astro.slots.render('actions'),
+  image,
+  id
+} = Astro.props;
+---
+
+<section
+  class="not-prose dark bg-dark relative lg:-mt-20"
+  {...id ? { id } : {}}
+>
+  <div id="container">
+    <div id="scene-overlay"></div>
+    <canvas id="scene"></canvas>
+    <div class="scene-placeholder" aria-hidden="true">
+      <Image
+        src={scenePlaceholder}
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+        class="h-full w-full object-cover"
+      />
+    </div>
+  </div>
+  <div id="hero" class="mx-auto px-12 relative sm:px-6">
+    <div class="pt-0 pointer-events-none md:pt-[76px]"></div>
+    <div class="py-12 md:py-20">
+      <div
+        class={`mx-auto pb-10 text-center md:pb-16 ${content ? 'lg:flex' : 'max-w-10xl'}`}
+      >
+        {
+          content && (
+            <div>
+              <Fragment set:html={content} />
+            </div>
+          )
+        }
+        {
+          /**
+           * Only a `subtitle` gets the radial plate behind it. A `subheading`
+           * deliberately does not: on the dark hero the gradient resolves to
+           * `--colors-dark`, which reads as a navy halo around the title.
+           */
+        }
+        <div class={subtitle && 'text-bg-shadow'}>
+          {
+            tagline && (
+              <p
+                class="text-base text-secondary tracking-wide font-bold uppercase dark:text-blue-900"
+                set:html={tagline}
+              />
+            )
+          }
+          {
+            title && (
+              <h1
+                class="text-5xl text-brand leading-tight tracking-tighter font-bold font-heading mb-4 md:text-6xl"
+                set:html={title}
+              />
+            )
+          }
+          {
+            subheading && (
+              <h3
+                class="text-xl font-bold mb-6 dark:text-slate-900"
+                set:html={subheading}
+              />
+            )
+          }
+          <div class="mx-auto max-w-7xl">
+            {
+              subtitle && (
+                <p
+                  class="text-xl mb-6 dark:text-slate-300"
+                  set:html={subtitle}
+                />
+              )
+            }
+            {
+              actions && (
+                <div class="m-auto flex flex-col flex-nowrap gap-4 sm:flex-row sm:justify-center">
+                  {Array.isArray(actions)
+                    ? (
+                        actions.map(action => (
+                          <div class="flex w-full sm:w-auto">
+                            <Button
+                              {...(action || {})}
+                              class="action-button w-full sm:mb-0"
+                            />
+                          </div>
+                        ))
+                      )
+                    : (
+                        <Fragment set:html={actions} />
+                      )}
+                </div>
+              )
+            }
+          </div>
+          <div
+            onclick="window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })"
+            class="flex items-center justify-center"
+            id="scroll-down-cta"
+          >
+            <!-- svg of arrow (only 2 strokes) pointing down -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="m-auto h-12 w-12"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 9l-7 7-7-7">
+              </path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        {
+          image && (
+            <div class="m-auto relative">
+              {/* @ts-expect-error - Track https://github.com/withastro/astro/issues/10780 */}
+              <Image
+                class="mx-auto rounded-md w-full"
+                sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
+                loading="eager"
+                height={576}
+                {...image}
+              />
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .scene-placeholder {
+    position: absolute;
+    inset: -30px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 1;
+    filter: blur(15px);
+    transition: opacity 0.7s ease, filter 0.7s ease;
+  }
+
+  #container.scene-ready .scene-placeholder {
+    opacity: 0;
+    filter: blur(0px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scene-placeholder {
+      transition: none;
+    }
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  #scene-overlay {
+    position: absolute;
+    display: none;
+    top: 0;
+    opacity: 0.5;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#d71921 30%, #16477e 70%);
+    mix-blend-mode: color;
+  }
+  #container {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .text-bg-shadow {
+    background: radial-gradient(
+      ellipse closest-side,
+      color-mix(in srgb, var(--colors-page) 80%, transparent) 0%,
+      color-mix(in srgb, var(--colors-page) 75%, transparent) 30%,
+      color-mix(in srgb, var(--colors-page) 65%, transparent) 50%,
+      color-mix(in srgb, var(--colors-page) 40%, transparent) 85%,
+      color-mix(in srgb, var(--colors-page) 30%, transparent) 92%,
+      color-mix(in srgb, var(--colors-page) 15%, transparent) 95%,
+      color-mix(in srgb, var(--colors-page) 8%, transparent) 97%,
+      color-mix(in srgb, var(--colors-page) 0%, transparent) 100%
+    );
+  }
+
+  #hero {
+    z-index: 1;
+    height: 100vh;
+  }
+
+  #scroll-down-cta{
+    cursor: pointer; 
+  }
+
+  /* Override shared button variants regardless of stylesheet order on navigation. */
+  #hero :global(.action-button) {
+    background: rgba(22, 71, 126, 0.5);
+    border: solid 3px rgb(22, 71, 126);
+    backdrop-filter: blur(5px);
+    transition: all 1.2s linear(0, 0.0026, 0.0103 0.68%, 0.0438 1.44%, 0.1032, 0.1822 3.08%, 0.3639 4.58%, 0.8941 8.48%, 1.0301 9.64%, 1.1322 10.67%, 1.2199 11.76%, 1.2809 12.79%, 1.3023 13.27%, 1.3214, 1.3349, 1.343 14.91%, 1.346, 1.3417 16.28%, 1.3295, 1.3103 17.78%, 1.2829 18.6%, 1.2473 19.49%, 1.0516 23.67%, 1.0053 24.76%, 0.9699 25.72%, 0.9343, 0.9077, 0.8902, 0.8815 30.37%, 0.8802 31.05%, 0.8817, 0.886 32.56%, 0.8933 33.38%, 0.9155 35.09%, 0.9822 39.19%, 1.0096 41.18%, 1.0221 42.34%, 1.0311, 1.0372 44.53%, 1.0407 45.69%, 1.0411 47.2%, 1.0371 48.84%, 1.0292 50.62%, 1.0065 54.65%, 0.9969 56.63%, 0.9896, 0.9861 61.01%, 0.9871 64.36%, 1.0009 72.02%, 1.0047 76.2%, 1.0044 79.89%, 0.9986 90.63%, 0.9994 100%);
+
+    &:hover {
+      z-index: 1;
+      background: rgb(22, 71, 126);
+      backdrop-filter: blur(0px);
+      transform: scale(1.2);
+    }
+  }
+
+  #scroll-down-cta {
+    width: 3cm;
+    height: 3cm;
+    border-radius: 100%;
+    border: 2px solid rgb(84, 116, 152);
+    background: rgba(22, 71, 126, 0.2);
+    backdrop-filter: blur(5px);
+    color: rgb(22, 71, 126);
+    justify-self: center;
+    margin-top: 4rem;
+    font-size: 40pt;
+  }
+</style>
+
+<script src="./hero-index-scene.js"></script>
