@@ -152,6 +152,10 @@ export function getHeaderData(_currentUrl: URL): HeaderData {
           {
             text: 'EMMSAD 2027',
             href: 'https://www.emmsad.org/'
+          },
+          {
+            text: 'BPMDS 2027',
+            href: 'http://www.bpmds.org/'
           }
         ]
       }
