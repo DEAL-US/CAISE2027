@@ -47,7 +47,7 @@ const {
                 'bg-primary text-white transition hover:bg-secondary',
                 'focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2'
               ]}>
-              <div class:list={['profile-icon', p.icon, p.iconClass ?? 'h-5 w-5']} />
+              <div class:list={['mask-contain mask-center', p.icon, p.iconClass ?? 'h-5 w-5']} />
             </a>
           ))}
         </div>
@@ -69,19 +69,3 @@ const {
     )}
   </div>
 </div>
-
-<style>
-/**
- * UnoCSS paints icons as a mask sized `100% 100%`, which stretches any glyph
- * whose aspect ratio differs from its box -- academicons' Scholar cap is
- * 384x512. Sizing the mask to `contain` keeps the glyph in proportion, so the
- * box can stay square at whatever size we want. Plain CSS, not `--at-apply`:
- * the directive transformer does not run on what the dev server serves first.
- */
-.profile-icon {
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-position: center;
-  mask-position: center;
-}
-</style>
