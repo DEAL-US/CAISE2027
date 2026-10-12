@@ -24,23 +24,25 @@ jobs:
         with:
           show-progress: false
           ref: ${{ inputs.commit || github.sha }}
+          persist-credentials: false
+          # Safe because no repository code is executed in this workflow (see build-mode below)
+          allow-unsafe-pr-checkout: true
 
       - name: Initialize CodeQL 🛠️
         uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         with:
           queries: security-and-quality
           languages: ${{ matrix.language }}
-
-      - name: Setup node environment ⚙️
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: lts/*
-          check-latest: true
-
-      - name: Autobuild 📦
-        uses: github/codeql-action/autobuild@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
+          # SECURITY: this workflow analyzes untrusted code from fork pull requests with a token
+          # that can write security events. 'none' guarantees no build (and therefore no
+          # repository code) is ever executed. Don't add languages that need to be built.
+          build-mode: none
 
       - name: Perform CodeQL Analysis 🧪
         uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         with:
           category: '/language:${{matrix.language}}'
+          # 'pull_request_target' runs with the base branch ref: upload the results to the
+          # pull request instead, so they never affect the alerts of the default branch.
+          ref: ${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/head', github.event.pull_request.number) || '' }}
+          sha: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || '' }}

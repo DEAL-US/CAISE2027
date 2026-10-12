@@ -10,6 +10,8 @@ on:
         required: true
         type: boolean
 
+permissions: {}
+
 env:
   SITE_URL: https://www.caise2027seville.org/
   BASE_URL: /
@@ -26,12 +28,15 @@ jobs:
         with:
           show-progress: false
           ref: ${{ inputs.commit || github.sha }}
+          persist-credentials: false
+          allow-unsafe-pr-checkout: true
 
       - name: Setup node environment ⚙️
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: lts/*
           check-latest: true
+          package-manager-cache: false
 
       - name: Install dependencies 📦
         run: corepack pnpm ci
@@ -73,6 +78,8 @@ jobs:
         with:
           show-progress: false
           ref: ${{ inputs.commit || github.sha }}
+          persist-credentials: false
+          allow-unsafe-pr-checkout: true
 
       - name: Configure Docker Buildx ⚙️
         uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0

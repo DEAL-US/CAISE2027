@@ -8,12 +8,15 @@ on:
   pull_request_target:
   merge_group:
 
+# Jobs here run with the base repository's context. Every job must declare its own
+# minimal permissions; jobs that execute PR code (build, quality checks) get none and no secrets.
+permissions: {}
+
 jobs:
   push-comment:
     name: Create comments ✍️
     if: ${{ always() && !cancelled() }}
     uses: ./.github/workflows/__job_messages.yml
-    secrets: inherit
     permissions: 
       pull-requests: write 
     with:
@@ -25,6 +28,7 @@ jobs:
     name: Build 🏗️
     if: ${{ always() && !cancelled() }}
     uses: ./.github/workflows/__package.yml
+    permissions: {}
     with:
       commit: ${{ github.event.pull_request.head.sha }}
       is_prerelease: true
@@ -33,9 +37,10 @@ jobs:
     name: Quality checks 👌🧪
     if: ${{ always() && !cancelled() }}
     uses: ./.github/workflows/__quality_checks.yml
-    permissions: {}
+    permissions:
+      contents: read
     with:
-      commit: ${{ github.event.pull_request.head.ref }}
+      commit: ${{ github.event.pull_request.head.sha }}
 
   codeql:
     name: GitHub CodeQL 🔬
@@ -57,11 +62,12 @@ jobs:
       - build
     permissions:
       contents: read
-      deployments: write
       pull-requests: write
       pages: write
       id-token: write
-    secrets: inherit
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     with:
       # If the PR is from the main branch of a fork, append the fork's name to the branch name
       branch: ${{ github.event.pull_request.head.repo.full_name != github.repository && github.event.pull_request.head.ref == 'main' && format('{0}/{1}', github.event.pull_request.head.repo.full_name, github.event.pull_request.head.ref) || github.event.pull_request.head.ref }}
