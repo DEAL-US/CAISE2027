@@ -219,18 +219,12 @@ const externalLinkProps = (href?: string) =>
   }
 
   header.expanded {
-    position: fixed;
+    --at-apply: fixed;
   }
 
-  /**
-   * Plain CSS on purpose: `--at-apply` is only resolved by UnoCSS's directive
-   * transformer, which does not run on the styles the dev server serves first.
-   * That left the dropdowns dead until a full reload, and broken again after
-   * every view transition.
-   */
   .dropdown:focus .dropdown-menu,
   .dropdown:focus-within .dropdown-menu,
   .dropdown:hover .dropdown-menu {
-    display: block;
+    --at-apply: block;
   }
 </style>
