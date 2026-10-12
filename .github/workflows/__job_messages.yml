@@ -44,7 +44,7 @@ jobs:
           DEPLOY_STATUS: ${{ inputs.in_progress && '🔄 Deploying...' || (inputs.preview_url != '' && '✅ Deployed!' || '❌ Failure. Check workflow logs for details') }}
           DEPLOYMENT_TYPE: ${{ inputs.branch != 'main' && '🔀 Preview' || '⚙️ Production' }}
           WORKFLOW_RUN: ${{ !inputs.in_progress && format('**[View build logs](https://github.com/{0}/actions/runs/{1})**', github.repository, github.run_id) || '' }}
-        # EOF is needed for multiline environment variables in a GitHub Actions context
+        # A delimiter is needed for multiline environment variables in a GitHub Actions context
         run: |
           echo "## Cloudflare Pages deployment" > $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -56,9 +56,11 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "$WORKFLOW_RUN" >> $GITHUB_STEP_SUMMARY
           COMPOSED_MSG=$(cat $GITHUB_STEP_SUMMARY)
-          echo "msg<<EOF" >> $GITHUB_ENV
+          # Random delimiter so the message contents can't inject other environment variables
+          DELIMITER="EOF_$(openssl rand -hex 16)"
+          echo "msg<<$DELIMITER" >> $GITHUB_ENV
           echo "$COMPOSED_MSG" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          echo "$DELIMITER" >> $GITHUB_ENV
 
       - name: Push comment to Pull Request 🔼
         uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1

@@ -19,12 +19,18 @@ on:
       is_prerelease:
         required: true
         type: boolean
+    # Optional so this works whether they are defined as repository or environment secrets:
+    # - Repository secrets: passed by the caller workflow.
+    # - Environment secrets: the caller can't read them (it has no 'environment:'), so it passes
+    #   an empty value, but the cf-pages job declares an environment and GitHub uses its secrets
+    #   instead of the ones passed by the caller.
+    secrets:
+      CLOUDFLARE_API_TOKEN:
+        required: false
+      CLOUDFLARE_ACCOUNT_ID:
+        required: false
 
-# Allow this job to clone the repo and create a page deployment
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+permissions: {}
 
 env:
   CF_PROJECT_NAME: caise27
@@ -33,6 +39,7 @@ jobs:
   cf-pages:
     name: Cloudflare Pages 📃
     runs-on: ubuntu-latest
+    permissions: {}
     environment: 
       name: ${{ inputs.branch == 'main' && 'Production (Cloudflare Pages)' || 'Preview (Cloudflare Pages)' }}
       url: ${{ steps.cf.outputs.deployment-url }}
@@ -46,6 +53,11 @@ jobs:
           name: ${{ inputs.artifact_name }}
           path: dist
 
+      # The site is static. The artifact may come from untrusted pull request code, so never
+      # deploy Cloudflare Pages Functions (server-side code that runs in Cloudflare with the project's bindings)
+      - name: Remove potential server-side code
+        run: rm -rf dist/_worker.js dist/_routes.json
+
       - name: Publish to Cloudflare Pages 📃
         uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
         id: cf
@@ -58,6 +70,10 @@ jobs:
     name: GitHub Pages 📃
     runs-on: ubuntu-latest
     if: ${{ !inputs.is_prerelease }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment: 
       name: ${{ inputs.branch == 'main' && 'Production (GitHub Pages)' || 'Preview (GitHub Pages)' }}
       url: ${{ steps.deploy.outputs.page_url }}
@@ -89,7 +105,6 @@ jobs:
     # Always run so the comment is composed for the workflow summary
     if: ${{ always() }}
     uses: ./.github/workflows/__job_messages.yml
-    secrets: inherit
     permissions: 
       pull-requests: write
     needs:

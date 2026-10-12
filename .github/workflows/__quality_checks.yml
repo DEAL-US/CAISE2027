@@ -8,16 +8,26 @@ on:
         type: string
   workflow_dispatch:
 
+# SECURITY: the 'quality' job executes untrusted code from fork pull requests
+# Not granting permissions by default prevents attackers from using the default's
+# GITHUB_TOKEN to exfiltrate secrets.
+permissions: {}
+
 jobs:
   dependency-review:
     name: Vulnerable dependencies 🔎
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           show-progress: false
           ref: ${{ inputs.commit || github.sha }}
+          persist-credentials: false
+          # Safe because of the SECURITY note at the top of this file
+          allow-unsafe-pr-checkout: true
 
       - name: Scan
         uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
@@ -36,6 +46,9 @@ jobs:
         with:
           show-progress: false
           ref: ${{ inputs.commit || github.sha }}
+          persist-credentials: false
+          # Safe because of the SECURITY note at the top of this file
+          allow-unsafe-pr-checkout: true
 
       - name: Check if all commits comply with the specification
         uses: webiny/action-conventional-commits@7f91b1595ca1951cdb671ddc9f07a49081ec5b69 # v1.4.2
@@ -52,6 +65,9 @@ jobs:
           show-progress: false
           fetch-depth: 0
           ref: ${{ inputs.commit || github.sha }}
+          persist-credentials: false
+          # Safe because of the SECURITY note at the top of this file
+          allow-unsafe-pr-checkout: true
 
       - name: Check commits
         uses: greenled/no-merge-commits-check@15835aad5ff322aef34eb9d189e40838a53625ec # v1.0.1
@@ -72,12 +88,16 @@ jobs:
         with:
           show-progress: false
           ref: ${{ inputs.commit || github.sha }}
+          persist-credentials: false
+          # Safe because of the SECURITY note at the top of this file
+          allow-unsafe-pr-checkout: true
 
       - name: Setup node environment ⚙️
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: lts/*
           check-latest: true
+          package-manager-cache: false
 
       - name: Install dependencies 📦
         run: corepack pnpm ci
