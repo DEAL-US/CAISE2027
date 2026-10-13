@@ -1,13 +1,17 @@
-/* global document, window, screen, HTMLCanvasElement, DeviceOrientationEvent, requestAnimationFrame, cancelAnimationFrame */
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import dracoWrapperUrl from 'three/addons/libs/draco/gltf/draco_wasm_wrapper.js?url';
+import dracoWasmUrl from 'three/addons/libs/draco/gltf/draco_decoder.wasm?url';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 // Evalúa ventanas de al menos un segundo de animación activa.
+/**
+ * Detect sustained low frame rates after the warmup period.
+ */
 function createFpsGuard(minFps = 25, lowDuration = 3000, warmup = 1500) {
   let elapsed = 0,
     frames = 0,
@@ -18,7 +22,7 @@ function createFpsGuard(minFps = 25, lowDuration = 3000, warmup = 1500) {
       frames = 0;
       lowTime = 0;
     },
-    sample(milliseconds) {
+    sample(milliseconds: number) {
       if (milliseconds <= 0) return false;
       if (warmup > 0) {
         warmup -= milliseconds;
@@ -36,26 +40,35 @@ function createFpsGuard(minFps = 25, lowDuration = 3000, warmup = 1500) {
   };
 }
 // Each navigation gets its own scene and event listeners.
-let cleanupScene;
+let cleanupScene: (() => void) | undefined;
 
-function disposeModel(root) {
-  const resources = new Set();
+/**
+ * Release shared geometry, materials, textures and shadow buffers once.
+ */
+function disposeModel(root: THREE.Object3D) {
+  const resources = new Set<{ dispose: () => void }>();
   root.traverse((object) => {
-    if (object.geometry) resources.add(object.geometry);
-    if (object.shadow) resources.add(object.shadow);
+    if ('shadow' in object && object.shadow instanceof THREE.LightShadow) {
+      resources.add(object.shadow);
+    }
+    if (!(object instanceof THREE.Mesh || object instanceof THREE.Line || object instanceof THREE.Points)) return;
+    resources.add(object.geometry);
     const materials = Array.isArray(object.material)
       ? object.material
       : object.material ? [object.material] : [];
     for (const material of materials) {
       resources.add(material);
       for (const value of Object.values(material)) {
-        if (value?.isTexture) resources.add(value);
+        if (value instanceof THREE.Texture) resources.add(value);
       }
     }
   });
   for (const resource of resources) resource.dispose();
 }
 
+/**
+ * Initialize the current hero and register its navigation cleanup.
+ */
 async function initScene() {
   cleanupScene?.();
   cleanupScene = undefined;
@@ -66,49 +79,41 @@ async function initScene() {
   container.classList.remove('scene-ready');
   const events = new AbortController();
   const { signal } = events;
-  let disposed = false;
+  const state: { disposed: boolean; composer?: EffectComposer } = { disposed: false };
   let frame = 0;
-  let model;
-  let composer;
-  let renderer;
+  let model: THREE.Object3D | undefined;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   const draco = new DRACOLoader();
   const release = () => {
-    if (disposed) return;
-    disposed = true;
+    if (state.disposed) return;
+    state.disposed = true;
     container.classList.remove('scene-ready');
     events.abort();
     cancelAnimationFrame(frame);
-    if (composer) {
-      for (const pass of composer.passes) pass.dispose();
-      composer.dispose();
+    if (state.composer) {
+      for (const pass of state.composer.passes) pass.dispose();
+      state.composer.dispose();
     }
     if (model) disposeModel(model);
-    renderer?.dispose();
+    renderer.dispose();
   };
   cleanupScene = release;
 
-  renderer = new THREE.WebGLRenderer({
-    canvas: canvas,
-    antialias: true,
-    alpha: true
-  });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.toneMapping = THREE.NeutralToneMapping;
   renderer.toneMappingExposure = 1.5;
 
   try {
     const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-    draco.setDecoderPath(
-      base + 'draco/'
-    );
+    draco.setDecoderPath({ js: dracoWrapperUrl, wasm: dracoWasmUrl });
     const loader = new GLTFLoader();
     loader.setDRACOLoader(draco);
     const gltf = await loader.loadAsync(base + 'models/Sevilla-comp.glb')
       .finally(() => draco.dispose());
-    if (disposed) {
+    if (state.disposed) {
       disposeModel(gltf.scene);
       return;
     }
@@ -117,8 +122,11 @@ async function initScene() {
     // para aplicar el material de profundidad mediante overrideMaterial.
     const scene = new THREE.Scene();
     scene.add(gltf.scene); // Conserva la cámara, los objetos y la luz exportada.
-    const camera = gltf.cameras[0];
-    if (!camera) throw new Error('El GLB no contiene ninguna cámara.');
+    const loadedCamera = gltf.cameras[0];
+    if (!(loadedCamera instanceof THREE.PerspectiveCamera || loadedCamera instanceof THREE.OrthographicCamera)) {
+      throw new Error('The GLB does not contain a supported camera.');
+    }
+    const camera = loadedCamera;
 
     // Relleno suave para las superficies que no reciben sol.
     scene.add(new THREE.HemisphereLight(0xeef4ff, 0x00caff, 2));
@@ -126,16 +134,16 @@ async function initScene() {
     const bounds = new THREE.Box3().setFromObject(scene);
     const center = bounds.getCenter(new THREE.Vector3());
     const radius = bounds.getSize(new THREE.Vector3()).length() / 2;
-    const suns = [];
+    const suns: THREE.DirectionalLight[] = [];
     scene.traverse((object) => {
-      if (object.isMesh) {
+      if (object instanceof THREE.Mesh) {
         object.castShadow = true;
         object.receiveShadow = true;
         const materials = Array.isArray(object.material)
           ? object.material
           : [object.material];
         for (const material of materials) {
-          if (material.name === 'base') {
+          if (material.name === 'base' && 'flatShading' in material) {
             // Normales de cara: evita suavizar entre paredes y tejados.
             // Los triangulos coplanares reciben la misma iluminacion.
             material.flatShading = true;
@@ -143,7 +151,7 @@ async function initScene() {
           }
         }
       }
-      if (object.isDirectionalLight) suns.push(object);
+      if (object instanceof THREE.DirectionalLight) suns.push(object);
     });
     for (const sun of suns) {
       sun.intensity = 5;
@@ -188,7 +196,7 @@ async function initScene() {
       aperture: 0.0025, // Menor valor = menor profundidad de campo.
       maxblur: 0.006 // Radio máximo como fracción del ancho de pantalla.
     });
-    dof.materialBokeh.defines.PERSPECTIVE_CAMERA = camera.isPerspectiveCamera
+    dof.materialBokeh.defines.PERSPECTIVE_CAMERA = camera instanceof THREE.PerspectiveCamera
       ? 1
       : 0;
     // El shader original fuerza alfa 1; conserva la transparencia del canvas.
@@ -196,7 +204,8 @@ async function initScene() {
       'gl_FragColor.a = 1.0;',
       ''
     );
-    composer = new EffectComposer(renderer);
+    const composer = new EffectComposer(renderer);
+    state.composer = composer;
     composer.addPass(new RenderPass(scene, camera));
     composer.addPass(dof);
     composer.addPass(new OutputPass()); // Conserva ACES y la salida sRGB.
@@ -204,6 +213,9 @@ async function initScene() {
     let dofEnabled = true;
     let resolutionReduced = false;
     const fpsGuard = createFpsGuard(25, 3000, 1500);
+    /**
+     * Render with the currently selected quality level.
+     */
     function renderScene(delta = 0) {
       if (dofEnabled) composer.render(delta);
       else renderer.render(scene, camera);
@@ -221,6 +233,9 @@ async function initScene() {
       -focusPlaneHeight
     );
 
+    /**
+     * Update depth of field from the pointer intersection with the map.
+     */
     function pickFocus() {
       if (!dofEnabled || !pointerInside || !focusDirty) return;
       focusDirty = false;
@@ -246,16 +261,23 @@ async function initScene() {
     const isMobile
       = navigator.maxTouchPoints > 0
         && window.matchMedia('(pointer: coarse)').matches;
+    const screenOrientation = (screen as { orientation?: ScreenOrientation }).orientation;
     const gyroOrigin = new THREE.Vector2();
     let gyroHasOrigin = false;
     let gyroEnabled = false;
-    let previousTime = null;
+    let previousTime: number | null = null;
 
-    function signedAngleDelta(angle, origin) {
+    /**
+     * Calculate the shortest signed difference between two angles.
+     */
+    function signedAngleDelta(angle: number, origin: number) {
       return THREE.MathUtils.euclideanModulo(angle - origin + 180, 360) - 180;
     }
 
-    function handleOrientation(event) {
+    /**
+     * Translate device tilt into a bounded camera rotation.
+     */
+    function handleOrientation(event: DeviceOrientationEvent) {
       if (!isMobile || event.beta === null || event.gamma === null) return;
 
       if (!gyroHasOrigin) {
@@ -267,7 +289,7 @@ async function initScene() {
       const beta = signedAngleDelta(event.beta, gyroOrigin.x);
       const gamma = signedAngleDelta(event.gamma, gyroOrigin.y);
       const screenAngle = THREE.MathUtils.degToRad(
-        screen.orientation?.angle ?? window.orientation ?? 0
+        screenOrientation?.angle ?? (window as { orientation?: number }).orientation ?? 0
       );
       const horizontal
         = gamma * Math.cos(screenAngle) + beta * Math.sin(screenAngle);
@@ -283,22 +305,33 @@ async function initScene() {
       requestMotion();
     }
 
+    // Safari exposes a permission request that is not part of the standard DOM types.
+    const orientationEvent = window.DeviceOrientationEvent as
+      | (typeof DeviceOrientationEvent & { requestPermission?: () => Promise<PermissionState> })
+      | undefined;
+
+    /**
+     * Subscribe to orientation events for the active scene.
+     */
     function startGyroscope() {
-      if (disposed || !isMobile || gyroEnabled || !('DeviceOrientationEvent' in window))
+      if (state.disposed || !isMobile || gyroEnabled || !orientationEvent)
         return;
       gyroEnabled = true;
       window.addEventListener('deviceorientation', handleOrientation, { signal });
     }
 
+    /**
+     * Request sensor access on browsers that require a user gesture.
+     */
     async function requestGyroscopePermission() {
-      if (!isMobile || gyroEnabled || !('DeviceOrientationEvent' in window))
+      if (!isMobile || gyroEnabled || !orientationEvent)
         return;
-      if (typeof DeviceOrientationEvent.requestPermission !== 'function') {
+      if (typeof orientationEvent.requestPermission !== 'function') {
         startGyroscope();
         return;
       }
       try {
-        if ((await DeviceOrientationEvent.requestPermission()) === 'granted')
+        if ((await orientationEvent.requestPermission()) === 'granted')
           startGyroscope();
       } catch (error) {
         console.warn('Could not activate gyroscope.', error);
@@ -309,13 +342,16 @@ async function initScene() {
     // debe ejecutarse dentro de un gesto del usuario (el primer toque).
     if (
       isMobile
-      && 'DeviceOrientationEvent' in window
-      && typeof DeviceOrientationEvent.requestPermission !== 'function'
+      && orientationEvent
+      && typeof orientationEvent.requestPermission !== 'function'
     )
       startGyroscope();
 
-    function animate(time) {
-      if (disposed) return;
+    /**
+     * Advance camera motion and focus until both settle.
+     */
+    function animate(time: number) {
+      if (state.disposed) return;
       if (document.hidden) {
         frame = 0;
         previousTime = null;
@@ -355,7 +391,7 @@ async function initScene() {
       pivot.rotation.y = current.x;
       if (!settled) focusDirty = true;
       pickFocus();
-      const focus = dof.uniforms.focus;
+      const focus = (dof.uniforms as { focus: THREE.IUniform<number> }).focus;
       focus.value = THREE.MathUtils.lerp(
         focus.value,
         targetFocus,
@@ -369,15 +405,21 @@ async function initScene() {
       frame = settled && focusSettled ? 0 : requestAnimationFrame(animate);
     }
 
+    /**
+     * Schedule an animation frame when the visible scene needs one.
+     */
     function requestMotion() {
-      if (!disposed && !frame && !document.hidden) {
+      if (!state.disposed && !frame && !document.hidden) {
         previousTime = null; // No cuenta el tiempo que estuvo quieto.
         fpsGuard.reset();
         frame = requestAnimationFrame(animate);
       }
     }
 
-    function updatePointer(event) {
+    /**
+     * Update focus and camera targets from pointer coordinates.
+     */
+    function updatePointer(event: PointerEvent) {
       const x = THREE.MathUtils.clamp(
         (event.clientX / window.innerWidth) * 2 - 1,
         -1,
@@ -404,6 +446,9 @@ async function initScene() {
     }, { signal });
     window.addEventListener('pointermove', updatePointer, { signal });
 
+    /**
+     * Restore the desktop camera target when interaction ends.
+     */
     function resetMotion() {
       pointerInside = false;
       if (!isMobile) target.set(0, 0);
@@ -421,15 +466,18 @@ async function initScene() {
         requestMotion();
       }
     }, { signal });
-    screen.orientation?.addEventListener('change', () => {
+    screenOrientation?.addEventListener('change', () => {
       gyroHasOrigin = false;
     }, { signal });
 
     // Conserva la altura del encuadre de la cámara ortográfica original.
-    const halfHeight = camera.isOrthographicCamera
+    const halfHeight = camera instanceof THREE.OrthographicCamera
       ? (camera.top - camera.bottom) / 2
       : 0;
 
+    /**
+     * Resize render targets and preserve the exported camera framing.
+     */
     function resize() {
       const { width, height } = container.getBoundingClientRect();
       if (width === 0 || height === 0) return;
@@ -438,7 +486,7 @@ async function initScene() {
       renderer.setSize(width, height, false);
       composer.setSize(width, height);
 
-      if (camera.isOrthographicCamera) {
+      if (camera instanceof THREE.OrthographicCamera) {
         camera.left = -halfHeight * aspect;
         camera.right = halfHeight * aspect;
         camera.top = halfHeight;
@@ -459,9 +507,10 @@ async function initScene() {
     resize();
     // Solo se mueve la cámara: reutiliza las sombras calculadas al cargar.
     renderer.shadowMap.autoUpdate = false;
-    document.getElementById('scene-overlay').style.display = 'block';
+    const overlay = container.querySelector<HTMLElement>('#scene-overlay');
+    if (overlay) overlay.style.display = 'block';
   } catch (error) {
-    if (disposed) return;
+    if (state.disposed) return;
     release();
     console.error(error);
   }
@@ -472,5 +521,11 @@ document.addEventListener('astro:before-swap', () => {
   cleanupScene = undefined;
 });
 document.addEventListener('astro:page-load', () => {
-  void initScene().catch(console.error);
+  void (async () => {
+    try {
+      await initScene();
+    } catch (error) {
+      console.error(error);
+    }
+  })();
 });

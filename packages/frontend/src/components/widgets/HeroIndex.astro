@@ -217,11 +217,22 @@ const {
   }
 
   #scroll-down-cta{
-    cursor: pointer; 
+    cursor: pointer;
   }
 
-  /* Override shared button variants regardless of stylesheet order on navigation. */
+  /* Keep the complete hero button appearance independent of shared UnoCSS styles. */
   #hero :global(.action-button) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 1.5rem;
+    border-radius: 9999px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.375;
+    text-align: center;
+    cursor: pointer;
     background: rgba(22, 71, 126, 0.5);
     border: solid 3px rgb(22, 71, 126);
     backdrop-filter: blur(5px);
@@ -232,6 +243,12 @@ const {
       background: rgb(22, 71, 126);
       backdrop-filter: blur(0px);
       transform: scale(1.2);
+    }
+  }
+
+  @media (min-width: 768px) {
+    #hero :global(.action-button) {
+      padding-inline: 2rem;
     }
   }
 
@@ -249,4 +266,4 @@ const {
   }
 </style>
 
-<script src="./hero-index-scene.js"></script>
+<script src="./hero-index-scene.ts"></script>
