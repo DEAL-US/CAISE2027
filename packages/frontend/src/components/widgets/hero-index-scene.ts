@@ -8,6 +8,29 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
+type HeroQuality = 'full' | 'half-resolution' | 'half-resolution-no-dof';
+const qualityStorageKey = 'caise2027:hero-quality:v1';
+
+/** Restore a recognized quality level, falling back when storage is unavailable. */
+function readHeroQuality(): HeroQuality {
+  try {
+    const saved = localStorage.getItem(qualityStorageKey);
+    if (saved === 'half-resolution' || saved === 'half-resolution-no-dof') return saved;
+  } catch {
+    // The scene still adapts normally when browser storage is blocked.
+  }
+  return 'full';
+}
+
+/** Remember automatic quality reductions across navigation and browser sessions. */
+function saveHeroQuality(quality: HeroQuality) {
+  try {
+    localStorage.setItem(qualityStorageKey, quality);
+  } catch {
+    // Storage failures must not interrupt rendering.
+  }
+}
+
 // Evalúa ventanas de al menos un segundo de animación activa.
 /**
  * Detect sustained low frame rates after the warmup period.
@@ -99,7 +122,8 @@ async function initScene() {
   };
   cleanupScene = release;
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  const savedQuality = readHeroQuality();
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2) / (savedQuality === 'full' ? 1 : 2));
 
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
@@ -210,8 +234,9 @@ async function initScene() {
     composer.addPass(dof);
     composer.addPass(new OutputPass()); // Conserva ACES y la salida sRGB.
 
-    let dofEnabled = true;
-    let resolutionReduced = false;
+    let dofEnabled = savedQuality !== 'half-resolution-no-dof';
+    let resolutionReduced = savedQuality !== 'full';
+    dof.enabled = dofEnabled;
     const fpsGuard = createFpsGuard(25, 3000, 1500);
     /**
      * Render with the currently selected quality level.
@@ -363,7 +388,7 @@ async function initScene() {
       previousTime = time;
       if (dofEnabled && fpsGuard.sample(elapsed)) {
         // Cada nivel requiere su propia ventana de bajo rendimiento.
-        // Conserva la calidad elegida hasta recargar para evitar oscilaciones.
+        // Remember each reduction so later visits start at the selected quality.
         fpsGuard.reset();
         if (!resolutionReduced) {
           resolutionReduced = true;
@@ -371,12 +396,14 @@ async function initScene() {
           // Reduce también los buffers del blur, conservando el tamaño CSS.
           renderer.setPixelRatio(pixelRatio);
           composer.setPixelRatio(pixelRatio);
+          saveHeroQuality('half-resolution');
           console.info(
             'Resolution reduced to half to keep performance.'
           );
         } else {
           dofEnabled = false;
           dof.enabled = false;
+          saveHeroQuality('half-resolution-no-dof');
           console.info(
             'DoF disabled to keep performance.'
           );
