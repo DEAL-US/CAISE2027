@@ -17,7 +17,9 @@ const variants = {
   primary: 'btn btn-primary',
   secondary: 'btn btn-secondary',
   tertiary: 'btn btn-tertiary',
-  link: 'cursor-pointer hover:text-primary'
+  link: 'cursor-pointer hover:text-primary',
+  /* Translucent over the home page's 3D scene; not built on `.btn`, so no dark-mode override has to be undone */
+  hero: 'inline-flex items-center justify-center rounded-[9999px] border-3 border-brand-blue bg-brand-blue/50 px-6 py-3.5 md:px-8 text-base leading-snug font-semibold text-white text-center cursor-pointer backdrop-blur-[5px] transition-all duration-1200 ease-bounce hover:z-1 hover:bg-brand-blue hover:backdrop-blur-0 hover:[transform:scale(1.2)] focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-blue-200'
 };
 ---
 

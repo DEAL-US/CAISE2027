@@ -188,7 +188,7 @@ export interface Disclaimer extends BetterOmit<astroHTML.JSX.InputHTMLAttributes
 
 // COMPONENTS
 export interface CallToAction extends BetterOmit<HTMLAttributes<'a'>, 'slot'> {
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'link';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'link' | 'hero';
   text?: string;
   icon?: IconElement;
   classes?: Partial<Classes>;

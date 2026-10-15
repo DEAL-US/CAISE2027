@@ -52,7 +52,7 @@ const externalLinkProps = (href?: string) =>
 <header
   class:list={[
     { 'sticky': isSticky, 'relative': !isSticky, 'dark': isDark, 'is-index': isIndex },
-    'top-0 z-50 flex-none mx-auto w-full border-b border-gray-50/0 parent'
+    'top-0 z-50 flex-none mx-auto w-full border-b border-gray-50/0 parent group/header'
   ]}
   data-aw-sticky-header={isSticky || undefined}
   data-aw-forced-mobile-header={forceMobile || undefined}>
@@ -100,7 +100,8 @@ const externalLinkProps = (href?: string) =>
     <nav
       class:list={[
         'text-default w-full items-center hidden overflow-x-hidden overflow-y-auto',
-        { 'lg:mx-5 lg:flex lg:w-auto lg:justify-self-center lg:overflow-x-auto lg:overflow-y-visible': !forceMobile }
+        { 'lg:mx-5 lg:flex lg:w-auto lg:justify-self-center lg:overflow-x-auto lg:overflow-y-visible': !forceMobile },
+        { 'group-[:not(.scroll)]/header:text-brand': isIndex }
       ]}
       aria-label="Main navigation">
       <ul
@@ -208,9 +209,6 @@ const externalLinkProps = (href?: string) =>
 </header>
 
 <style>
-  header.is-index:not(.scroll) nav {
-    color: #d71921;
-  }
   header.scroll > div:first-child {
     box-shadow: 0 0.375rem 1.5rem 0 rgb(140 152 164 / 13%);
   }

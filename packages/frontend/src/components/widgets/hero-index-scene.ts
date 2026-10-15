@@ -535,7 +535,7 @@ async function initScene() {
     // Solo se mueve la cámara: reutiliza las sombras calculadas al cargar.
     renderer.shadowMap.autoUpdate = false;
     const overlay = container.querySelector<HTMLElement>('#scene-overlay');
-    if (overlay) overlay.style.display = 'block';
+    overlay?.classList.remove('hidden');
   } catch (error) {
     if (state.disposed) return;
     release();
