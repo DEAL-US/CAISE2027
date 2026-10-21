@@ -14,6 +14,11 @@ export interface NewsItem {
  */
 const news: NewsItem[] = [
   {
+    date: '2026-10-21',
+    text: 'Important! New LNCS template.',
+    href: 'https://www.overleaf.com/latex/templates/springer-nature-lecture-notes-in-computer-science/kzwwpvhwnvfj'
+  },
+  {
     date: '2026-10-08',
     text: 'The call for workshops is now available',
     href: getPermalink('/calls/workshops')
