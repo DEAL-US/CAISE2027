@@ -34,6 +34,9 @@ import AndreaDelgado from '#/assets/images/people/Andrea_Delgado.jpg';
 import MariaTeresaGomezLopez from '#/assets/images/people/Maria_Teresa_Gomez_Lopez.png';
 import OscarPastor from '#/assets/images/people/oscar_pastor.jpg';
 import MoniqueSnoeck from '#/assets/images/people/monik_snoeck.jpg';
+import XavierFranch from '#/assets/images/people/FRANCH-XAVIER.jpg';
+import MoniqueSnoeckSteering from '#/assets/images/people/SNOECK-MONIQUE.jpg';
+import JelenaZdravkovic from '#/assets/images/people/ZDRAVKOVIC-JELENA.jpg';
 
 import type { Testimonial } from '#/types';
 
@@ -102,7 +105,7 @@ type ConferenceMemberData = Partial<Record<keyof typeof sharedPeopleData, Confer
 /** Shared contact addresses shown below the corresponding committee heading. */
 export const conferenceCommitteeContacts: Record<string, string> = {
   'General chairs': 'caise2027@easychair.org',
-  'Program chairs': 'caise2027-main@easychair.org',
+  'Program Committee': 'caise2027-main@easychair.org',
   'Workshops': 'caise2027-workshops@easychair.org',
   'Tutorials': 'caise2027-tutorials@easychair.org',
   'Panels': 'caise2027-panels@easychair.org',
@@ -120,7 +123,7 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       // email: 'aruiz@us.es'
     }
   },
-  'Program chairs': {
+  'Program Committee': {
     'Massimo Mecella': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=x844E6sAAAAJ',
       image: MassimoMecella,
@@ -132,6 +135,26 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       image: MaribelSantos,
       institution: 'University of Minho',
       location: 'Portugal'
+    }
+  },
+  'Steering Committee': {
+    'Xavier Franch': {
+      scholar: 'https://scholar.google.com/citations?user=k6b-lLYAAAAJ',
+      image: XavierFranch,
+      institution: 'Universitat Politècnica de Catalunya (UPC)',
+      location: 'Spain'
+    },
+    'Monique Snoeck': {
+      scholar: 'https://scholar.google.it/citations?user=d25wDdMAAAAJ',
+      image: MoniqueSnoeckSteering,
+      institution: 'KU Leuven',
+      location: 'Belgium'
+    },
+    'Jelena Zdravkovic': {
+      scholar: 'https://scholar.google.it/citations?user=0Jvid1AAAAAJ&hl=en&oi=ao',
+      image: JelenaZdravkovic,
+      institution: 'Stockholm University',
+      location: 'Sweden'
     }
   },
   'Local Organising': {
@@ -241,7 +264,7 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       location: 'Spain'
     }
   },
-  'Proceedings chairs': {
+  'Proceedings': {
     'Flavia Monti': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=PegkmvcAAAAJ',
       image: FlaviaMonti,
