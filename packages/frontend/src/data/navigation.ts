@@ -158,6 +158,15 @@ export function getHeaderData(_currentUrl: URL): HeaderData {
             href: 'http://www.bpmds.org/'
           }
         ]
+      },
+      {
+        text: 'Sponsors',
+        links: [
+          {
+            text: 'Become a sponsor',
+            href: getPermalink('/sponsors/become-a-sponsor')
+          }
+        ]
       }
       // {
       //   text: 'Venue',
@@ -274,6 +283,15 @@ export const getFooterData = (): FooterData => ({
           href: getPermalink('/calls/dates')
         },
         ...calls()
+      ]
+    },
+    {
+      title: 'Sponsors',
+      links: [
+        {
+          text: 'Become a sponsor',
+          href: getPermalink('/sponsors/become-a-sponsor')
+        }
       ]
     }
     // {

@@ -1,0 +1,60 @@
+---
+import PageLayout from '#/layouts/PageLayout.astro';
+import Content from '#/components/widgets/Content.astro';
+import CallToAction from '#/components/widgets/CallToAction.astro';
+import pdfBrochure from '#/assets/documents/sponsoring/CAISE2027-sponsoring-offer_EN.pdf';
+
+const contactEmail = 'mailto:info@caise2027seville.org';
+---
+
+<PageLayout
+  metadata={{
+    title: 'Become a sponsor',
+    description: 'Being a sponsor of CAiSE 2027 comes with its own set of advantages'
+  }}
+  heroProps={{
+    actions: [
+      { variant: 'hero', text: 'Download brochure', icon: 'i-tabler:download', href: pdfBrochure },
+      { variant: 'hero', text: 'Contact us', icon: 'i-tabler:mail', href: contactEmail }
+    ]
+  }}>
+  <Content
+    id="calendar"
+    bg
+    title="Why sponsor CAiSE 2027?"
+    callsToAction={[
+      {
+        text: 'Download the CAiSE 2027 sponsorship brochure',
+        href: pdfBrochure,
+        icon: 'i-tabler:download',
+        variant: 'primary'
+      }]}>
+    <Fragment slot="content">
+      <p>
+        This will be the 39<sup>th</sup> International Conference on Advanced Information Systems Engineering,
+        and is being held in Seville from 7 to 11 June 2027. Over the past decade, the conference has built its
+        reputation by showcasing leading-edge research of the highest quality, complemented by talks, tutorials,
+        and discussions by the most renowned thought leaders and innovators in the field.
+      </p>
+      <br />
+      <p>
+        If you’re looking to hire excellent researchers,
+        promote a product that’s useful to academy, promote awareness of your organisation,
+        or just give something back to the community, then you should sponsor CAiSE 2027.
+      </p>
+    </Fragment>
+  </Content>
+
+  <CallToAction
+    title="Contact us today"
+    boxed={false}
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Write an email',
+        href: contactEmail
+      }
+    ]}
+  >
+  </CallToAction>
+</PageLayout>
