@@ -141,8 +141,16 @@ export function getHeaderData(_currentUrl: URL): HeaderData {
         text: 'Committees',
         links: [
           {
-            text: 'Organizing Committees',
+            text: 'Conference Chairs',
             href: getPermalink('/conference/chairs')
+          },
+          {
+            text: 'Program Board',
+            href: getPermalink('/conference/committees/board')
+          },
+          {
+            text: 'Program Committee',
+            href: getPermalink('/conference/committees/program')
           }
         ]
       },
