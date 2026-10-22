@@ -223,12 +223,18 @@ const externalLinkProps = (href?: string) =>
   }
 
   header.expanded {
-    --at-apply: fixed;
+    position: fixed;
   }
 
+  /**
+   * Plain CSS on purpose: in dev, after a view transition the component styles
+   * are re-injected without going through UnoCSS's directive transformer, so an
+   * `--at-apply` here stays unresolved and the dropdowns stop opening until a
+   * full reload. Production builds are not affected.
+   */
   .dropdown:focus .dropdown-menu,
   .dropdown:focus-within .dropdown-menu,
   .dropdown:hover .dropdown-menu {
-    --at-apply: block;
+    display: block;
   }
 </style>
