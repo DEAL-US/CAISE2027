@@ -137,7 +137,7 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       location: 'Portugal'
     }
   },
-  'Local Organising Chairs': {
+  'Local Organizing Chairs': {
     'Inma Hernández': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=nThy9VsAAAAJ',
       ...USData,
