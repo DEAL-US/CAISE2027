@@ -137,6 +137,20 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       location: 'Portugal'
     }
   },
+  'Local Organising Chairs': {
+    'Inma Hernández': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=nThy9VsAAAAJ',
+      ...USData,
+      image: InmaHernandez
+      // email: 'inmahernandez@us.es'
+    },
+    'Daniel Ayala': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=Pv2WnYAAAAAJ',
+      ...USData,
+      image: DanielAyala
+      // email: 'dayala1@us.es'
+    }
+  },
   'Tutorial Chairs': {
     'Arik Senderovich': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=89TT1cgAAAAJ',
@@ -218,20 +232,6 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       image: IstvanDavid,
       institution: 'McMaster University',
       location: 'Canada'
-    }
-  },
-  'Local Organising Chairs': {
-    'Inma Hernández': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=nThy9VsAAAAJ',
-      ...USData,
-      image: InmaHernandez
-      // email: 'inmahernandez@us.es'
-    },
-    'Daniel Ayala': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=Pv2WnYAAAAAJ',
-      ...USData,
-      image: DanielAyala
-      // email: 'dayala1@us.es'
     }
   },
   'Panel Chairs': {
