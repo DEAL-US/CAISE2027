@@ -5,8 +5,8 @@ import { conferenceChairs, conferenceCommitteeContacts, toTestimonial } from '#/
 ---
 
 <PageLayout metadata={{
-  title: 'Conference Chairs',
-  description: 'Chairs for this edition of the conference'
+  title: 'Organizing Committee',
+  description: 'The organizing committee of this edition of the conference'
 }}>
   {Object.entries(conferenceChairs()).map(([section, chairs], section_index) => {
     const email = conferenceCommitteeContacts[section];
