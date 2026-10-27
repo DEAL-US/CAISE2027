@@ -141,16 +141,17 @@ export function getHeaderData(_currentUrl: URL): HeaderData {
         text: 'Committees',
         links: [
           {
-            text: 'Conference Chairs',
+            text: 'Organizing Committee',
             href: getPermalink('/conference/chairs')
-          },
-          {
-            text: 'Program Board',
-            href: getPermalink('/conference/committees/board')
           },
           {
             text: 'Program Committee',
             href: getPermalink('/conference/committees/program')
+          },
+          {
+            /* The page is titled "Steering Committee & Advisory Board"; the menu keeps it short */
+            text: 'Steering Committee',
+            href: getPermalink('/conference/committees/steering')
           }
         ]
       },

@@ -104,17 +104,17 @@ type ConferenceMemberData = Partial<Record<keyof typeof sharedPeopleData, Confer
 
 /** Shared contact addresses shown below the corresponding committee heading. */
 export const conferenceCommitteeContacts: Record<string, string> = {
-  'General chairs': 'caise2027@easychair.org',
-  'Program Committee': 'caise2027-main@easychair.org',
-  'Workshops': 'caise2027-workshops@easychair.org',
-  'Tutorials': 'caise2027-tutorials@easychair.org',
-  'Panels': 'caise2027-panels@easychair.org',
-  'Doctoral Consortium': 'caise2027-dc@easychair.org',
-  'Forum': 'caise2027-forum@easychair.org'
+  'General Chairs': 'caise2027@easychair.org',
+  'Program Committee Chairs': 'caise2027-main@easychair.org',
+  'Workshop Chairs': 'caise2027-workshops@easychair.org',
+  'Tutorial Chairs': 'caise2027-tutorials@easychair.org',
+  'Panel Chairs': 'caise2027-panels@easychair.org',
+  'Doctoral Consortium Chairs': 'caise2027-dc@easychair.org',
+  'Forum Chairs': 'caise2027-forum@easychair.org'
 };
 
 export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
-  'General chairs': {
+  'General Chairs': {
     'Cristina Cabanillas': sharedPeopleData['Cristina Cabanillas'],
     'Antonio Ruiz Cortés': {
       scholar: 'https://scholar.google.es/citations?user=Ka-FHBQAAAAJ&hl=es&oi=ao',
@@ -123,7 +123,7 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       // email: 'aruiz@us.es'
     }
   },
-  'Program Committee': {
+  'Program Committee Chairs': {
     'Massimo Mecella': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=x844E6sAAAAJ',
       image: MassimoMecella,
@@ -137,41 +137,21 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       location: 'Portugal'
     }
   },
-  'Steering Committee': {
-    'Xavier Franch': {
-      scholar: 'https://scholar.google.com/citations?user=k6b-lLYAAAAJ',
-      image: XavierFranch,
-      institution: 'Universitat Politècnica de Catalunya (UPC)',
-      location: 'Spain'
+  'Tutorial Chairs': {
+    'Arik Senderovich': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=89TT1cgAAAAJ',
+      image: ArikSenderovich,
+      institution: 'York University',
+      location: 'Canada'
     },
-    'Monique Snoeck': {
-      scholar: 'https://scholar.google.it/citations?user=d25wDdMAAAAJ',
-      image: MoniqueSnoeckSteering,
+    'Estefanía Serral Asensio': {
+      scholar: 'https://scholar.google.es/citations?user=5YyRdNEAAAAJ&hl=es&oi=ao',
+      image: EstefaniaSerral,
       institution: 'KU Leuven',
       location: 'Belgium'
-    },
-    'Jelena Zdravkovic': {
-      scholar: 'https://scholar.google.it/citations?user=0Jvid1AAAAAJ&hl=en&oi=ao',
-      image: JelenaZdravkovic,
-      institution: 'Stockholm University',
-      location: 'Sweden'
     }
   },
-  'Local Organising': {
-    'Inma Hernández': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=nThy9VsAAAAJ',
-      ...USData,
-      image: InmaHernandez
-      // email: 'inmahernandez@us.es'
-    },
-    'Daniel Ayala': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=Pv2WnYAAAAAJ',
-      ...USData,
-      image: DanielAyala
-      // email: 'dayala1@us.es'
-    }
-  },
-  'Workshops': {
+  'Workshop Chairs': {
     'Janis Stirna': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=8aR_MtEAAAAJ',
       image: JanisStirna,
@@ -191,80 +171,7 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       location: 'Spain'
     }
   },
-  'Tutorials': {
-    'Arik Senderovich': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=89TT1cgAAAAJ',
-      image: ArikSenderovich,
-      institution: 'York University',
-      location: 'Canada'
-    },
-    'Estefanía Serral Asensio': {
-      scholar: 'https://scholar.google.es/citations?user=5YyRdNEAAAAJ&hl=es&oi=ao',
-      image: EstefaniaSerral,
-      institution: 'KU Leuven',
-      location: 'Belgium'
-    }
-  },
-  'Panels': {
-    'Manuel Resinas': sharedPeopleData['Manuel Resinas'],
-    'Schahram Dustdar': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=0n5S6uUAAAAJ',
-      image: SchahramDustdar,
-      institution: 'TU Wien',
-      location: 'Austria'
-    }
-  },
-  'Doctoral Consortium': {
-    'Paolo Giorgini': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=ulB0WtkAAAAJ',
-      image: PaoloGiorgini,
-      institution: 'University of Trento',
-      location: 'Italy'
-    },
-    'Adela del Río Ortega': sharedPeopleData['Adela del Río Ortega'],
-    'Dominik Bork': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=tp-fFq0AAAAJ',
-      image: DominikBork,
-      institution: 'TU Wien',
-      location: 'Austria'
-    }
-  },
-  'Forum': {
-    'Marite Kirikova': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=XSP8XvsAAAAJ',
-      image: MariteKirikova,
-      institution: 'Riga Technical University',
-      location: 'Latvia'
-    },
-    'Francesco Leotta': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=Z216gywAAAAJ',
-      image: FrancescoLeotta,
-      institution: 'Sapienza Università di Roma',
-      location: 'Italy'
-    }
-  },
-  'Journal First': {
-    'Giancarlo Guizzardi': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=nnfVBt8AAAAJ',
-      image: GiancarloGuizzardi,
-      institution: 'University of Twente',
-      location: 'Netherlands'
-    },
-    'María Teresa Gómez-López': {
-      scholar: 'https://scholar.google.com/citations?user=qSd_60AAAAAJ&hl=en',
-      ...USData,
-      image: MariaTeresaGomezLopez
-    }
-  },
-  'Research Projects Exhibition': {
-    'María José Escalona': {
-      scholar: 'https://scholar.google.es/citations?user=30qXvJMAAAAJ&hl=es&oi=ao',
-      image: MariaJoseEscalona,
-      institution: 'University of Seville',
-      location: 'Spain'
-    }
-  },
-  'Proceedings': {
+  'Proceedings Chairs': {
     'Flavia Monti': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=PegkmvcAAAAJ',
       image: FlaviaMonti,
@@ -282,47 +189,11 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       ...USDataNoCity
     }
   },
-  'PhD Awards': {
-    'Oscar Pastor': {
-      scholar: 'https://scholar.google.es/citations?user=JSQuVBYAAAAJ&hl=es&oi=ao',
-      image: OscarPastor,
-      institution: 'Universitat Politècnica de València',
-      location: 'Spain'
-    },
-    'Manuel Wimmer': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=YZDY1psAAAAJ',
-      image: ManuelWimmer,
-      institution: 'JKU Linz',
-      location: 'Austria'
-    },
-    'Monique Snoeck': {
-      scholar: 'https://scholar.google.es/citations?hl=es&user=d25wDdMAAAAJ',
-      image: MoniqueSnoeck,
-      institution: 'KU Leuven',
-      location: 'Belgium'
-    }
-  },
-  'Web and Social Media': {
-    'José Calderón': {
-      ...USDataNoCity,
-      image: JoseCalderon
-    },
-    'Daniel Ruiz López': {
-      ...USData,
-      // email: 'druiz7@us.es',
-      image: DanielRuiz
-    },
-    'Fernando Fernández': {
-      ...USData,
-      // email: 'ferferga@us.es',
-      image: FernandoFernandez
-    }
-  },
   /**
    * The four members without an institution or an email are pending: only
    * their country is confirmed so far.
    */
-  'Publicity': {
+  'Publicity Chairs': {
     'Djordje Djurica': {
       scholar: 'https://scholar.google.es/citations?hl=es&user=jjrLeQIAAAAJ',
       image: DjordjeDjurica,
@@ -348,6 +219,137 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
       institution: 'McMaster University',
       location: 'Canada'
     }
+  },
+  'Local Organising Chairs': {
+    'Inma Hernández': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=nThy9VsAAAAJ',
+      ...USData,
+      image: InmaHernandez
+      // email: 'inmahernandez@us.es'
+    },
+    'Daniel Ayala': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=Pv2WnYAAAAAJ',
+      ...USData,
+      image: DanielAyala
+      // email: 'dayala1@us.es'
+    }
+  },
+  'Panel Chairs': {
+    'Manuel Resinas': sharedPeopleData['Manuel Resinas'],
+    'Schahram Dustdar': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=0n5S6uUAAAAJ',
+      image: SchahramDustdar,
+      institution: 'TU Wien',
+      location: 'Austria'
+    }
+  },
+  'Doctoral Consortium Chairs': {
+    'Paolo Giorgini': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=ulB0WtkAAAAJ',
+      image: PaoloGiorgini,
+      institution: 'University of Trento',
+      location: 'Italy'
+    },
+    'Adela del Río Ortega': sharedPeopleData['Adela del Río Ortega'],
+    'Dominik Bork': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=tp-fFq0AAAAJ',
+      image: DominikBork,
+      institution: 'TU Wien',
+      location: 'Austria'
+    }
+  },
+  'Forum Chairs': {
+    'Marite Kirikova': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=XSP8XvsAAAAJ',
+      image: MariteKirikova,
+      institution: 'Riga Technical University',
+      location: 'Latvia'
+    },
+    'Francesco Leotta': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=Z216gywAAAAJ',
+      image: FrancescoLeotta,
+      institution: 'Sapienza Università di Roma',
+      location: 'Italy'
+    }
+  },
+  'Journal First Chairs': {
+    'Giancarlo Guizzardi': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=nnfVBt8AAAAJ',
+      image: GiancarloGuizzardi,
+      institution: 'University of Twente',
+      location: 'Netherlands'
+    },
+    'María Teresa Gómez-López': {
+      scholar: 'https://scholar.google.com/citations?user=qSd_60AAAAAJ&hl=en',
+      ...USData,
+      image: MariaTeresaGomezLopez
+    }
+  },
+  'Research Projects Exhibition Chair': {
+    'María José Escalona': {
+      scholar: 'https://scholar.google.es/citations?user=30qXvJMAAAAJ&hl=es&oi=ao',
+      image: MariaJoseEscalona,
+      institution: 'University of Seville',
+      location: 'Spain'
+    }
+  },
+  'PhD Award Chairs': {
+    'Oscar Pastor': {
+      scholar: 'https://scholar.google.es/citations?user=JSQuVBYAAAAJ&hl=es&oi=ao',
+      image: OscarPastor,
+      institution: 'Universitat Politècnica de València',
+      location: 'Spain'
+    },
+    'Manuel Wimmer': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=YZDY1psAAAAJ',
+      image: ManuelWimmer,
+      institution: 'JKU Linz',
+      location: 'Austria'
+    },
+    'Monique Snoeck': {
+      scholar: 'https://scholar.google.es/citations?hl=es&user=d25wDdMAAAAJ',
+      image: MoniqueSnoeck,
+      institution: 'KU Leuven',
+      location: 'Belgium'
+    }
+  },
+  'Web and Social Media Chairs': {
+    'José Calderón': {
+      ...USDataNoCity,
+      image: JoseCalderon
+    },
+    'Daniel Ruiz López': {
+      ...USData,
+      // email: 'druiz7@us.es',
+      image: DanielRuiz
+    },
+    'Fernando Fernández': {
+      ...USData,
+      // email: 'ferferga@us.es',
+      image: FernandoFernandez
+    }
+  }
+});
+
+/** Chairs of the CAiSE Steering Committee, shown on the steering committee page. */
+export const steeringCommitteeChairs = (): ConferenceMemberData => ({
+  'Xavier Franch': {
+    scholar: 'https://scholar.google.com/citations?user=k6b-lLYAAAAJ',
+    image: XavierFranch,
+    institution: 'Universitat Politècnica de Catalunya (UPC)',
+    location: 'Spain'
+  },
+  'Monique Snoeck': {
+    scholar: 'https://scholar.google.it/citations?user=d25wDdMAAAAJ',
+    image: MoniqueSnoeckSteering,
+    institution: 'KU Leuven',
+    location: 'Belgium'
+  },
+  'Jelena Zdravkovic': {
+    scholar: 'https://scholar.google.it/citations?user=0Jvid1AAAAAJ&hl=en&oi=ao',
+    image: JelenaZdravkovic,
+    institution: 'Stockholm University',
+    location: 'Sweden'
   }
 });
 

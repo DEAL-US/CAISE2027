@@ -1,0 +1,45 @@
+---
+title: 'Steering Committee & Advisory Board'
+layout: '#/layouts/MarkdownLayout.astro'
+---
+import Testimonials from '#/components/widgets/Testimonials.astro';
+import { steeringCommitteeChairs, toTestimonial } from '#/data/people';
+
+## Steering Committee Chairs
+
+<Testimonials
+  classes={{ container: 'px-0 py-6 md:px-0 md:py-6 lg:py-6' }}
+  testimonials={Object.entries(steeringCommitteeChairs()).map(([name, info]) =>
+    toTestimonial(name, info, { includeTreatment: false })
+  )} />
+
+## Steering Committee
+
+* Carlos Cetina, Universidad San Jorge, Spain
+* Frederik Gailly, Ghent University, Belgium
+* Paolo Giorgini, University of Trento, Italy
+* Giancarlo Guizzardi, University of Twente, The Netherlands
+* Marta Indulska, The University of Queensland, Australia
+* Marcello La Rosa, University of Melbourne, Australia
+* Massimo Mecella, Sapienza University of Rome, Italy
+* Haralambos Mouratidis, University of Essex, UK
+* Geert Poels, Ghent University, Belgium
+* Hajo Reijers, Utrecht University, The Netherlands
+* Iris Reinhartz-Berger, University of Haifa, Israel
+* Shazia Sadiq, The University of Queensland, Australia
+* Camille Salinesi, University of Paris 1 Pantheon-Sorbonne, France
+* Flavia Santoro, UERJ - Universidade do Estado do Rio de Janeiro, Brazil
+* Pnina Soffer, University of Haifa, Israel
+* Janis Stirna, Stockholm University, Sweden
+* Ernest Teniente, Universitat Politècnica de Catalunya, Spain
+* Barbara Weber, University of St. Gallen, Switzerland
+* Eric Yu, University of Toronto, Canada
+
+## Advisory Board
+
+* Johann Eder, Alpen-Adria University Klagenfurt, Austria (Chair)
+* Arne Sølvberg, Norwegian Univ. of Science and Technology, Norway
+* Colette Rolland, University of Paris 1, France
+* Oscar Pastor, Universitat Politècnica de València, Spain
+* Barbara Pernici, Politecnico Milano, Italy
+* John Krogstie, Technical University of Trondheim, Norway
