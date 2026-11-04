@@ -133,7 +133,7 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
     'Maribel Yasmina Santos': {
       scholar: 'https://scholar.google.es/citations?user=wmG-0k0AAAAJ&hl=es&oi=ao',
       image: MaribelSantos,
-      institution: 'University of Minho',
+      institution: 'University of Minho, CCG/ZGDV Institute',
       location: 'Portugal'
     }
   },
