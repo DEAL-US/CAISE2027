@@ -24,18 +24,6 @@
   hover:text-white dark:text-white dark:bg-secondary dark:border-secondary dark:hover:border-primary dark:hover:bg-primary;
 }
 
-/*
- * A button centres its text and its trailing icon as one group, so the text
- * alone sat ~9px left of centre. This invisible spacer mirrors the icon's
- * footprint (`ml-1 w-5 -mr-1.5` in `ButtonContents`, 1.125rem) on the other
- * side, which puts the text itself in the middle.
- */
-:is(a, button):has(> [data-icon])::before {
-  content: '';
-  flex-shrink: 0;
-  width: 1.125rem;
-}
-
 .btn-tertiary {
   --at-apply: text-muted border-none shadow-none hover:text-gray-900 dark:text-gray-400 dark:hover:text-white;
 }

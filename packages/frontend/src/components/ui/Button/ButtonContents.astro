@@ -5,9 +5,23 @@ import type { CallToAction as Props } from '#/types';
 const {
   text = Astro.slots.render('default')
 } = Astro.props;
+
+/*
+ * The last word goes in a `nowrap` group with the icon, so a wrapped label
+ * never leaves the icon alone on its own line. Labels carrying markup are left
+ * whole, since cutting them could split a tag.
+ */
+const html = String(await text ?? '');
+const [, head = html, lastWord = ''] = html.includes('<') ? [] : /^(.*?)(\S+)\s*$/s.exec(html) ?? [];
 ---
 
-<Fragment set:html={text} />
-<BSlot class="ml-1 h-5 w-5 inline-block -mr-1.5 rtl:mr-1 rtl:-ml-1.5">
-  <slot name="icon" />
-</BSlot>
+{/*
+  The icon flows inline after the text, inside one wrapper, so `text-center`
+  centres each line together with its icon. As separate flex items, a wrapped
+  label kept spare width on its left and the pair sat off-centre.
+*/}
+<span>
+  <Fragment set:html={head} /><span class="whitespace-nowrap"><Fragment set:html={lastWord} /><BSlot
+      class="ml-1.5 h-5 w-5 inline-block rtl:ml-0 rtl:mr-1.5"
+      style="vertical-align: -0.2em"><slot name="icon" /></BSlot></span>
+</span>
