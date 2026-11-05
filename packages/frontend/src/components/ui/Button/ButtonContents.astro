@@ -21,7 +21,11 @@ const [, head = html, lastWord = ''] = html.includes('<') ? [] : /^(.*?)(\S+)\s*
   label kept spare width on its left and the pair sat off-centre.
 */}
 <span>
-  <Fragment set:html={head} /><span class="whitespace-nowrap"><Fragment set:html={lastWord} /><BSlot
-      class="ml-1.5 h-5 w-5 inline-block rtl:ml-0 rtl:mr-1.5"
-      style="vertical-align: -0.2em"><slot name="icon" /></BSlot></span>
+  <Fragment set:html={head} />
+  <span class="whitespace-nowrap">
+    <Fragment set:html={lastWord} />
+    <BSlot class="ml-1.5 h-5 w-5 inline-block rtl:ml-0 rtl:mr-1.5" style="vertical-align: -0.2em">
+      <slot name="icon" />
+    </BSlot>
+  </span>
 </span>
