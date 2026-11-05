@@ -7,7 +7,9 @@ COPY . .
 RUN git clean -fxd || true
 
 WORKDIR /tmp/install/packages/backend
-RUN corepack pnpm ci --prod
+# Node 25+ no longer bundles corepack, and node:lts follows the newest LTS
+RUN npm install -g corepack@0.36.0 \
+    && corepack pnpm ci --prod
 # ## Workaround of https://github.com/npm/cli/issues/6874
 # RUN cp -r ../../node_modules . \
 #     && rm -rf node_modules/@caise2027-website/shared \
@@ -22,7 +24,8 @@ COPY --from=build /tmp/install/packages/backend .
 RUN rm -rf *.config* tsconfig.json seeds sample.env Dockerfile $(find . -type f -name "*.md" -name ".*") \
     && apt update \
     && apt install -y openssl curl \
-    && rm -rf /var/lib/apt/lists/{*,.*} /var/cache/apt/archives/{*,.*}
+    && rm -rf /var/lib/apt/lists/{*,.*} /var/cache/apt/archives/{*,.*} \
+    && npm install -g corepack@0.36.0
 
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
