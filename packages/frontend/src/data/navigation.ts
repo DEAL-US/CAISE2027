@@ -176,6 +176,10 @@ export function getHeaderData(_currentUrl: URL): HeaderData {
             href: getPermalink('/sponsors/become-a-sponsor')
           }
         ]
+      },
+      {
+        text: 'Registration',
+        href: getPermalink('/registration')
       }
       // {
       //   text: 'Venue',
