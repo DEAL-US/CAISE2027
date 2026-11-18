@@ -1,0 +1,65 @@
+---
+title: 'Call for Journal First'
+layout: '#/layouts/MarkdownLayout.astro'
+showHeading: false
+order: 3
+importantDates:
+  "Submission deadline": 26 February 2027
+  "Notification to authors": 12 March 2027
+description: CAiSE 2027 is organising journal-first sessions to disseminate recent important research contributions and spark discussions between authors and researchers in the CAiSE community.
+action:
+  variant: 'primary'
+  text: 'Submit a journal-first paper'
+  href: https://easychair.org/conferences/?conf=caise2027
+heroProps:
+  actions:
+    - variant: 'hero'
+      text: 'Submit a journal-first paper'
+      icon: 'i-tabler:file-upload'
+      href: https://easychair.org/conferences/?conf=caise2027
+---
+import ImportantDates from '#/components/widgets/ImportantDates.astro';
+import CallToAction from '#/components/widgets/CallToAction.astro';
+
+CAiSE 2027 is organising journal-first sessions as part of the scientific program. The aim of these sessions is to disseminate recent important research contributions and spark discussions between authors and researchers in the CAiSE community. Authors of selected journal articles on CAiSE-related topics will be invited to present their work at the conference.
+
+## Scope
+
+For the journal-first sessions, we solicit submissions related to articles that have been accepted for publication by a reputable journal and that meet the following criteria:
+
+- The article relates to the topics of the CAiSE conference and the recent [call for papers](/calls/papers/).
+- The article was an original submission to the journal and not an extension of an earlier conference or workshop paper.
+- The article was accepted for publication by a journal on or after 1 January 2026, with the acceptance publicly announced. It must be available at the publisher's website (e.g., as "articles in advance") and written in English.
+- The article has not been presented at, and is not under consideration for, journal-first tracks of other conferences.
+
+## Format
+
+Accepted submissions will be presented as part of the CAiSE 2027 scientific programme.
+
+## Submission
+
+Submissions must be done electronically via the **Journal First track** at EasyChair ([https://easychair.org/conferences/?conf=caise2027](https://easychair.org/conferences/?conf=caise2027)) and include:
+
+- Title and author information of the article.
+- The original abstract and keywords.
+- DOI of the original publication or, alternatively, a link to the publication at the journal's website.
+- A PDF version of the published paper.
+- Quality indicators of the journal paper, such as impact, early citation performance, cross-organisational or international collaborations, or the type of research funding/grants supporting the project.
+
+## Evaluation
+
+All submissions will be reviewed by the track chairs with the aim to accept all qualifying submissions subject to ability to accommodate them in the program. If needed, priority will be given to submissions according to their topical fit with the scope of the conference, the importance of the contribution, as well as the standing of the respective journal (including, but not limited to, the journal's impact factor and ranking results).
+
+## Attendance and Presentation
+
+At least one author of each submission accepted for the journal-first track must register and attend the conference to present the work. The author needs a full registration to present the journal article. As the articles of the journal-first track have been published already, they will not be part of the CAiSE 2027 proceedings. The articles will be listed in the conference program and CAiSE 2027 participants will have access to the respective abstracts and a pointer to the original journal article.
+
+## Questions and Inquiries
+
+Questions about eligibility and other inquiries can be sent to the CAiSE'27 Journal First chairs at [caise2027-journalfirst@easychair.org](mailto:caise2027-journalfirst@easychair.org).
+
+## Key Dates
+
+<ImportantDates importantDates={frontmatter.importantDates}/>
+
+<CallToAction actions={[frontmatter.action]} boxed={false} classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }} />
