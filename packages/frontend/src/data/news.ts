@@ -14,6 +14,11 @@ export interface NewsItem {
  */
 const news: NewsItem[] = [
   {
+    date: '2026-11-20',
+    text: 'The call for tutorials is now available',
+    href: getPermalink('/calls/tutorials')
+  },
+  {
     date: '2026-11-18',
     text: 'The call for journal-first papers is now available',
     href: getPermalink('/calls/journal-first')

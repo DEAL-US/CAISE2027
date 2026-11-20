@@ -1,0 +1,75 @@
+---
+title: 'Call for Tutorials'
+layout: '#/layouts/MarkdownLayout.astro'
+showHeading: false
+order: 4
+importantDates:
+  "Submission of tutorial proposals": 28 February 2027
+  "Notifications": 19 March 2027
+  "Camera-ready abstracts": 30 March 2027
+description: CAiSE'27 invites proposals for tutorials offering new insights, knowledge, and skills to professionals, educators, researchers, and students on advanced topics in the field of information systems engineering.
+action:
+  variant: 'primary'
+  text: 'Submit a tutorial proposal'
+  href: https://easychair.org/conferences/?conf=caise2027
+heroProps:
+  actions:
+    - variant: 'hero'
+      text: 'Submit a tutorial proposal'
+      icon: 'i-tabler:file-upload'
+      href: https://easychair.org/conferences/?conf=caise2027
+---
+import ImportantDates from '#/components/widgets/ImportantDates.astro';
+import CallToAction from '#/components/widgets/CallToAction.astro';
+
+CAiSE'27 invites proposals for tutorials offering new insights, knowledge, and skills to professionals, educators, researchers, and students on advanced topics in the field of information systems engineering.
+
+Proposals addressing this year's conference theme, "**Hybrid Intelligent Information Systems Engineering**", are encouraged. Proposals on other emerging or established topics in information systems engineering are equally welcome.
+
+Tutorials should enhance participants' understanding of principles, concepts, methods, and tools relevant to the CAiSE community. Tutorials must be educational rather than commercial or sales-oriented.
+
+Tutorials will be 90 minutes long and will run in parallel with the technical sessions of the main conference. Proposals should identify the intended audience and any prerequisite knowledge.
+
+## Selection Criteria
+
+The tutorial chairs will review proposals based on the following criteria:
+
+- Relevance to the field of IS engineering;
+- Anticipated appeal to the conference audience;
+- Timeliness and importance for the conference audience;
+- Past experience and qualifications of the instructor(s).
+
+The tutorial chairs will also consider the complementarity of each proposal with respect to the conference program and other tutorial proposals.
+
+## Submission guidelines
+
+Tutorial proposals should be submitted to EasyChair using the conference submission site: [CAiSE 2027 Tutorials](https://easychair.org/conferences/?conf=caise2027) and then selecting the "CAiSE2027 Tutorials Track".
+
+Proposals should be submitted in PDF format and must not exceed 1,500 words, excluding references and presenter biographies. Each proposal should cover the following points:
+
+- Title
+- Presenters: Names, affiliations, and short biographies highlighting relevant expertise for the tutorial topic.
+- Goal: The overall goal of the tutorial and what participants are expected to learn.
+- Scope: Intended audience, level (basic or advanced), and prerequisites.
+- Topic relevance: Relevance to CAiSE and the intended audience, including the conference theme where applicable.
+- Content outline: A structured overview of the planned tutorial contents.
+- Previous delivery: If the tutorial has been presented before, indicate the venues and any planned updates.
+- References: Relevant papers, books, and other supporting materials.
+- Sample slides (optional): Presenters may include sample slides or a link to existing tutorial materials.
+
+## Publication and Presenter Support
+
+- A 2-page tutorial abstract will be published in the CAiSE LNCS proceedings.
+- Tutorials will benefit from the local organizational infrastructure, including registration, badges, refreshments, and equipment.
+- Promotion of the tutorial on the CAiSE 2027 website and through conference mailings.
+- A conference registration discount per accepted tutorial.
+
+## Questions and Inquiries
+
+Questions about eligibility and other inquiries can be sent to the CAiSE'27 Tutorial Chairs at [caise2027-tutorials@easychair.org](mailto:caise2027-tutorials@easychair.org).
+
+## Key Dates
+
+<ImportantDates importantDates={frontmatter.importantDates}/>
+
+<CallToAction actions={[frontmatter.action]} boxed={false} classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }} />
