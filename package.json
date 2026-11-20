@@ -21,7 +21,7 @@
     "@types/node": "26.4.1",
     "eslint": "10.10.0",
     "jiti": "2.7.0",
-    "type-fest": "5.9.0",
-    "typescript": "6.0.3"
+    "type-fest": "6.0.3",
+    "typescript": "7.0.2"
   }
 }
