@@ -296,6 +296,8 @@ export interface BareCall {
   title: string;
   order: int;
   showHeading: boolean;
+  /** Shorter title for the Calls menu; defaults to `title`. */
+  menuTitle?: string;
   importantDates: Record<string, string>;
 }
 
