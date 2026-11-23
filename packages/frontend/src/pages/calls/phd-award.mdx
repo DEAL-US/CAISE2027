@@ -1,0 +1,78 @@
+---
+title: 'Call for PhD Award Applications'
+layout: '#/layouts/MarkdownLayout.astro'
+showHeading: false
+order: 6
+importantDates:
+  "Paper submission deadline": 19 March 2027
+  "Notification": 7 May 2027
+description: The CAiSE PhD Award is granted annually to an outstanding recent PhD thesis in the field of Information Systems Engineering.
+action:
+  variant: 'primary'
+  text: 'Apply for the PhD Award'
+  href: https://easychair.org/conferences/?conf=caise2027
+heroProps:
+  actions:
+    - variant: 'hero'
+      text: 'Apply for the PhD Award'
+      icon: 'i-tabler:file-upload'
+      href: https://easychair.org/conferences/?conf=caise2027
+---
+import ImportantDates from '#/components/widgets/ImportantDates.astro';
+import CallToAction from '#/components/widgets/CallToAction.astro';
+
+The deadline to apply for the CAiSE 2027 PhD Award is **19 March 2027**. The conditions to apply are:
+
+- having participated as an author in a previous CAiSE Doctoral Consortium or at a main CAiSE event: either the main conference, the CAiSE Forum, EMMSAD, or BPMDS **and**
+- having successfully defended the PhD thesis in the last two years (i.e., since January 2025).
+
+The application must be a single PDF file containing:
+
+- A short cover letter that includes the list of PhD committee members, and a list of publications that resulted from the PhD thesis, highlighting those that make the application eligible.
+- The support letter from the thesis advisor.
+- The candidate's defended PhD thesis.
+- The candidate's CV.
+- Any additional information the candidate deems relevant.
+
+The application must be submitted electronically to the **PhD Award track** of CAiSE 2027 via [EasyChair](https://easychair.org/conferences/?conf=caise2027).
+
+## About the PhD Award
+
+The CAiSE PhD Award is granted annually to an outstanding recent PhD thesis in the field of Information Systems Engineering. The award is co-sponsored by the CAiSE Steering Committee and Springer. It consists of a certificate, free full registration (5 days) to the next two editions of the CAiSE conference, and a book voucher for a free selection worth EUR 500 from Springer's printed books collection.
+
+In addition, the selected thesis will be recommended for publication as a monograph in the LNBIP series published by Springer, provided that Springer's publication conditions are met.
+
+The PhD theses submitted for the award will be reviewed by a standing committee of senior members selected from the CAiSE Advisory Committee, the CAiSE Steering Committee, and the CAiSE Program Committee.
+
+The review process is guided by the following selection criteria:
+
+- Scientific contribution.
+- Relevance of the contributions for information systems engineering research and practice.
+- The way this relevance has been addressed by the PhD Award candidate in the papers and PhD text.
+- List of publications that resulted from the PhD research, with particular attention for papers published at CAiSE, including Doctoral Consortium papers.
+- Recommendation by the supervisor. This recommendation can include the opinion of another external member of the SC if deemed relevant by the supervisor.
+- Any other relevant evidence provided by the candidate.
+
+## Past Recipients of the Award
+
+- **2026:** Tianwa Chen, PhD from the University of Queensland (Australia), thesis title "Sensemaking in Integrative Multi-artefact Information Tasks"
+- **2025:** Charlotte Verbruggen, PhD from KU Leuven (Belgium), thesis title "Advancing multi-modelling in MDE for integrated domain and business process modelling" ([link to published monograph](https://link.springer.com/book/9783032138750))
+- **2024:** Glenda Carla Moura Amaral, PhD from the Free University of Bozen-Bolzano (Italy), thesis title "An Ontology Network in Finance and Economics" ([link to published monograph](https://link.springer.com/book/10.1007/978-3-031-71082-7))
+- **2023:** Anna Bernasconi, PhD from Politecnico di Milano (Italy), thesis title "Model, Integrate, Search… Repeat: a Sound Approach to Building Integrated Repositories of Genomic Data" ([link to the published monograph](https://link.springer.com/book/9783031449062))
+- **2022:** Volodymyr Leno, PhD from University of Melbourne (Australia), thesis title "Robotic Process Mining: Accelerating the adoption of Robotic Process Automation" ([link to the thesis](https://minerva-access.unimelb.edu.au/bitstream/handle/11343/297274/98f9efca-4dd2-eb11-94dc-0050568d0279_manuscript.pdf))
+- **2021:** Orlenys Lopez Pintado, PhD from University of Tartu (Estonia), thesis title "Collaborative Business Process Execution on the Block Chain: the Caterpillar System" ([link to the thesis](https://dspace.ut.ee/items/1e09072c-5442-463a-b8c6-0425951cb90b))
+- **2020:** Steven Mertens, PhD from Ghent University (Belgium), thesis title "Enabling process management for loosely framed knowledge-intensive processes" ([link to the published monograph](https://www.springer.com/gp/book/9783030661922))
+- **2019:** Giovanni Meroni, PhD from Politecnico di Milano (Italy), thesis title "Artifact-driven business process monitoring" ([link to the published monograph](https://www.springer.com/gp/book/9783030324117))
+- **2018:** Wei Wang, PhD from University of Queensland (Australia), thesis title "Integrated Modeling of Business Processes and Business Rules" ([link to the published monograph](https://www.springer.com/gp/book/9783030118082))
+- **2017:** Marcela Ruiz, PhD from the Universidad Politécnica de Valencia (Spain), thesis title "TraceME: A Traceability-Based Method for Conceptual Model Evolution" ([link to the published monograph](https://www.springer.com/gp/book/9783319897158))
+- **2016:** Le Minh Sang Tran, PhD from University of Trento (Italy), thesis title "Managing the Uncertainty of the Evolution of Requirements Models" ([testimony of the 2016 CAiSE PhD Award winner](https://www.youtube.com/watch?v=q-vvlH66lC4))
+
+## Questions and Inquiries
+
+Questions about eligibility and other inquiries can be sent to the CAiSE 2027 PhD Award chairs at [caise2027-phdaward@easychair.org](mailto:caise2027-phdaward@easychair.org).
+
+## Key Dates
+
+<ImportantDates importantDates={frontmatter.importantDates}/>
+
+<CallToAction actions={[frontmatter.action]} boxed={false} classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }} />
