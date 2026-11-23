@@ -20,7 +20,7 @@ const news: NewsItem[] = [
   },
   {
     date: '2026-11-23',
-    text: 'The call for forum and tools is now available',
+    text: 'The call for forum papers and tool demonstrations is now available',
     href: getPermalink('/calls/forum')
   },
   {
@@ -35,7 +35,7 @@ const news: NewsItem[] = [
   },
   {
     date: '2026-11-16',
-    text: 'Workshop notification date extended to November 20, 2026',
+    text: 'Workshop notification date extended to 20 November 2026',
     href: getPermalink('/calls/workshops')
   },
   {
@@ -59,5 +59,14 @@ export const sortedNews = [...news].sort((a, b) => b.date.localeCompare(a.date))
 
 export const latestNews: NewsItem | undefined = sortedNews[0];
 
-/** Formats an ISO date as DD-MM-YYYY. */
-export const formatNewsDate = (date: string) => date.split('-').reverse().join('-');
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+/** Formats an ISO date as "D Month YYYY" (e.g. 19 March 2027), the date format used across the site. */
+export const formatNewsDate = (date: string) => {
+  const [year, month, day] = date.split('-').map(Number);
+
+  return `${day} ${MONTHS[month - 1]} ${year}`;
+};
