@@ -14,6 +14,16 @@ export interface NewsItem {
  */
 const news: NewsItem[] = [
   {
+    date: '2026-11-23',
+    text: 'The call for PhD Award applications is now available',
+    href: getPermalink('/calls/phd-award')
+  },
+  {
+    date: '2026-11-23',
+    text: 'The call for forum papers and tool demonstrations is now available',
+    href: getPermalink('/calls/forum')
+  },
+  {
     date: '2026-11-20',
     text: 'The call for tutorials is now available',
     href: getPermalink('/calls/tutorials')
@@ -25,7 +35,7 @@ const news: NewsItem[] = [
   },
   {
     date: '2026-11-16',
-    text: 'Workshop notification date extended to November 20, 2026',
+    text: 'Workshop notification date extended to 20 November 2026',
     href: getPermalink('/calls/workshops')
   },
   {
@@ -49,5 +59,12 @@ export const sortedNews = [...news].sort((a, b) => b.date.localeCompare(a.date))
 
 export const latestNews: NewsItem | undefined = sortedNews[0];
 
-/** Formats an ISO date as DD-MM-YYYY. */
-export const formatNewsDate = (date: string) => date.split('-').reverse().join('-');
+const newsDateFormat = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC'
+});
+
+/** Formats an ISO date as "D Month YYYY" (e.g. 19 March 2027), the date format used across the site. */
+export const formatNewsDate = (date: string) => newsDateFormat.format(new Date(`${date}T00:00:00Z`));

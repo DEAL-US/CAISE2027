@@ -1,0 +1,62 @@
+---
+title: 'Call for Forum Papers and Tool Demonstrations'
+menuTitle: 'Call for Forum and Tools'
+layout: '#/layouts/MarkdownLayout.astro'
+showHeading: false
+order: 5
+importantDates:
+  "Abstract submission (suggested)": 19 February 2027
+  "Paper submission deadline (strict)": 6 March 2027
+  "Notification to the authors": 2 April 2027
+  "Camera ready": 9 April 2027
+description: The CAiSE Forum is a space within the CAiSE conference to present and discuss new, exciting research ideas and software tools related to information systems engineering.
+action:
+  variant: 'primary'
+  text: 'Submit a forum paper'
+  href: https://easychair.org/conferences/?conf=caise2027
+heroProps:
+  actions:
+    - variant: 'hero'
+      text: 'Submit a forum paper'
+      icon: 'i-tabler:file-upload'
+      href: https://easychair.org/conferences/?conf=caise2027
+---
+import ImportantDates from '#/components/widgets/ImportantDates.astro';
+import CallToAction from '#/components/widgets/CallToAction.astro';
+
+The CAiSE Forum is a space within the CAiSE conference to present and discuss new, exciting research ideas and software tools related to information systems engineering.
+
+The Forum aims to serve as an interactive platform, encouraging (i) the presentation of scientific papers on emerging topics and controversial positions, and (ii) the demonstration of innovative systems, tools, and applications.
+
+The Forum sessions at the CAiSE conference aim to facilitate interaction, discussion, and exchange of ideas among presenters and participants. Contributions to the CAiSE'27 Forum are welcome to address any of the CAiSE'27 conference topics. In particular, we welcome submissions on this year's theme: **Hybrid Intelligent Information Systems Engineering**.
+
+## Submission Types
+
+We invite two types of submissions:
+
+- **Visionary Papers:** Present innovative and forward-looking research that describes novel ideas, disruptive concepts, or emerging areas of interest that are relevant to the CAiSE community. Submissions should articulate a clear and well-motivated vision, grounded in relevant literature or preliminary insights, and outline its potential impact on research and practice. While full-scale validation is not expected for these papers, they should provide convincing arguments, illustrative examples, or initial evidence that supports the feasibility and significance of the proposed vision.
+- **Demo Papers:** Describe innovative tools and prototypes that implement the results of research efforts. Tool papers should highlight the tool's relevance and innovations to the CAiSE community. Each paper should include:
+  - A clear description of the tool's main features and innovations to the CAiSE community.
+  - An assessment of the tool's maturity (e.g., prototype, beta release, or production-ready).
+  - A link to a webpage where the tool can be accessed or downloaded. If access requires a license, this must be arranged in a way that preserves reviewer anonymity.
+  - A short video (3–5 minutes with voiceover) demonstrating the tool in action.
+
+Both visionary papers and demo papers must not exceed 8 pages in LNCS format, including references (see the Springer authors' guidelines). Papers should be submitted in PDF format through [EasyChair](https://easychair.org/conferences/?conf=caise2027) by selecting the **CAiSE 2027 – Forum track**.
+
+The submitted papers must be unpublished and must not be under review elsewhere.
+
+## Publication
+
+Accepted papers will be published by Springer in a CAiSE Forum proceedings volume within the Lecture Notes in Computer Science (LNCS) series. Authors should consult the [Springer Authors Guidelines](https://www.springer.com/gp/computer-science/lncs/conference-proceedings-guidelines) and use their LaTeX or Word proceedings templates for preparing their papers.
+
+An [Overleaf template with LNCS proceedings](https://www.overleaf.com/latex/templates/springer-nature-lecture-notes-in-computer-science/kzwwpvhwnvfj) is available.
+
+Springer encourages authors to include their ORCIDs in their papers.
+
+In addition, the corresponding author of each paper, acting on behalf of all of the authors of that paper, must complete and sign a Consent-to-Publish form. The corresponding author signing the copyright form should match the corresponding author marked on the paper. Once the files have been sent to Springer, changes relating to the authorship of the papers cannot be made.
+
+## Key Dates
+
+<ImportantDates importantDates={frontmatter.importantDates}/>
+
+<CallToAction actions={[frontmatter.action]} boxed={false} classes={{ container: 'pt-0 md:pt-0 lg:pt-0' }} />

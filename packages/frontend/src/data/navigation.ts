@@ -9,7 +9,7 @@ const calls = () => posts
   .sort((a, b) => a.frontmatter.order - b.frontmatter.order)
   .map(post =>
     ({
-      text: post.frontmatter.title,
+      text: post.frontmatter.menuTitle ?? post.frontmatter.title,
       href: getPermalink(post.url)
     })
   );
