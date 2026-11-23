@@ -59,14 +59,12 @@ export const sortedNews = [...news].sort((a, b) => b.date.localeCompare(a.date))
 
 export const latestNews: NewsItem | undefined = sortedNews[0];
 
-const MONTHS = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-];
+const newsDateFormat = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC'
+});
 
 /** Formats an ISO date as "D Month YYYY" (e.g. 19 March 2027), the date format used across the site. */
-export const formatNewsDate = (date: string) => {
-  const [year, month, day] = date.split('-').map(Number);
-
-  return `${day} ${MONTHS[month - 1]} ${year}`;
-};
+export const formatNewsDate = (date: string) => newsDateFormat.format(new Date(`${date}T00:00:00Z`));
