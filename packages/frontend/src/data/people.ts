@@ -316,6 +316,7 @@ export const conferenceChairs = (): Record<string, ConferenceMemberData> => ({
   'Web and Social Media Chairs': {
     'José Calderón': {
       ...USDataNoCity,
+      scholar: 'https://scholar.google.com/citations?user=llAZb_AAAAAJ&hl=es',
       image: JoseCalderon
     },
     'Daniel Ruiz López': {
